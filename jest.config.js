@@ -1,3 +1,6 @@
 module.exports = {
-  projects: ['<rootDir>/apps/music-artwork-generator'],
+  projects: [
+    '<rootDir>/apps/music-artwork-generator',
+    '<rootDir>/apps/music-artwork-generator-api',
+  ],
 };

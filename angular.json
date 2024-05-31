@@ -81,17 +81,22 @@
                   "maximumError": "10kb"
                 }
               ]
-            }
+            },
+            "development": {}
           }
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "music-artwork-generator:build"
+            "browserTarget": "music-artwork-generator:build",
+            "proxyConfig": "apps/music-artwork-generator/proxy.conf.json"
           },
           "configurations": {
             "production": {
               "browserTarget": "music-artwork-generator:build:production"
+            },
+            "development": {
+              "browserTarget": "music-artwork-generator:build:development"
             }
           }
         },
@@ -144,6 +149,56 @@
             "lintFilePatterns": [
               "apps/music-artwork-generator-e2e/**/*.{js,ts}"
             ]
+          }
+        }
+      }
+    },
+    "music-artwork-generator-api": {
+      "root": "apps/music-artwork-generator-api",
+      "sourceRoot": "apps/music-artwork-generator-api/src",
+      "projectType": "application",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:build",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/music-artwork-generator-api",
+            "main": "apps/music-artwork-generator-api/src/main.ts",
+            "tsConfig": "apps/music-artwork-generator-api/tsconfig.app.json",
+            "assets": ["apps/music-artwork-generator-api/src/assets"]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/music-artwork-generator-api/src/environments/environment.ts",
+                  "with": "apps/music-artwork-generator-api/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "music-artwork-generator-api:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/music-artwork-generator-api/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/music-artwork-generator-api"],
+          "options": {
+            "jestConfig": "apps/music-artwork-generator-api/jest.config.js",
+            "passWithNoTests": true
           }
         }
       }
