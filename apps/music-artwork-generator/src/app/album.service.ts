@@ -16,7 +16,7 @@ export class AlbumService {
     return iif(
       () => this.window.localStorage.getItem('albums') !== null,
       of(JSON.parse(this.window.localStorage.getItem('albums'))),
-      this.httpClient.get<Album[]>('/api').pipe(
+      this.httpClient.get<Album[]>('/api/artist').pipe(
         tap(albums => {
           this.window.localStorage.setItem('albums', JSON.stringify(albums));
         })
