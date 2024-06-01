@@ -1,1 +1,6 @@
-<p>album-detail works!</p>
+<ng-container *ngIf="album$ | async as album">
+  <h1>{{album.album}}</h1>
+  <h2>{{album.artist}}</h2>
+  <button (click)="findAlbumArtwork($event, album)">Find album artwork</button>
+  <iframe name="covers"></iframe>
+</ng-container>

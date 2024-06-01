@@ -8,7 +8,7 @@ import { Cover } from './cover.interface';
   styleUrls: ['./app.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AppComponent implements AfterViewInit {
+export class AppComponent {
 
   constructor(
     @Inject(WINDOW) private window: Window,
@@ -18,13 +18,6 @@ export class AppComponent implements AfterViewInit {
       const cover: Cover = JSON.parse(messageEvent.data);
       console.log(cover);
     }, false);
-  }
-
-  ngAfterViewInit(): void {
-    this.window.open(
-      "https://covers.musichoarders.xyz/?sources=applemusic&country=us&artist=The+Band&album=Greatest+Hits&remote.port=browser&remote.agent=test&remote.text=test",
-      "theframe"
-    );
   }
 
 }

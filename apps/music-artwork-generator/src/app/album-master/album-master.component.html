@@ -2,7 +2,7 @@
     <div>{{albums.length}} results</div>
     <ul>
       <li *ngFor="let album of albums">
-        <a routerLink="/detail">{{ album.album }}</a>, <span>{{ album.artist }}</span>
+        <a routerLink="/detail" [queryParams]="{artist: album.artist, album: album.album}">{{ album.album }}</a>, <span>{{ album.artist }}</span>
       </li>
     </ul>
   </ng-container>

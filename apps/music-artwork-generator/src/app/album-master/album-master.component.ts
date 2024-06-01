@@ -28,9 +28,4 @@ export class AlbumMasterComponent implements OnInit, OnDestroy {
     }
   }
 
-  clickMe(event: Event) {
-    event.preventDefault();
-    console.log(event);
-  }
-
 }
