@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { AlbumMasterComponent } from './album-master.component';
 import { RouterModule } from '@angular/router';
 import { AlbumsResolverService } from './albums-resolver.service';
+import { WINDOW } from '../window.constant';
 
 @NgModule({
   imports: [
@@ -26,7 +27,9 @@ import { AlbumsResolverService } from './albums-resolver.service';
   declarations: [
     AlbumMasterComponent
   ],
-  providers: [AlbumsResolverService],
+  providers: [
+    AlbumsResolverService
+  ],
   exports: [AlbumMasterComponent]
 })
 export class AlbumMasterModule { }

@@ -21,8 +21,7 @@ import { WINDOW } from '../window.constant';
   ],
   declarations: [AlbumDetailComponent],
   providers: [
-    AlbumResolverService,
-    {provide: WINDOW, useValue: window}
+    AlbumResolverService
   ],
   exports: [AlbumDetailComponent]
 })
