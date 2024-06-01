@@ -5,6 +5,7 @@ import { map, tap } from 'rxjs/operators';
 import { WINDOW } from '../window.constant';
 import { Cover } from '../cover.interface';
 import { Album } from '../album.interface';
+import { AlbumService } from '../album.service';
 
 @Component({
   templateUrl: './album-detail.component.html',
@@ -26,7 +27,8 @@ export class AlbumDetailComponent implements OnInit, OnDestroy {
   constructor(
     private activatedRoute: ActivatedRoute,
     @Inject(WINDOW) private window: Window,
-    private changeDetectorRef: ChangeDetectorRef
+    private changeDetectorRef: ChangeDetectorRef,
+    private albumService: AlbumService
   ) {
     this.window.addEventListener('message', (messageEvent: MessageEvent) => {
       if (messageEvent.origin !== "https://covers.musichoarders.xyz") {
@@ -49,13 +51,18 @@ export class AlbumDetailComponent implements OnInit, OnDestroy {
     }
   }
 
-  findAlbumArtwork(event: Event, album: Album) {
+  findCover(event: Event, album: Album) {
     event.preventDefault();
     this.popupWindow = this.window.open(
       `https://covers.musichoarders.xyz/?sources=applemusic&country=us&artist=${album.artist}&album=${album.album}&remote.port=browser&remote.agent=test&remote.text=test`,
       "covers",
       "width=600,height=400"
     );
+  }
+
+  updateAlbum(event: Event, album: Album) {
+    event.preventDefault();
+    this.albumService.updateAlbum(album);
   }
 
 }

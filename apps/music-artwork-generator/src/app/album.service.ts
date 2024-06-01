@@ -23,4 +23,18 @@ export class AlbumService {
       )
     );
   }
+
+  getAlbumByArtistAndAlbum(artist: string, album: string): Observable<Album> {
+    const albums: Album[] = JSON.parse(this.window.localStorage.getItem('albums'));
+    return of(albums.find(o => o.album === album && o.artist === artist));
+  }
+
+  updateAlbum(albumToUpdate: Album): void {
+    const albums: Album[] = JSON.parse(this.window.localStorage.getItem('albums')).slice(0);
+    const relevantAlbumIndex: number = albums.findIndex(album => album.album === albumToUpdate.album && album.artist === albumToUpdate.artist);
+    const relevantAlbum: Album = albums.find(o => o.album === albumToUpdate.album && o.artist === albumToUpdate.artist);
+    relevantAlbum.cover = albumToUpdate.cover;
+    albums.splice(relevantAlbumIndex, 1, relevantAlbum);
+    this.window.localStorage.setItem('albums', JSON.stringify(albums));
+  }
 }
