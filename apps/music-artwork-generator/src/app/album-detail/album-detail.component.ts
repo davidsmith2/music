@@ -1,9 +1,10 @@
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, Inject, NgZone, ChangeDetectorRef } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { WINDOW } from '../window.constant';
 import { Cover } from '../cover.interface';
+import { Album } from '../album.interface';
 
 @Component({
   templateUrl: './album-detail.component.html',
@@ -11,11 +12,10 @@ import { Cover } from '../cover.interface';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AlbumDetailComponent implements OnInit, OnDestroy {
-  selectedAlbum: any;
-  album$: Observable<any> = this.activatedRoute.queryParams.pipe(
-    tap((_params: Params) => {
-      this.selectedAlbum = null;
-    })
+  selectedAlbum: Album;
+  album$: Observable<Album> = this.activatedRoute.data.pipe(
+    map((data: {album: Album}) => data.album),
+    tap((album: Album) => this.selectedAlbum = album)
   );
   albumSub: Subscription;
   popupWindow: Window;
@@ -45,9 +45,8 @@ export class AlbumDetailComponent implements OnInit, OnDestroy {
     }
   }
 
-  findAlbumArtwork(event: Event, album: any) {
+  findAlbumArtwork(event: Event, album: Album) {
     event.preventDefault();
-    this.selectedAlbum = album;
     this.popupWindow = this.window.open(
       `https://covers.musichoarders.xyz/?sources=applemusic&country=us&artist=${album.artist}&album=${album.album}&remote.port=browser&remote.agent=test&remote.text=test`,
       "covers",
