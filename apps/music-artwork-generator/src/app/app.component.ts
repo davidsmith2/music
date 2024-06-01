@@ -41,4 +41,9 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
       this.albumsSub.unsubscribe();
     }
   }
+
+  clickMe(event: Event) {
+    event.preventDefault();
+    console.log(event);
+  }
 }

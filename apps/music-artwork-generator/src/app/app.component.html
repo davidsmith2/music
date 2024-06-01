@@ -3,11 +3,12 @@
     <div>{{albums.length}} results</div>
     <ul>
       <li *ngFor="let album of albums">
-        {{ album.album }}, {{ album.artist }}
+        <a routerLink="/detail">{{ album.album }}</a>, <span>{{ album.artist }}</span>
       </li>
     </ul>
   </ng-container>
 </div>
 <div style="float: right; width: 67%; ">
+  <router-outlet></router-outlet>
   <iframe name="theframe" width="800" height="600"></iframe>
 </div>
