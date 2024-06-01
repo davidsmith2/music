@@ -2,13 +2,13 @@ import { Injectable } from "@angular/core";
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from "@angular/router";
 import { Album } from "../album.interface";
 import { Observable, of } from "rxjs";
-import { HttpClient } from "@angular/common/http";
+import { AlbumService } from "../album.service";
 
 @Injectable()
 export class AlbumsResolverService implements Resolve<Array<Album>>{
-  constructor(private httpClient: HttpClient) { }
+  constructor(private albumService: AlbumService) { }
 
   resolve(_route: ActivatedRouteSnapshot, _state: RouterStateSnapshot): Observable<Array<Album>> {
-    return this.httpClient.get<Array<Album>>('/api');
+    return this.albumService.getAlbums();
   }
 }
