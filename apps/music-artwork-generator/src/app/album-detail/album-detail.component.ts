@@ -11,13 +11,13 @@ import { Cover } from '../cover.interface';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AlbumDetailComponent implements OnInit, OnDestroy {
+  selectedAlbum: any;
   album$: Observable<any> = this.activatedRoute.queryParams.pipe(
-    tap((_queryParams: Params) => {
-      this.albumArtwork = {};
+    tap((_params: Params) => {
+      this.selectedAlbum = null;
     })
   );
   albumSub: Subscription;
-  albumArtwork: any;
   popupWindow: Window;
 
   constructor(
@@ -30,11 +30,7 @@ export class AlbumDetailComponent implements OnInit, OnDestroy {
       const cover: Cover = JSON.parse(messageEvent.data);
       console.log(cover)
       this.popupWindow.close();
-      this.albumArtwork = {
-        src: cover.bigCoverUrl,
-        width: 400,
-        height: 400
-      };
+      this.selectedAlbum = {...this.selectedAlbum, cover: cover.bigCoverUrl};
       this.changeDetectorRef.detectChanges();
     }, false);
   }
@@ -51,6 +47,7 @@ export class AlbumDetailComponent implements OnInit, OnDestroy {
 
   findAlbumArtwork(event: Event, album: any) {
     event.preventDefault();
+    this.selectedAlbum = album;
     this.popupWindow = this.window.open(
       `https://covers.musichoarders.xyz/?sources=applemusic&country=us&artist=${album.artist}&album=${album.album}&remote.port=browser&remote.agent=test&remote.text=test`,
       "covers",
