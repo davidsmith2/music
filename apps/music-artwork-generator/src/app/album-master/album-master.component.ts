@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { Album } from '../album.interface';
 import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators';
+import { Artist } from '../artist.interface';
 
 @Component({
   templateUrl: './album-master.component.html',
@@ -10,8 +11,8 @@ import { map } from 'rxjs/operators';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AlbumMasterComponent {
-  albums$: Observable<Array<Album>> = this.activatedRoute.data.pipe(
-    map(data => data.albums)
+  artists$: Observable<Array<Artist>> = this.activatedRoute.data.pipe(
+    map(data => data.artists)
   );
 
   constructor(private activatedRoute: ActivatedRoute) { }

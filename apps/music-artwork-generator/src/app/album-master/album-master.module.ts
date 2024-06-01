@@ -13,7 +13,7 @@ import { WINDOW } from '../window.constant';
         path: '',
         component: AlbumMasterComponent,
         resolve: {
-          albums: AlbumsResolverService
+          artists: AlbumsResolverService
         },
         children: [
           {

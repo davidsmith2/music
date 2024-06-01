@@ -12,7 +12,7 @@ import { WINDOW } from './window.constant';
     HttpClientModule,
     RouterModule.forRoot([
       {
-        path: 'albums',
+        path: 'artists',
         loadChildren: () => import('./album-master/album-master.module').then(m => m.AlbumMasterModule)
       }
     ])

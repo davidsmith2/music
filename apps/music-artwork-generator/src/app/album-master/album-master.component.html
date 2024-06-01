@@ -1,9 +1,14 @@
-<ng-container *ngIf="albums$ | async as albums">
+<ng-container *ngIf="artists$ | async as artists">
   <div style="float: left; width: 33%; ">
-    <div>{{albums.length}} results</div>
+    <div>{{artists.length}} artists</div>
     <ul>
-      <li *ngFor="let album of albums">
-        <a routerLink="/albums/0" [queryParams]="{artist: album.artist, album: album.album}">{{ album.album }}</a>, <span>{{ album.artist }}</span>
+      <li *ngFor="let artist of artists">
+        <a [routerLink]="['/artists']" [queryParams]="{name: artist.name}">
+          {{artist.name}}
+        </a>
+        <!--
+        {{ artist.name }}</a>, <span>{{ artist.name }}</span>
+        -->
       </li>
     </ul>
   </div>
