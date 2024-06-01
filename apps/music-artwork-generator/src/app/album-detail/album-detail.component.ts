@@ -15,7 +15,10 @@ export class AlbumDetailComponent implements OnInit, OnDestroy {
   selectedAlbum: Album;
   album$: Observable<Album> = this.activatedRoute.data.pipe(
     map((data: {album: Album}) => data.album),
-    tap((album: Album) => this.selectedAlbum = album)
+    tap((album: Album) => {
+      this.selectedAlbum = album;
+      this.changeDetectorRef.detectChanges();
+    })
   );
   albumSub: Subscription;
   popupWindow: Window;
@@ -26,9 +29,10 @@ export class AlbumDetailComponent implements OnInit, OnDestroy {
     private changeDetectorRef: ChangeDetectorRef
   ) {
     this.window.addEventListener('message', (messageEvent: MessageEvent) => {
-      if (messageEvent.origin !== "https://covers.musichoarders.xyz") return;
+      if (messageEvent.origin !== "https://covers.musichoarders.xyz") {
+        return;
+      };
       const cover: Cover = JSON.parse(messageEvent.data);
-      console.log(cover)
       this.popupWindow.close();
       this.selectedAlbum = {...this.selectedAlbum, cover: cover.bigCoverUrl};
       this.changeDetectorRef.detectChanges();

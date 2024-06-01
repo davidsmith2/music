@@ -1,4 +1,4 @@
-<ng-container *ngIf="album$ | async as album">
+<ng-container *ngIf="selectedAlbum">
   <h1>{{selectedAlbum.album}}</h1>
   <h2>{{selectedAlbum.artist}}</h2>
   <ng-container *ngIf="!selectedAlbum.cover; else artworkTemplate">
