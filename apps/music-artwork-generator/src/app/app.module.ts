@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import { WINDOW } from './window.constant';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { AlbumMasterModule } from './album-master/album-master.module';
 
 @Component({
   template: `
@@ -20,7 +21,8 @@ export class DetailComponent {}
     HttpClientModule,
     RouterModule.forRoot([
       {path: 'detail', component: DetailComponent}
-    ])
+    ]),
+    AlbumMasterModule
   ],
   providers: [
     {provide: WINDOW, useValue: window}
