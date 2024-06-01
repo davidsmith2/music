@@ -3,9 +3,9 @@
 
     <xsl:template match="/">
         <tracks>
-            <!-- <xsl:apply-templates select="//dict"/> -->
-            <xsl:apply-templates select="//dict[key='Artist' and key='Album']"/>
-         </tracks>
+            <!-- <xsl:apply-templates select="//dict[key='Artist' and key='Album' and not(key='Purchased' and following-sibling::*[1][self::true])]"/> -->
+            <xsl:apply-templates select="//dict[key='Artist' and key='Album' and not(key[.='Purchased']/following-sibling::*[1][self::true])]"/>
+        </tracks>
     </xsl:template>
 
     <xsl:template match="dict">
