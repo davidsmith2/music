@@ -1,32 +1,23 @@
-import { AfterViewInit, Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { WINDOW } from './window.constant';
 import { Cover } from './cover.interface';
-import { HttpClient } from '@angular/common/http';
-import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'davidsmith-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
-  albums$: Observable<any>;
-  albumsSub: Subscription;
+export class AppComponent implements AfterViewInit {
 
   constructor(
     @Inject(WINDOW) private window: Window,
-    private httpClient: HttpClient
   ) {
     this.window.addEventListener('message', function(messageEvent: MessageEvent) {
       if (messageEvent.origin !== "https://covers.musichoarders.xyz") return;
       const cover: Cover = JSON.parse(messageEvent.data);
       console.log(cover);
     }, false);
-    this.albums$ = this.httpClient.get<any>('/api');
-  }
-
-  ngOnInit(): void {
-    this.albumsSub = this.albums$.subscribe();
   }
 
   ngAfterViewInit(): void {
@@ -36,14 +27,4 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     );
   }
 
-  ngOnDestroy(): void {
-    if (this.albumsSub) {
-      this.albumsSub.unsubscribe();
-    }
-  }
-
-  clickMe(event: Event) {
-    event.preventDefault();
-    console.log(event);
-  }
 }

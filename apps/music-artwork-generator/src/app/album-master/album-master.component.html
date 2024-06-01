@@ -1,1 +1,8 @@
-<p>album-master works!</p>
+<ng-container *ngIf="albums$ | async as albums">
+    <div>{{albums.length}} results</div>
+    <ul>
+      <li *ngFor="let album of albums">
+        <a routerLink="/detail">{{ album.album }}</a>, <span>{{ album.artist }}</span>
+      </li>
+    </ul>
+  </ng-container>

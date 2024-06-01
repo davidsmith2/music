@@ -1,11 +1,9 @@
 import { Component, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppComponent } from './app.component';
 import { WINDOW } from './window.constant';
-import { HttpClientModule } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
 import { AlbumMasterModule } from './album-master/album-master.module';
+import { RouterModule } from '@angular/router';
 
 @Component({
   template: `
@@ -18,7 +16,6 @@ export class DetailComponent {}
   declarations: [AppComponent],
   imports: [
     BrowserModule,
-    HttpClientModule,
     RouterModule.forRoot([
       {path: 'detail', component: DetailComponent}
     ]),
