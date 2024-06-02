@@ -1,15 +1,30 @@
-<ng-container *ngIf="artists$ | async as artists">
-  <div style="float: left; width: 33%; ">
-    <div>{{artists.length}} artists</div>
+<div style="float: left; width: 33%; ">
+  <div>
+    <span *ngIf="artists$ | async as artists">{{artists.length}} total</span>,
+    <span *ngIf="completeArtists$ | async as completeArtists">{{completeArtists.length}} complete</span>,
+    <span *ngIf="incompleteArtists$ | async as incompleteArtists">{{incompleteArtists.length}} incomplete</span>
+  </div>
+  <div *ngIf="incompleteArtists$ | async as incompleteArtists">
+    <h2>Incomplete ({{incompleteArtists.length}})</h2>
     <ul>
-      <li *ngFor="let artist of artists">
+      <li *ngFor="let artist of incompleteArtists">
         <a [routerLink]="['/artists', artist.name]">
           {{artist.name}}
         </a>
       </li>
     </ul>
   </div>
-  <div style="float: right; width: 67%; ">
-    <router-outlet></router-outlet>
+  <div *ngIf="completeArtists$ | async as completeArtists">
+    <h2>Complete ({{completeArtists.length}})</h2>
+    <ul>
+      <li *ngFor="let artist of completeArtists">
+        <a [routerLink]="['/artists', artist.name]">
+          {{artist.name}}
+        </a>
+      </li>
+    </ul>
   </div>
-</ng-container>
+</div>
+<div style="float: right; width: 67%; ">
+  <router-outlet></router-outlet>
+</div>

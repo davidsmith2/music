@@ -14,6 +14,7 @@ import { ArtistsResolverService } from './artists-resolver.service';
         resolve: {
           artists: ArtistsResolverService
         },
+        runGuardsAndResolvers: 'paramsOrQueryParamsChange',
         children: [
           {
             path: ':name',

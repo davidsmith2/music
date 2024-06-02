@@ -3,7 +3,6 @@ import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { Artist } from '../core/artist/artist.interface';
-import { Album } from '../core/album/album.interface';
 
 @Component({
   templateUrl: './artist-master.component.html',
@@ -13,6 +12,22 @@ import { Album } from '../core/album/album.interface';
 export class ArtistMasterComponent {
   artists$: Observable<Array<Artist>> = this.activatedRoute.data.pipe(
     map(data => data.artists)
+  );
+
+  completeArtists$ = this.artists$.pipe(
+    map(artists => artists.filter(artist => {
+      const numAlbums = artist.albums.length;
+      const numCovers = artist.albums.filter(album => album.cover).length;
+      return numAlbums === numCovers;
+    }))
+  );
+
+  incompleteArtists$ = this.artists$.pipe(
+    map(artists => artists.filter(artist => {
+      const numAlbums = artist.albums.length;
+      const numCovers = artist.albums.filter(album => album.cover).length;
+      return numAlbums !== numCovers;
+    }))
   );
 
   constructor(private activatedRoute: ActivatedRoute) { }
