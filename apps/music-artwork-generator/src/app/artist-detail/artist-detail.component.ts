@@ -1,12 +1,11 @@
-import { Component, ChangeDetectionStrategy, Inject, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Component, ChangeDetectionStrategy, Inject, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { WINDOW } from '../window.constant';
-import { Cover } from '../cover.interface';
-import { Album } from '../album.interface';
-import { AlbumService } from '../album.service';
-import { query } from '@angular/animations';
+import { Cover } from '../core/cover/cover.interface';
+import { Album } from '../core/album/album.interface';
+import { AlbumService } from '../core/album/album.service';
 
 @Component({
   templateUrl: './artist-detail.component.html',

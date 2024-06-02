@@ -1,9 +1,9 @@
 import { HttpClient } from "@angular/common/http";
-import { BehaviorSubject, Observable, Subject, iif, of } from "rxjs";
+import { Observable, iif, of } from "rxjs";
 import { Album } from "./album.interface";
 import { Inject, Injectable } from "@angular/core";
 import { map, tap } from "rxjs/operators";
-import { WINDOW } from "./window.constant";
+import { WINDOW } from "../../window.constant";
 
 @Injectable({ providedIn: 'root' })
 export class AlbumService {

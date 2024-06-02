@@ -2,8 +2,8 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators';
-import { Artist } from '../artist.interface';
-import { Album } from '../album.interface';
+import { Artist } from '../core/artist/artist.interface';
+import { Album } from '../core/album/album.interface';
 
 @Component({
   templateUrl: './artist-master.component.html',
