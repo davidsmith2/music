@@ -3,12 +3,9 @@
     <div>{{artists.length}} artists</div>
     <ul>
       <li *ngFor="let artist of artists">
-        <a [routerLink]="['/artists']" [queryParams]="{name: artist.name}">
+        <a [routerLink]="['/artists', artist.name]">
           {{artist.name}}
         </a>
-        <!--
-        {{ artist.name }}</a>, <span>{{ artist.name }}</span>
-        -->
       </li>
     </ul>
   </div>

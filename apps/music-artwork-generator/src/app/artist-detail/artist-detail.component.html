@@ -1,0 +1,11 @@
+<ng-container *ngIf="albums$ | async as albums">
+  <ng-container *ngFor="let album of albums">
+    <h2>{{ album.title }}</h2>
+    <ng-container *ngIf="!album.cover; else albumCoverTemplate">
+      <button (click)="findAlbumCover($event, album)">Find album cover</button>
+    </ng-container>
+    <ng-template #albumCoverTemplate>
+      <img [src]="album.cover" [width]="400" [height]="400" alt="Album artwork">
+    </ng-template>
+  </ng-container>
+</ng-container>

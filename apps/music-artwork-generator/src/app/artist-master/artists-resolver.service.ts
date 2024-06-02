@@ -5,7 +5,7 @@ import { ArtistService } from "../artist.service";
 import { Artist } from "../artist.interface";
 
 @Injectable()
-export class AlbumsResolverService implements Resolve<Array<Artist>>{
+export class ArtistsResolverService implements Resolve<Array<Artist>>{
   constructor(private artistService: ArtistService) { }
 
   resolve(_route: ActivatedRouteSnapshot, _state: RouterStateSnapshot): Observable<Array<Artist>> {

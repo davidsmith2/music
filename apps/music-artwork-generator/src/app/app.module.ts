@@ -13,7 +13,7 @@ import { WINDOW } from './window.constant';
     RouterModule.forRoot([
       {
         path: 'artists',
-        loadChildren: () => import('./album-master/album-master.module').then(m => m.AlbumMasterModule)
+        loadChildren: () => import('./artist-master/artist-master.module').then(m => m.ArtistsMasterModule)
       }
     ])
   ],

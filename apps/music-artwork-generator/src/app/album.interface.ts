@@ -1,5 +1,5 @@
 export interface Album {
   artist: string;
-  album: string;
+  title: string;
   cover?: string;
 }

@@ -5,12 +5,9 @@ import { Observable } from "rxjs";
 import { AlbumService } from "../album.service";
 
 @Injectable()
-export class AlbumResolverService implements Resolve<Album>{
+export class AlbumsResolverService implements Resolve<Array<Album>>{
   constructor(private albumService: AlbumService) {}
-  resolve(route: ActivatedRouteSnapshot, _state: RouterStateSnapshot): Observable<Album> {
-    return this.albumService.getAlbumByArtistAndAlbum(
-      route.queryParamMap.get('artist'),
-      route.queryParamMap.get('album')
-    );
+  resolve(route: ActivatedRouteSnapshot, _state: RouterStateSnapshot): Observable<Array<Album>> {
+    return this.albumService.getAlbumsByArtistName(route.paramMap.get('name'));
   }
 }

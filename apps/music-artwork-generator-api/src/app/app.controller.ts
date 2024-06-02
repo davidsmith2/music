@@ -11,7 +11,7 @@ export class AppController {
     return this.appService.getArtists();
   }
 
-  @Get('albums')
+  @Get('album')
   getAlbumsByArtistName(@Query('artistName') artistName: string) {
     return this.appService.getAlbumsByArtistName(artistName);
   }
