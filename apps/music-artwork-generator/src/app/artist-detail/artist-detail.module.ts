@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ArtistDetailComponent } from './artist-detail.component';
 import { RouterModule } from '@angular/router';
-import { AlbumResolverService } from './album-resolver.service';
+import { ArtistResolverService } from './artist-resolver.service';
 
 @NgModule({
   imports: [
@@ -12,14 +12,14 @@ import { AlbumResolverService } from './album-resolver.service';
         path: '',
         component: ArtistDetailComponent,
         resolve: {
-          albums: AlbumResolverService
+          artist: ArtistResolverService
         },
         runGuardsAndResolvers: 'paramsOrQueryParamsChange'
       }
     ])
   ],
   declarations: [ArtistDetailComponent],
-  providers: [AlbumResolverService],
+  providers: [ArtistResolverService],
   exports: [ArtistDetailComponent]
 })
 export class ArtistDetailModule { }

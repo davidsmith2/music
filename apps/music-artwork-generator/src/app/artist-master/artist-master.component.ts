@@ -12,17 +12,7 @@ import { Album } from '../core/album/album.interface';
 })
 export class ArtistMasterComponent {
   artists$: Observable<Array<Artist>> = this.activatedRoute.data.pipe(
-    map(data => data.albums),
-    map((albums: Array<Album>) => {
-      return albums.reduce((results: Array<Artist>, album: Album) => {
-        if (results.findIndex(artist => artist.name === album.artist) === -1) {
-          results.push({
-            name: album.artist
-          });
-        }
-        return results;
-      }, []).sort((a, b) => a.name.localeCompare(b.name));
-    }),
+    map(data => data.artists)
   );
 
   constructor(private activatedRoute: ActivatedRoute) { }

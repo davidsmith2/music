@@ -1,6 +1,6 @@
-<h1 *ngIf="artist$ | async as artist">{{artist}}</h1>
-<ng-container *ngIf="albums$ | async as albums">
-  <ng-container *ngFor="let album of albums">
+<ng-container *ngIf="artist$ | async as artist">
+  <h1>{{artist.name}}</h1>
+  <ng-container *ngFor="let album of artist.albums">
     <h2>{{ album.title }}</h2>
     <ng-container *ngIf="!album.cover; else albumCoverTemplate">
       <button (click)="findAlbumCover($event, album)">Find album cover</button>

@@ -1,11 +1,13 @@
 import { Component, ChangeDetectionStrategy, Inject, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { WINDOW } from '../window.constant';
 import { Cover } from '../core/cover/cover.interface';
 import { Album } from '../core/album/album.interface';
 import { AlbumService } from '../core/album/album.service';
+import { ArtistService } from '../core/artist/artist.service';
+import { Artist } from '../core/artist/artist.interface';
 
 @Component({
   templateUrl: './artist-detail.component.html',
@@ -13,24 +15,19 @@ import { AlbumService } from '../core/album/album.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ArtistDetailComponent implements OnInit, OnDestroy {
-  artist$: Observable<string>;
-  albums$: Observable<Array<Album>>;
+  artist$: Observable<Artist>;
   selectedAlbum: Album;
   popupWindow: Window;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     @Inject(WINDOW) private window: Window,
+    private artistService: ArtistService,
     private albumService: AlbumService,
     private router: Router,
   ) {
-    this.artist$ = this.activatedRoute.params.pipe(
-      map((params: Params) => {
-        return params.name;
-      })
-    );
-    this.albums$ = this.activatedRoute.data.pipe(
-      map(data => data.albums),
+    this.artist$ = this.activatedRoute.data.pipe(
+      map(data => data.artist)
     );
     this.window.addEventListener('message', (messageEvent: MessageEvent) => {
       if (messageEvent.origin !== "https://covers.musichoarders.xyz") {

@@ -4,6 +4,7 @@ import { Album } from "./album.interface";
 import { Inject, Injectable } from "@angular/core";
 import { map, tap } from "rxjs/operators";
 import { WINDOW } from "../../window.constant";
+import { Artist } from "../artist/artist.interface";
 
 @Injectable({ providedIn: 'root' })
 export class AlbumService {
@@ -12,31 +13,24 @@ export class AlbumService {
     @Inject(WINDOW) private window: Window
   ) {}
 
-  getAlbums(): Observable<Album[]> {
-    return iif(
-      () => this.window.localStorage.getItem('albums') !== null,
-      of(JSON.parse(this.window.localStorage.getItem('albums'))),
-      this.httpClient.get<Album[]>('/api/album').pipe(
-        tap((albums: Array<Album>) => {
-          this.window.localStorage.setItem('albums', JSON.stringify(albums));
-        })
-      )
-    );
-  }
-
   getAlbumsByArtistName(artistName: string): Observable<Album[]> {
-    return of(JSON.parse(this.window.localStorage.getItem('albums'))).pipe(
-      map((albums: Album[]) => {
-        return albums.filter(album => album.artist === artistName);
+    const storageKey: string = 'artists';
+    return of(JSON.parse(this.window.localStorage.getItem(storageKey))).pipe(
+      map((artists: Array<Artist>) => {
+        return artists.find(artist => artist.name === artistName).albums;
       })
     );
   }
 
   updateAlbum(albumToUpdate: Album): void {
-    const storageKey: string = 'albums';
-    const albums: Album[] = JSON.parse(this.window.localStorage.getItem(storageKey)).slice(0);
-    const relevantAlbumIndex: number = albums.findIndex(album => album.title === albumToUpdate.title && album.artist === albumToUpdate.artist);
+    const storageKey: string = 'artists';
+    const artists: Array<Artist> = JSON.parse(this.window.localStorage.getItem(storageKey)).slice(0);
+    const artistToUpdate: Artist = artists.find((artist) => artist.name === albumToUpdate.artist);
+    const relevantArtistIndex: number = artists.findIndex(artist => artist.name === albumToUpdate.artist);
+    const albums: Array<Album> = artists.find((artist: Artist) => artist.name === albumToUpdate.artist).albums;
+    const relevantAlbumIndex: number = albums.findIndex(album => album.title === albumToUpdate.title);
     albums.splice(relevantAlbumIndex, 1, albumToUpdate);
-    this.window.localStorage.setItem(storageKey, JSON.stringify(albums));
+    artistToUpdate.albums = albums;
+    this.window.localStorage.setItem(storageKey, JSON.stringify(artists));
   }
 }
