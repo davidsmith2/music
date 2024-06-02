@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ArtistMasterComponent } from './artist-master.component';
 import { RouterModule } from '@angular/router';
-import { ArtistsResolverService } from './artists-resolver.service';
+import { AlbumResolverService } from './album-resolver.service';
 
 @NgModule({
   imports: [
@@ -12,7 +12,7 @@ import { ArtistsResolverService } from './artists-resolver.service';
         path: '',
         component: ArtistMasterComponent,
         resolve: {
-          artists: ArtistsResolverService
+          albums: AlbumResolverService
         },
         children: [
           {
@@ -27,7 +27,7 @@ import { ArtistsResolverService } from './artists-resolver.service';
     ArtistMasterComponent
   ],
   providers: [
-    ArtistsResolverService
+    AlbumResolverService
   ],
   exports: [ArtistMasterComponent]
 })

@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, Inject, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { switchMap, tap } from 'rxjs/operators';
 import { WINDOW } from '../window.constant';
 import { Cover } from '../cover.interface';
 import { Album } from '../album.interface';
@@ -13,13 +13,7 @@ import { AlbumService } from '../album.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ArtistDetailComponent implements OnInit, OnDestroy {
-  albums$: Observable<Array<Album>> = this.activatedRoute.data.pipe(
-    map((data) => {
-      return data.albums;
-    })
-  );
-  params$: Observable<Params> = this.activatedRoute.params;
-  paramsSub: Subscription;
+  albums$: Observable<Array<Album>>;
   popupWindow: Window;
   selectedArtist: string;
   selectedAlbum: Album;
@@ -29,6 +23,12 @@ export class ArtistDetailComponent implements OnInit, OnDestroy {
     @Inject(WINDOW) private window: Window,
     private albumService: AlbumService
   ) {
+    this.albums$ = this.activatedRoute.params.pipe(
+      tap((params: Params) => {
+        this.selectedArtist = params.name;
+      }),
+      switchMap(() => this.albumService.getAlbumsByArtistName(this.selectedArtist))
+    );
     this.window.addEventListener('message', (messageEvent: MessageEvent) => {
       if (messageEvent.origin !== "https://covers.musichoarders.xyz") {
         return;
@@ -40,13 +40,11 @@ export class ArtistDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.paramsSub = this.params$.subscribe((params: Params) => {
-      this.selectedArtist = params.name;
-    });
+    //
   }
 
   ngOnDestroy() {
-    this.paramsSub.unsubscribe();
+    //
   }
 
   findAlbumCover(event: Event, album: Album) {

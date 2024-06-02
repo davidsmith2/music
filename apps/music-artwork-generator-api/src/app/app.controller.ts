@@ -6,13 +6,8 @@ import { AppService } from './app.service';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Get('artist')
-  getArtists() {
-    return this.appService.getArtists();
-  }
-
   @Get('album')
-  getAlbumsByArtistName(@Query('artistName') artistName: string) {
-    return this.appService.getAlbumsByArtistName(artistName);
+  getAlbums() {
+    return this.appService.getAlbums();
   }
 }
