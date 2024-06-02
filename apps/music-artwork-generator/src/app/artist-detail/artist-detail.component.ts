@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy, Inject, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { WINDOW } from '../window.constant';
@@ -13,10 +13,10 @@ import { AlbumService } from '../core/album/album.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ArtistDetailComponent implements OnInit, OnDestroy {
+  artist$: Observable<string>;
   albums$: Observable<Array<Album>>;
-  popupWindow: Window;
-  selectedArtist: string;
   selectedAlbum: Album;
+  popupWindow: Window;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -24,6 +24,11 @@ export class ArtistDetailComponent implements OnInit, OnDestroy {
     private albumService: AlbumService,
     private router: Router,
   ) {
+    this.artist$ = this.activatedRoute.params.pipe(
+      map((params: Params) => {
+        return params.name;
+      })
+    );
     this.albums$ = this.activatedRoute.data.pipe(
       map(data => data.albums),
     );

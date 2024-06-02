@@ -1,4 +1,4 @@
-<h1>{{selectedArtist}}</h1>
+<h1 *ngIf="artist$ | async as artist">{{artist}}</h1>
 <ng-container *ngIf="albums$ | async as albums">
   <ng-container *ngFor="let album of albums">
     <h2>{{ album.title }}</h2>
