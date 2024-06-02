@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy, Inject, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { WINDOW } from '../window.constant';
@@ -18,17 +18,16 @@ export class ArtistDetailComponent implements OnInit, OnDestroy {
       return data.albums;
     })
   );
-  queryParams$: Observable<Params> = this.activatedRoute.queryParams;
-  queryParamsSub: Subscription;
+  params$: Observable<Params> = this.activatedRoute.params;
+  paramsSub: Subscription;
   popupWindow: Window;
+  selectedArtist: string;
   selectedAlbum: Album;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     @Inject(WINDOW) private window: Window,
-    private albumService: AlbumService,
-    private router: Router,
-    private changeDetectorRef: ChangeDetectorRef
+    private albumService: AlbumService
   ) {
     this.window.addEventListener('message', (messageEvent: MessageEvent) => {
       if (messageEvent.origin !== "https://covers.musichoarders.xyz") {
@@ -41,11 +40,13 @@ export class ArtistDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.queryParamsSub = this.queryParams$.subscribe(() => this.changeDetectorRef.markForCheck());
+    this.paramsSub = this.params$.subscribe((params: Params) => {
+      this.selectedArtist = params.name;
+    });
   }
 
   ngOnDestroy() {
-    this.queryParamsSub.unsubscribe();
+    this.paramsSub.unsubscribe();
   }
 
   findAlbumCover(event: Event, album: Album) {
@@ -60,7 +61,6 @@ export class ArtistDetailComponent implements OnInit, OnDestroy {
 
   updateAlbumCover(cover: string) {
     this.albumService.updateAlbum({...this.selectedAlbum, cover});
-    this.router.navigateByUrl(`${this.router.url}?t=${Date.now()}`);
   }
 
 }
