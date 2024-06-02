@@ -1,12 +1,19 @@
 <ng-container *ngIf="artist$ | async as artist">
-  <h1>{{artist.name}}</h1>
-  <ng-container *ngFor="let album of artist.albums">
-    <h2>{{ album.title }}</h2>
-    <ng-container *ngIf="!album.cover; else albumCoverTemplate">
-      <button (click)="findAlbumCover($event, album)">Find album cover</button>
+  <h2>Albums: {{artist.name}}</h2>
+  <div>
+    <span *ngIf="albums$ | async as albums">{{albums.length}} total</span>,
+    <span *ngIf="completeAlbums$ | async as completeAlbums">{{completeAlbums.length}} with covers</span>,
+    <span *ngIf="incompleteAlbums$ | async as incompleteAlbums">{{incompleteAlbums.length}} without covers</span>
+  </div>
+  <div>
+    <ng-container *ngFor="let album of artist.albums">
+      <h3>{{ album.title }}</h3>
+      <ng-container *ngIf="!album.cover; else albumCoverTemplate">
+        <button (click)="findAlbumCover($event, album)">Find album cover</button>
+      </ng-container>
+      <ng-template #albumCoverTemplate>
+        <img [src]="album.cover" [width]="400" [height]="400" alt="Album artwork">
+      </ng-template>
     </ng-container>
-    <ng-template #albumCoverTemplate>
-      <img [src]="album.cover" [width]="400" [height]="400" alt="Album artwork">
-    </ng-template>
-  </ng-container>
+  </div>
 </ng-container>

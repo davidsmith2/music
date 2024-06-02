@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, Inject, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 import { WINDOW } from '../window.constant';
 import { Cover } from '../core/cover/cover.interface';
 import { Album } from '../core/album/album.interface';
@@ -14,7 +14,26 @@ import { Artist } from '../core/artist/artist.interface';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ArtistDetailComponent implements OnInit, OnDestroy {
-  artist$: Observable<Artist>;
+  artist$: Observable<Artist> = this.activatedRoute.data.pipe(
+    map(data => data.artist)
+  );
+
+  albums$: Observable<Array<Album>> = this.artist$.pipe(
+    map(artist => artist.albums)
+  );
+
+  completeAlbums$ = this.albums$.pipe(
+    map(albums => {
+      return albums.filter(album => !!album.cover);
+    })
+  );
+
+  incompleteAlbums$ = this.albums$.pipe(
+    map(albums => {
+      return albums.filter(album => !album.cover);
+    })
+  );
+
   selectedAlbum: Album;
   popupWindow: Window;
 
@@ -24,9 +43,6 @@ export class ArtistDetailComponent implements OnInit, OnDestroy {
     private artistService: ArtistService,
     private router: Router,
   ) {
-    this.artist$ = this.activatedRoute.data.pipe(
-      map(data => data.artist)
-    );
     this.window.addEventListener('message', (messageEvent: MessageEvent) => {
       if (messageEvent.origin !== "https://covers.musichoarders.xyz") {
         return;
