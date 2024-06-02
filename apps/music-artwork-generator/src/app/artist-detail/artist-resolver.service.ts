@@ -1,8 +1,6 @@
 import { Injectable } from "@angular/core";
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from "@angular/router";
-import { Album } from "../core/album/album.interface";
 import { Observable } from "rxjs";
-import { AlbumService } from "../core/album/album.service";
 import { Artist } from "../core/artist/artist.interface";
 import { ArtistService } from "../core/artist/artist.service";
 

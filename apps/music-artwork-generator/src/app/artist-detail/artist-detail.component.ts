@@ -1,11 +1,10 @@
 import { Component, ChangeDetectionStrategy, Inject, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { WINDOW } from '../window.constant';
 import { Cover } from '../core/cover/cover.interface';
 import { Album } from '../core/album/album.interface';
-import { AlbumService } from '../core/album/album.service';
 import { ArtistService } from '../core/artist/artist.service';
 import { Artist } from '../core/artist/artist.interface';
 
@@ -23,7 +22,6 @@ export class ArtistDetailComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     @Inject(WINDOW) private window: Window,
     private artistService: ArtistService,
-    private albumService: AlbumService,
     private router: Router,
   ) {
     this.artist$ = this.activatedRoute.data.pipe(
@@ -58,7 +56,7 @@ export class ArtistDetailComponent implements OnInit, OnDestroy {
   }
 
   updateAlbumCover(cover: string) {
-    this.albumService.updateAlbum({...this.selectedAlbum, cover});
+    this.artistService.updateAlbum({...this.selectedAlbum, cover});
     this.router.navigate([], {
       relativeTo: this.activatedRoute,
       queryParams: {
