@@ -1,6 +1,6 @@
 <ng-container *ngIf="library$ | async as library">
-    <div style="width: 100%;">
-        <nav style="float: left; width: 10%;">
+    <div class="container">
+        <nav>
             <h2>Library</h2>
             <ul class="list-reset">
                 <li class="mb-2">
@@ -16,7 +16,7 @@
                 -->
             </ul>
         </nav>
-        <main style="float: left; width: 90%; ">
+        <main>
             <router-outlet></router-outlet>
         </main>
     </div>

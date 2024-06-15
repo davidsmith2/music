@@ -1,6 +1,6 @@
 <ng-container *ngIf="albums$ | async as albums">
-    <div *ngFor="let album of albums">
-        <div style="float: left; width: 20%;">
+    <div class="container">
+        <div *ngFor="let album of albums">
             <div>
                 <img [src]="album.artwork" alt="Album Artwork">
             </div>
@@ -8,4 +8,4 @@
             <div>{{ album.artist }}</div>
         </div>
     </div>
-</ng-container>>
+</ng-container>
