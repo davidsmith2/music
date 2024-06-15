@@ -15,6 +15,10 @@ export class AlbumService {
     @Inject(WINDOW) private window: Window
   ) {}
 
+  getAlbums(): Observable<Array<Album>> {
+    return this.httpClient.get<Array<Album>>(`${this.apiRoot}/album`);
+  }
+
   updateAlbum(update: Album): void {
     const artists: Array<Artist> = JSON.parse(this.window.localStorage.getItem(this.storageKey)).slice(0);
     const artist: Artist = artists.find((artist) => artist.name === update.artist);

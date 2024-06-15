@@ -1,4 +1,8 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Album } from '@davidsmith/api-interfaces';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'davidsmith-album-master',
@@ -6,11 +10,13 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
   styleUrls: ['./album-master.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AlbumMasterComponent implements OnInit {
+export class AlbumMasterComponent {
+  albums$: Observable<Array<Album>>;
 
-  constructor() { }
-
-  ngOnInit(): void {
+  constructor(private activatedRoute: ActivatedRoute) {
+    this.albums$ = this.activatedRoute.data.pipe(
+      map(data => data.albums)
+    );
   }
 
 }

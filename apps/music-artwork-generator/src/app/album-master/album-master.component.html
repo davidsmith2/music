@@ -1,1 +1,11 @@
-<p>album-master works!</p>
+<ng-container *ngIf="albums$ | async as albums">
+    <div *ngFor="let album of albums">
+        <div style="float: left; width: 20%;">
+            <div>
+                <img [src]="album.artwork" alt="Album Artwork">
+            </div>
+            <div><strong>{{ album.title }}</strong></div>
+            <div>{{ album.artist }}</div>
+        </div>
+    </div>
+</ng-container>>

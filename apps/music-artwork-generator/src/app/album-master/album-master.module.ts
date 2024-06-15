@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AlbumMasterComponent } from './album-master.component';
+import { RouterModule } from '@angular/router';
+import { AlbumsResolverService } from './albums-resolver.service';
 
 
 
@@ -9,7 +11,19 @@ import { AlbumMasterComponent } from './album-master.component';
     AlbumMasterComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    RouterModule.forChild([
+      {
+        path: '',
+        component: AlbumMasterComponent,
+        resolve: {
+          albums: AlbumsResolverService
+        }
+      }
+    ])
+  ],
+  providers: [
+    AlbumsResolverService
   ],
   exports: [
     AlbumMasterComponent
