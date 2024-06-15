@@ -1,7 +1,23 @@
-<h1>Music Artwork Generator</h1>
 <ng-container *ngIf="library$ | async as library">
-    <p>Library loaded with 
-        <a routerLink="/artists">{{library.artists.length}} artists</a>
-    </p>
+    <div style="width: 100%;">
+        <nav style="float: left; width: 10%;">
+            <h2>Library</h2>
+            <ul class="list-reset">
+                <li class="mb-2">
+                    <a routerLink="/artists">Artists</a>
+                </li>
+                <!--
+                <li>
+                    <a routerLink="/albums">Albums</a>
+                </li>
+                <li>
+                    <a routerLink="/songs">Songs</a>
+                </li>
+                -->
+            </ul>
+        </nav>
+        <main style="float: left; width: 90%; ">
+            <router-outlet></router-outlet>
+        </main>
+    </div>
 </ng-container>
-<router-outlet></router-outlet>
