@@ -1,11 +1,13 @@
 <ng-container *ngIf="albums$ | async as albums">
     <div class="container">
-        <div *ngFor="let album of albums">
+        <div *ngFor="let album of albums" class="child-container">
             <div>
-                <img [src]="album.artwork" alt="Album Artwork">
+                <img [src]="album.cover" [width]="175" [height]="175" alt="Album artwork">
             </div>
-            <div><strong>{{ album.title }}</strong></div>
-            <div>{{ album.artist }}</div>
+            <div>
+                <div><strong>{{ album.title }}</strong></div>
+                <div>{{ album.artist }}</div>
+            </div>
         </div>
     </div>
 </ng-container>
