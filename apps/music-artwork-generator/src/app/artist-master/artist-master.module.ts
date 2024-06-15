@@ -17,6 +17,11 @@ import { ArtistsResolverService } from './artists-resolver.service';
         runGuardsAndResolvers: 'paramsOrQueryParamsChange',
         children: [
           {
+            path: '',
+            redirectTo: 'All Artists',
+            pathMatch: 'full'
+          },
+          {
             path: ':name',
             loadChildren: () => import('../artist-detail/artist-detail.module').then(m => m.ArtistDetailModule)
           }

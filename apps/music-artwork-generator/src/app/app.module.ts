@@ -12,6 +12,11 @@ import { WINDOW } from './window.constant';
     HttpClientModule,
     RouterModule.forRoot([
       {
+        path: '',
+        redirectTo: 'artists',
+        pathMatch: 'full',
+      },
+      {
         path: 'artists',
         loadChildren: () => import('./artist-master/artist-master.module').then(m => m.ArtistsMasterModule)
       }
