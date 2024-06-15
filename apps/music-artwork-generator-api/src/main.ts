@@ -7,9 +7,13 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app/app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { Logger } from '@nestjs/common';
+import { json } from 'body-parser';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  // Increase the limit for JSON bodies
+  app.use(json({ limit: '50mb' }));
 
   // Swagger configuration
   const config = new DocumentBuilder()
