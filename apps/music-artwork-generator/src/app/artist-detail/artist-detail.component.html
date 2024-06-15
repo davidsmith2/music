@@ -1,6 +1,6 @@
-<ng-container *ngIf="artist$ | async as artist">
-  <h1>{{artist.name}}</h1>
-  <div>
+<ng-container *ngIf="artists$ | async as artists">
+  <ng-container *ngFor="let artist of artists">
+    <h2>{{artist.name}}</h2>
     <ng-container *ngFor="let album of artist.albums">
       <div style="float: left; width: 20%;">
         test
@@ -15,6 +15,7 @@
           <button (click)="saveAlbumCover($event, album)">Save album cover</button>
         </ng-template>
       </div>
+      <div style="clear: both;"></div>
     </ng-container>
-  </div>
+  </ng-container>
 </ng-container>

@@ -14,12 +14,16 @@ import { AlbumService } from '../core/album/album.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ArtistDetailComponent implements OnInit, OnDestroy {
-  artist$: Observable<Artist> = this.activatedRoute.data.pipe(
-    map(data => data.artist)
+  artists$: Observable<Array<Artist>> = this.activatedRoute.data.pipe(
+    map(data => data.artists)
   );
 
-  albums$: Observable<Array<Album>> = this.artist$.pipe(
-    map(artist => artist.albums)
+  albums$: Observable<Array<Album>> = this.artists$.pipe(
+    map(artists => {
+      return artists.reduce((acc: Array<Album>, artist: Artist) => {
+        return acc;
+      }, []);
+    })
   );
 
   completeAlbums$ = this.albums$.pipe(

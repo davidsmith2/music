@@ -3,11 +3,19 @@ import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from "@angular/r
 import { Observable } from "rxjs";
 import { Artist } from "@davidsmith/api-interfaces";
 import { ArtistService } from "../core/artist/artist.service";
+import { map } from "rxjs/operators";
 
 @Injectable()
-export class ArtistResolverService implements Resolve<Artist>{
+export class ArtistResolverService implements Resolve<Array<Artist>>{
   constructor(private artistService: ArtistService) {}
-  resolve(route: ActivatedRouteSnapshot, _state: RouterStateSnapshot): Observable<Artist> {
-    return this.artistService.getArtistByName(route.paramMap.get('name'));
+  resolve(route: ActivatedRouteSnapshot, _state: RouterStateSnapshot): Observable<Array<Artist>> {
+    const id: string = route.paramMap.get('name');
+    if (id === 'All Artists') {
+      return this.artistService.getArtists();
+    } else {
+      return this.artistService.getArtistByName(id).pipe(
+        map((artist: Artist) => [artist])
+      );
+    }
   }
 }
