@@ -4,6 +4,7 @@ import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { WINDOW } from './window.constant';
+import { AlbumMasterModule } from './album-master/album-master.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,7 +21,8 @@ import { WINDOW } from './window.constant';
         path: 'artists',
         loadChildren: () => import('./artist-master/artist-master.module').then(m => m.ArtistsMasterModule)
       }
-    ])
+    ]),
+    AlbumMasterModule
   ],
   providers: [
     {provide: WINDOW, useValue: window}
