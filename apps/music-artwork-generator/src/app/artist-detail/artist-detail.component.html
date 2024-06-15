@@ -13,6 +13,10 @@
       </ng-container>
       <ng-template #albumCoverTemplate>
         <img [src]="album.cover" [width]="400" [height]="400" alt="Album artwork">
+        <!--
+        <button (click)="downloadAlbumCover($event)">Download album cover</button>
+        -->
+        <button (click)="saveAlbumCover($event, album)">Save album cover</button>
       </ng-template>
     </ng-container>
   </div>

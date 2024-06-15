@@ -1,12 +1,12 @@
 import { Component, ChangeDetectionStrategy, Inject, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { WINDOW } from '../window.constant';
 import { Cover } from '../core/cover/cover.interface';
-import { Album } from '../core/album/album.interface';
-import { ArtistService } from '../core/artist/artist.service';
-import { Artist } from '../core/artist/artist.interface';
+import { Album } from '@davidsmith/api-interfaces';
+import { Artist } from '@davidsmith/api-interfaces';
+import { AlbumService } from '../core/album/album.service';
 
 @Component({
   templateUrl: './artist-detail.component.html',
@@ -40,7 +40,7 @@ export class ArtistDetailComponent implements OnInit, OnDestroy {
   constructor(
     private activatedRoute: ActivatedRoute,
     @Inject(WINDOW) private window: Window,
-    private artistService: ArtistService,
+    private albumService: AlbumService,
     private router: Router,
   ) {
     this.window.addEventListener('message', (messageEvent: MessageEvent) => {
@@ -72,7 +72,7 @@ export class ArtistDetailComponent implements OnInit, OnDestroy {
   }
 
   updateAlbumCover(cover: string) {
-    this.artistService.updateAlbum({...this.selectedAlbum, cover});
+    this.albumService.updateAlbum({...this.selectedAlbum, cover});
     this.router.navigate([], {
       relativeTo: this.activatedRoute,
       queryParams: {
@@ -80,6 +80,13 @@ export class ArtistDetailComponent implements OnInit, OnDestroy {
       },
       queryParamsHandling: 'merge'
     });
+  }
+
+  saveAlbumCover(event: Event, album: Album) {
+    event.preventDefault();
+    this.albumService.saveAlbumCover(album).pipe(
+      take(1)
+    ).subscribe();
   }
 
 }

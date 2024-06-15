@@ -2,7 +2,7 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators';
-import { Artist } from '../core/artist/artist.interface';
+import { Artist } from '@davidsmith/api-interfaces';
 
 @Component({
   templateUrl: './artist-master.component.html',

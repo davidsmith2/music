@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from "@angular/router";
 import { Observable } from "rxjs";
-import { Artist } from "../core/artist/artist.interface";
+import { Artist } from "@davidsmith/api-interfaces";
 import { ArtistService } from "../core/artist/artist.service";
 
 @Injectable()

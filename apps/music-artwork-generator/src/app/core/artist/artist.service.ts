@@ -3,13 +3,12 @@ import { Observable, iif, of } from "rxjs";
 import { Inject, Injectable } from "@angular/core";
 import { map, tap } from "rxjs/operators";
 import { WINDOW } from "../../window.constant";
-import { Artist } from "./artist.interface";
-import { Album } from "../album/album.interface";
+import { Artist } from "@davidsmith/api-interfaces";
 
 @Injectable({ providedIn: 'root' })
 export class ArtistService {
   private readonly storageKey: string = 'artists';
-  private readonly apiEndpoint: string = '/api/artist';
+  private readonly apiRoot: string = '/api';
 
   constructor(
     private httpClient: HttpClient,
@@ -20,7 +19,7 @@ export class ArtistService {
     return iif(
       () => this.window.localStorage.getItem(this.storageKey) !== null,
       of(JSON.parse(this.window.localStorage.getItem(this.storageKey))),
-      this.httpClient.get<Array<Artist>>(this.apiEndpoint).pipe(
+      this.httpClient.get<Array<Artist>>(`${this.apiRoot}/artist`).pipe(
         tap((artists: Array<Artist>) => {
           this.window.localStorage.setItem(this.storageKey, JSON.stringify(artists));
         })
@@ -34,14 +33,6 @@ export class ArtistService {
         return artists.find(artist => artist.name === name);
       })
     );
-  }
-
-  updateAlbum(update: Album): void {
-    const artists: Array<Artist> = JSON.parse(this.window.localStorage.getItem(this.storageKey)).slice(0);
-    const artist: Artist = artists.find((artist) => artist.name === update.artist);
-    const albumIndex: number = artist.albums.findIndex(album => album.title === update.title);
-    artist.albums.splice(albumIndex, 1, update);
-    this.window.localStorage.setItem(this.storageKey, JSON.stringify(artists));
   }
 
 }
