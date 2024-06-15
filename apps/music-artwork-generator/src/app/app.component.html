@@ -1,2 +1,7 @@
 <h1>Music Artwork Generator</h1>
+<ng-container *ngIf="library$ | async as library">
+    <p>Library loaded with 
+        <a routerLink="/artists">{{library.artists.length}} artists</a>
+    </p>
+</ng-container>
 <router-outlet></router-outlet>
