@@ -1,36 +1,5 @@
 {
   "version": 1,
-  "cli": {
-    "defaultCollection": "@nrwl/angular"
-  },
-  "defaultProject": "music-artwork-generator",
-  "schematics": {
-    "@nrwl/angular": {
-      "application": {
-        "linter": "eslint"
-      },
-      "library": {
-        "linter": "eslint"
-      },
-      "storybook-configuration": {
-        "linter": "eslint"
-      }
-    },
-    "@nrwl/angular:application": {
-      "style": "scss",
-      "linter": "eslint",
-      "unitTestRunner": "jest",
-      "e2eTestRunner": "cypress"
-    },
-    "@nrwl/angular:library": {
-      "style": "scss",
-      "linter": "eslint",
-      "unitTestRunner": "jest"
-    },
-    "@nrwl/angular:component": {
-      "style": "scss"
-    }
-  },
   "projects": {
     "api-interfaces": {
       "projectType": "library",
@@ -46,21 +15,18 @@
               "libs/api-interfaces/src/**/*.html"
             ]
           },
-          "outputs": [
-            "{options.outputFile}"
-          ]
+          "outputs": ["{options.outputFile}"]
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/api-interfaces"
-          ],
+          "outputs": ["coverage/libs/api-interfaces"],
           "options": {
             "jestConfig": "libs/api-interfaces/jest.config.js",
             "passWithNoTests": true
           }
         }
-      }
+      },
+      "tags": []
     },
     "music-artwork-generator": {
       "projectType": "application",
@@ -80,9 +46,7 @@
               "apps/music-artwork-generator/src/favicon.ico",
               "apps/music-artwork-generator/src/assets"
             ],
-            "styles": [
-              "apps/music-artwork-generator/src/styles.scss"
-            ],
+            "styles": ["apps/music-artwork-generator/src/styles.scss"],
             "scripts": [],
             "vendorChunk": true,
             "extractLicenses": false,
@@ -152,21 +116,18 @@
               "apps/music-artwork-generator/src/**/*.html"
             ]
           },
-          "outputs": [
-            "{options.outputFile}"
-          ]
+          "outputs": ["{options.outputFile}"]
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/apps/music-artwork-generator"
-          ],
+          "outputs": ["coverage/apps/music-artwork-generator"],
           "options": {
             "jestConfig": "apps/music-artwork-generator/jest.config.js",
             "passWithNoTests": true
           }
         }
-      }
+      },
+      "tags": []
     },
     "music-artwork-generator-api": {
       "root": "apps/music-artwork-generator-api",
@@ -174,17 +135,13 @@
       "projectType": "application",
       "architect": {
         "build": {
-          "builder": "@nrwl/node:build",
-          "outputs": [
-            "{options.outputPath}"
-          ],
+          "builder": "@nrwl/node:webpack",
+          "outputs": ["{options.outputPath}"],
           "options": {
             "outputPath": "dist/apps/music-artwork-generator-api",
             "main": "apps/music-artwork-generator-api/src/main.ts",
             "tsConfig": "apps/music-artwork-generator-api/tsconfig.app.json",
-            "assets": [
-              "apps/music-artwork-generator-api/src/assets"
-            ]
+            "assets": ["apps/music-artwork-generator-api/src/assets"]
           },
           "configurations": {
             "production": {
@@ -201,7 +158,7 @@
           }
         },
         "serve": {
-          "builder": "@nrwl/node:execute",
+          "builder": "@nrwl/node:node",
           "options": {
             "buildTarget": "music-artwork-generator-api:build"
           }
@@ -209,25 +166,20 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "apps/music-artwork-generator-api/**/*.ts"
-            ]
+            "lintFilePatterns": ["apps/music-artwork-generator-api/**/*.ts"]
           },
-          "outputs": [
-            "{options.outputFile}"
-          ]
+          "outputs": ["{options.outputFile}"]
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/apps/music-artwork-generator-api"
-          ],
+          "outputs": ["coverage/apps/music-artwork-generator-api"],
           "options": {
             "jestConfig": "apps/music-artwork-generator-api/jest.config.js",
             "passWithNoTests": true
           }
         }
-      }
+      },
+      "tags": []
     },
     "music-artwork-generator-e2e": {
       "root": "apps/music-artwork-generator-e2e",
@@ -254,11 +206,11 @@
               "apps/music-artwork-generator-e2e/**/*.{js,ts}"
             ]
           },
-          "outputs": [
-            "{options.outputFile}"
-          ]
+          "outputs": ["{options.outputFile}"]
         }
-      }
+      },
+      "tags": [],
+      "implicitDependencies": ["music-artwork-generator"]
     }
   }
 }
