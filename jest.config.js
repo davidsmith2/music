@@ -1,7 +1,3 @@
-module.exports = {
-  projects: [
-    '<rootDir>/apps/music-artwork-generator',
-    '<rootDir>/apps/music-artwork-generator-api',
-    '<rootDir>/libs/api-interfaces',
-  ],
-};
+const { getJestProjects } = require('@nrwl/jest');
+
+module.exports = { projects: getJestProjects() };
