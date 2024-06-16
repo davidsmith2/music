@@ -36,18 +36,14 @@
       }
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
-      "options": {
-        "lintFilePatterns": ["apps/music-artwork-generator-api/**/*.ts"]
-      },
+      "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"]
     },
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/apps/music-artwork-generator-api"],
       "options": {
-        "jestConfig": "apps/music-artwork-generator-api/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "apps/music-artwork-generator-api/jest.config.ts"
       }
     }
   },

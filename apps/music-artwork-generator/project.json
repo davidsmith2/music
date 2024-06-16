@@ -61,40 +61,33 @@
     "serve": {
       "executor": "@angular-devkit/build-angular:dev-server",
       "options": {
-        "browserTarget": "music-artwork-generator:build",
-        "proxyConfig": "apps/music-artwork-generator/proxy.conf.json"
+        "proxyConfig": "apps/music-artwork-generator/proxy.conf.json",
+        "buildTarget": "music-artwork-generator:build"
       },
       "configurations": {
         "production": {
-          "browserTarget": "music-artwork-generator:build:production"
+          "buildTarget": "music-artwork-generator:build:production"
         },
         "development": {
-          "browserTarget": "music-artwork-generator:build:development"
+          "buildTarget": "music-artwork-generator:build:development"
         }
       }
     },
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {
-        "browserTarget": "music-artwork-generator:build"
+        "buildTarget": "music-artwork-generator:build"
       }
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
-      "options": {
-        "lintFilePatterns": [
-          "apps/music-artwork-generator/src/**/*.ts",
-          "apps/music-artwork-generator/src/**/*.html"
-        ]
-      },
+      "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"]
     },
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/apps/music-artwork-generator"],
       "options": {
-        "jestConfig": "apps/music-artwork-generator/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "apps/music-artwork-generator/jest.config.ts"
       }
     }
   },
