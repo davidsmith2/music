@@ -6,17 +6,21 @@
       </div>
       <div *ngFor="let album of artist.albums" class="child-container">
         <div>
-          test
-        </div>
-        <div>
-          <h3>{{ album.title }}</h3>
           <ng-container *ngIf="!album.cover; else albumCoverTemplate">
             <button (click)="findAlbumCover($event, album)">Find album cover</button>
           </ng-container>
           <ng-template #albumCoverTemplate>
-            <img [src]="album.cover" [width]="400" [height]="400" alt="Album artwork">
+            <img [src]="album.cover" [width]="175" [height]="175" alt="Album artwork">
             <button (click)="saveAlbumCover($event, album)">Save album cover</button>
           </ng-template>
+        </div>
+        <div>
+          <h3>{{ album.title }}</h3>
+          <ul>
+            <li *ngFor="let track of album.tracks">
+              {{ track.title }}
+            </li>
+          </ul>
         </div>
       </div>
     </ng-container>
