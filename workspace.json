@@ -1,0 +1,10 @@
+{
+    "version": 2,
+    "projects": {
+      "music-artwork-generator": "apps/music-artwork-generator",
+      "music-artwork-generator-api": "apps/music-artwork-generator-api",
+      "music-artwork-generator-e2e": "apps/music-artwork-generator-e2e",
+      "api-interfaces": "libs/api-interfaces"
+    },
+    "$schema": "./node_modules/nx/schemas/workspace-schema.json"
+  }
