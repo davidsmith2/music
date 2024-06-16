@@ -13,7 +13,8 @@
         "tsConfig": "apps/music-artwork-generator-api/tsconfig.app.json",
         "assets": ["apps/music-artwork-generator-api/src/assets"],
         "target": "node",
-        "compiler": "tsc"
+        "compiler": "tsc",
+        "webpackConfig": "apps/music-artwork-generator-api/webpack.config.js"
       },
       "configurations": {
         "production": {
