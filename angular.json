@@ -21,7 +21,7 @@
           "builder": "@nrwl/jest:jest",
           "outputs": ["coverage/libs/api-interfaces"],
           "options": {
-            "jestConfig": "libs/api-interfaces/jest.config.js",
+            "jestConfig": "libs/api-interfaces/jest.config.ts",
             "passWithNoTests": true
           }
         }
@@ -122,7 +122,7 @@
           "builder": "@nrwl/jest:jest",
           "outputs": ["coverage/apps/music-artwork-generator"],
           "options": {
-            "jestConfig": "apps/music-artwork-generator/jest.config.js",
+            "jestConfig": "apps/music-artwork-generator/jest.config.ts",
             "passWithNoTests": true
           }
         }
@@ -174,7 +174,7 @@
           "builder": "@nrwl/jest:jest",
           "outputs": ["coverage/apps/music-artwork-generator-api"],
           "options": {
-            "jestConfig": "apps/music-artwork-generator-api/jest.config.js",
+            "jestConfig": "apps/music-artwork-generator-api/jest.config.ts",
             "passWithNoTests": true
           }
         }
