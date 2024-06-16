@@ -1,0 +1,30 @@
+{
+  "name": "music-artwork-generator-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/music-artwork-generator-e2e/src",
+  "projectType": "application",
+  "targets": {
+    "e2e": {
+      "executor": "@nrwl/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/music-artwork-generator-e2e/cypress.json",
+        "tsConfig": "apps/music-artwork-generator-e2e/tsconfig.e2e.json",
+        "devServerTarget": "music-artwork-generator:serve"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "music-artwork-generator:serve:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["apps/music-artwork-generator-e2e/**/*.{js,ts}"]
+      },
+      "outputs": ["{options.outputFile}"]
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["music-artwork-generator"]
+}

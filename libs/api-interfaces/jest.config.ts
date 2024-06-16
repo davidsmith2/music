@@ -1,14 +1,9 @@
-module.exports = {
+/* eslint-disable */
+export default {
   displayName: 'api-interfaces',
 
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
-  globals: {
-    'ts-jest': {
-      stringifyContentPathRegex: '\\.(html|svg)$',
-
-      tsconfig: '<rootDir>/tsconfig.spec.json',
-    },
-  },
+  globals: {},
   coverageDirectory: '../../coverage/libs/api-interfaces',
   snapshotSerializers: [
     'jest-preset-angular/build/serializers/no-ng-attributes',
@@ -16,8 +11,15 @@ module.exports = {
     'jest-preset-angular/build/serializers/html-comment',
   ],
   transform: {
-    '^.+.(ts|mjs|js|html)$': 'jest-preset-angular',
+    '^.+.(ts|mjs|js|html)$': [
+      'jest-preset-angular',
+      {
+        stringifyContentPathRegex: '\\.(html|svg)$',
+
+        tsconfig: '<rootDir>/tsconfig.spec.json',
+      },
+    ],
   },
   transformIgnorePatterns: ['node_modules/(?!.*.mjs$)'],
-  preset: '../../jest.preset.ts',
+  preset: '../../jest.preset.js',
 };
