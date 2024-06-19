@@ -32,9 +32,9 @@ export class LibraryService {
   }
 
   private decorateLibraryWithArtists(source: Array<Artist>): Partial<Library> {
-    const artists: Array<Artist> = source.map(artist => {
-      artist.id = this.hash(artist.name);
-      return { ...artist, ...this.decorateArtistWithAlbums(artist.albums) };
+    const artists: Array<Artist> = source.map((artist, index) => {
+      artist.id = this.hash(artist.name, index);
+      return { ...artist, ...this.decorateArtistWithAlbums(artist.albums, index) };
     });
     const artistIds: Array<string> = artists.map(artist => {
       return artist.id;
@@ -42,9 +42,10 @@ export class LibraryService {
     return { artistIds, artists };
   }
 
-  private decorateArtistWithAlbums(source: Array<Album>) {
-    const albums: Array<Album> = source.map(album => {
-      album.id = this.hash(album.title);
+  private decorateArtistWithAlbums(source: Array<Album>, hashSeedPrefix: number) {
+    const albums: Array<Album> = source.map((album, index) => {
+      const hashSeed: number = Number(`${hashSeedPrefix}${index}`);
+      album.id = this.hash(album.title, hashSeed);
       return album;
     });
     const albumIds: Array<string> = albums.map(album => {
@@ -53,10 +54,13 @@ export class LibraryService {
     return { albumIds, albums };
   }
 
-  private hash(input: string) {
-    const seed = 0xABCD;
-    const hash = XXH.h32(input, seed).toString(16);
+  private hash(input: string, seed: number) {
+    const hash = XXH.h32(input, this.padNumberToSixDigits(seed)).toString(16);
     return hash;
+  }
+
+  private padNumberToSixDigits(num: number) {
+    return num.toString().padStart(6, '0');
   }
 
 }
