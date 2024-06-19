@@ -14,7 +14,6 @@ export class AppComponent {
   library$: Observable<Library>;
 
   constructor(private libraryService: LibraryService) {
-    console.log(this.libraryService)
     this.library$ = this.libraryService.getByKey('1').pipe(take(1));
   }
 

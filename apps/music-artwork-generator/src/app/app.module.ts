@@ -12,7 +12,6 @@ import { EffectsModule } from '@ngrx/effects';
 @Injectable()
 class CoreHttpUrlGenerator extends DefaultHttpUrlGenerator {
   collectionResource(entityName: string, root: string): string {
-    console.log(entityName, root)
     if (entityName === 'Library') {
       return `${root}/library`;
     }
