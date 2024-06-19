@@ -4,6 +4,9 @@ import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { WINDOW } from './window.constant';
+import { EntityDataModule } from '@ngrx/data';
+import { StoreModule } from '@ngrx/store';
+import { entityConfig } from './entity-metadata';
 
 @NgModule({
   declarations: [AppComponent],
@@ -24,7 +27,9 @@ import { WINDOW } from './window.constant';
         path: 'albums',
         loadChildren: () => import('./album-master/album-master.module').then(m => m.AlbumMasterModule)
       }
-    ])
+    ]),
+    StoreModule.forRoot({}),
+    EntityDataModule.forRoot(entityConfig)
   ],
   providers: [
     {provide: WINDOW, useValue: window}
