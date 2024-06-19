@@ -8,6 +8,7 @@ import { DefaultHttpUrlGenerator, EntityDataModule, HttpUrlGenerator, Pluralizer
 import { StoreModule } from '@ngrx/store';
 import { entityConfig } from './entity-metadata';
 import { EffectsModule } from '@ngrx/effects';
+import { metaReducers } from './meta-reducers.constant';
 
 @Injectable()
 class CoreHttpUrlGenerator extends DefaultHttpUrlGenerator {
@@ -39,7 +40,7 @@ class CoreHttpUrlGenerator extends DefaultHttpUrlGenerator {
         loadChildren: () => import('./album-master/album-master.module').then(m => m.AlbumMasterModule)
       }
     ]),
-    StoreModule.forRoot({}),
+    StoreModule.forRoot({}, { metaReducers }),
     EffectsModule.forRoot([]),
     EntityDataModule.forRoot(entityConfig)
   ],
