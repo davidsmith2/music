@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { LibraryService } from './library.service';
 import { Library } from '@davidsmith/api-interfaces';
 
@@ -11,9 +11,9 @@ export class LibraryController {
     return this.libraryService.saveLibrary(library);
   }
 
-  @Get()
-  getLibrary() {
-    return this.libraryService.getLibrary();
+  @Get(':id')
+  getLibrary(@Param('id') id: number) {
+    return this.libraryService.getLibrary(id);
   }
 
 }

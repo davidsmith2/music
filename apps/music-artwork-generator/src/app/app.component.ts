@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { LibraryService } from './core/library/library.service';
-import { take } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Library } from '@davidsmith/api-interfaces';
 
@@ -14,7 +14,8 @@ export class AppComponent {
   library$: Observable<Library>;
 
   constructor(private libraryService: LibraryService) {
-    this.library$ = this.libraryService.getLibrary().pipe(take(1));
+    console.log(this.libraryService)
+    this.library$ = this.libraryService.getByKey('1').pipe(take(1));
   }
 
 }

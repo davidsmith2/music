@@ -1,12 +1,24 @@
-import { NgModule } from '@angular/core';
+import { Injectable, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { WINDOW } from './window.constant';
-import { EntityDataModule } from '@ngrx/data';
+import { DefaultHttpUrlGenerator, EntityDataModule, HttpUrlGenerator, Pluralizer } from '@ngrx/data';
 import { StoreModule } from '@ngrx/store';
 import { entityConfig } from './entity-metadata';
+import { EffectsModule } from '@ngrx/effects';
+
+@Injectable()
+class CoreHttpUrlGenerator extends DefaultHttpUrlGenerator {
+  collectionResource(entityName: string, root: string): string {
+    console.log(entityName, root)
+    if (entityName === 'Library') {
+      return `${root}/library`;
+    }
+    return null;
+  }
+}
 
 @NgModule({
   declarations: [AppComponent],
@@ -29,10 +41,12 @@ import { entityConfig } from './entity-metadata';
       }
     ]),
     StoreModule.forRoot({}),
+    EffectsModule.forRoot([]),
     EntityDataModule.forRoot(entityConfig)
   ],
   providers: [
-    {provide: WINDOW, useValue: window}
+    { provide: WINDOW, useValue: window },
+    { provide: HttpUrlGenerator, useClass: CoreHttpUrlGenerator },
   ],
   bootstrap: [AppComponent],
 })
