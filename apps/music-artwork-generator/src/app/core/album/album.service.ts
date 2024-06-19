@@ -1,22 +1,24 @@
-import { HttpClient } from "@angular/common/http";
-import { Observable, iif, of } from "rxjs";
-import { Inject, Injectable } from "@angular/core";
-import { WINDOW } from "../../window.constant";
+import { Observable } from "rxjs";
+import { Injectable } from "@angular/core";
 import { Album } from "@davidsmith/api-interfaces";
-import { Artist } from "@davidsmith/api-interfaces";
+import { EntityCollectionServiceBase, EntityCollectionServiceElementsFactory } from "@ngrx/data";
 
 @Injectable({ providedIn: 'root' })
-export class AlbumService {
+export class AlbumService extends EntityCollectionServiceBase<Album> {
   private readonly storageKey: string = 'artists';
   private readonly apiRoot: string = '/api';
 
-  constructor(
-    private httpClient: HttpClient,
-    @Inject(WINDOW) private window: Window
-  ) {}
+  constructor(serviceElementsFactory: EntityCollectionServiceElementsFactory) {
+    super('Album', serviceElementsFactory);
+  }
 
   getAlbums(): Observable<Array<Album>> {
-    return this.httpClient.get<Array<Album>>(`${this.apiRoot}/album`);
+    return this.entities$;
+  }
+
+  /*
+  saveAlbumCover(album: Album): Observable<Album> {
+    return this.httpClient.put<Album>(`${this.apiRoot}/album`, album);
   }
 
   updateAlbum(update: Album): void {
@@ -26,9 +28,6 @@ export class AlbumService {
     artist.albums.splice(albumIndex, 1, update);
     this.window.localStorage.setItem(this.storageKey, JSON.stringify(artists));
   }
-
-  saveAlbumCover(album: Album): Observable<Album> {
-    return this.httpClient.put<Album>(`${this.apiRoot}/album`, album);
-  }
+  */
 
 }

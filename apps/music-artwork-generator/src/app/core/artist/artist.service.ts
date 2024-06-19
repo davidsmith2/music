@@ -1,38 +1,24 @@
-import { HttpClient } from "@angular/common/http";
-import { Observable, iif, of } from "rxjs";
-import { Inject, Injectable } from "@angular/core";
-import { map, tap } from "rxjs/operators";
-import { WINDOW } from "../../window.constant";
+import { Injectable } from "@angular/core";
 import { Artist } from "@davidsmith/api-interfaces";
+import { EntityCollectionServiceBase, EntityCollectionServiceElementsFactory } from "@ngrx/data";
+import { Dictionary } from "@ngrx/entity";
+import { Observable, map } from "rxjs";
 
 @Injectable({ providedIn: 'root' })
-export class ArtistService {
-  private readonly storageKey: string = 'artists';
-  private readonly apiRoot: string = '/api';
-
-  constructor(
-    private httpClient: HttpClient,
-    @Inject(WINDOW) private window: Window
-  ) {}
-
-  getArtists(): Observable<Array<Artist>> {
-    return iif(
-      () => this.window.localStorage.getItem(this.storageKey) !== null,
-      of(JSON.parse(this.window.localStorage.getItem(this.storageKey))),
-      this.httpClient.get<Array<Artist>>(`${this.apiRoot}/artist`).pipe(
-        tap((artists: Array<Artist>) => {
-          this.window.localStorage.setItem(this.storageKey, JSON.stringify(artists));
-        })
-      )
-    );
+export class ArtistService extends EntityCollectionServiceBase<Artist> {
+  constructor(serviceElementsFactory: EntityCollectionServiceElementsFactory) {
+    super('Artist', serviceElementsFactory);
   }
 
-  getArtistByName(name: string): Observable<Artist> {
-    return of(JSON.parse(this.window.localStorage.getItem(this.storageKey))).pipe(
-      map((artists: Array<Artist>) => {
-        return artists.find(artist => artist.name === name);
+  getArtists(): Observable<Array<Artist>> {
+    return this.entities$;
+  }
+
+  getArtistByName(artistName: string): Observable<Artist> {
+    return this.entityMap$.pipe(
+      map((entityMap: Dictionary<Artist>) => {
+        return entityMap[artistName];
       })
     );
   }
-
 }

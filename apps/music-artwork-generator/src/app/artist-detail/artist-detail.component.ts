@@ -1,12 +1,16 @@
 import { Component, ChangeDetectionStrategy, Inject, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map, take } from 'rxjs/operators';
+import { map, switchMap, take } from 'rxjs/operators';
 import { WINDOW } from '../window.constant';
 import { Cover } from '../core/cover/cover.interface';
 import { Album } from '@davidsmith/api-interfaces';
 import { Artist } from '@davidsmith/api-interfaces';
 import { AlbumService } from '../core/album/album.service';
+import { ArtistService } from '../core/artist/artist.service';
+import { toFactorySelector } from 'ngrx-entity-relationship';
+import { ArtistRelationshipService } from '../core/artist/artist-relationship.service';
+import { Store, select } from '@ngrx/store';
 
 @Component({
   templateUrl: './artist-detail.component.html',
@@ -14,8 +18,11 @@ import { AlbumService } from '../core/album/album.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ArtistDetailComponent implements OnInit, OnDestroy {
-  artists$: Observable<Array<Artist>> = this.activatedRoute.data.pipe(
-    map(data => data.artists)
+  artists$: Observable<Array<Artist>> = this.artistService.keys$.pipe(
+    switchMap((keys: Array<string>) => {
+      const relationalSelector = toFactorySelector(this.artistRelationshipService.selectArtists);
+      return this.store.pipe(select(relationalSelector(keys as any)));
+    })    
   );
 
   albums$: Observable<Array<Album>> = this.artists$.pipe(
@@ -44,8 +51,10 @@ export class ArtistDetailComponent implements OnInit, OnDestroy {
   constructor(
     private activatedRoute: ActivatedRoute,
     @Inject(WINDOW) private window: Window,
-    private albumService: AlbumService,
+    private artistService: ArtistService,
+    private artistRelationshipService: ArtistRelationshipService,
     private router: Router,
+    private store: Store
   ) {
     this.window.addEventListener('message', (messageEvent: MessageEvent) => {
       if (messageEvent.origin !== "https://covers.musichoarders.xyz") {
@@ -76,7 +85,7 @@ export class ArtistDetailComponent implements OnInit, OnDestroy {
   }
 
   updateAlbumCover(cover: string) {
-    this.albumService.updateAlbum({...this.selectedAlbum, cover});
+    // this.albumService.updateAlbum({...this.selectedAlbum, cover});
     this.router.navigate([], {
       relativeTo: this.activatedRoute,
       queryParams: {
@@ -88,9 +97,11 @@ export class ArtistDetailComponent implements OnInit, OnDestroy {
 
   saveAlbumCover(event: Event, album: Album) {
     event.preventDefault();
+    /*
     this.albumService.saveAlbumCover(album).pipe(
       take(1)
     ).subscribe();
+    */
   }
 
 }
