@@ -4,6 +4,7 @@ const entityMetadata: EntityMetadataMap = {
   Library: {},
   Artist: {},
   Album: {},
+  Song: {},
   Cover: {}
 };
 

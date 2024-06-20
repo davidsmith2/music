@@ -39,7 +39,7 @@ function getAlbums(a, b) {
   });
 }
 
-function getTracks(a, b, c) {
+function getSongs(a, b, c) {
   const dirs = fs.readdirSync(path.join(a, b, c));
   return getData(dirs, (dir) => {
     return {
@@ -88,8 +88,8 @@ function buildLibrary() {
     const albums = getAlbums(MUSIC_MEDIA_FOLDER_NAME, artist.name);
     artist.albums = albums;
     albums.forEach((album) => {
-      const tracks = getTracks(MUSIC_MEDIA_FOLDER_NAME, artist.name, album.title);
-      album.tracks = tracks;
+      const songs = getSongs(MUSIC_MEDIA_FOLDER_NAME, artist.name, album.title);
+      album.songs = songs;
     });
   });
   library.artists = artists;

@@ -3,6 +3,7 @@ import { LibraryService } from "./library.service";
 import { ArtistService } from "../artist/artist.service";
 import { AlbumService } from "../album/album.service";
 import { relatedEntity, rootEntity } from "ngrx-entity-relationship";
+import { SongService } from "../song/song.service";
 
 @Injectable({providedIn: 'root'})
 export class LibraryRelationshipService {
@@ -23,7 +24,8 @@ export class LibraryRelationshipService {
   constructor(
     private libraryService: LibraryService,
     private artistService: ArtistService,
-    private albumService: AlbumService
+    private albumService: AlbumService,
+    private songService: SongService
   ) {}
 
 }
