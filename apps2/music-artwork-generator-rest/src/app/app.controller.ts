@@ -6,7 +6,6 @@ export class AppController {
 
   @Get('status')
   getStatus() {
-    return {status: 'ok'};
+    return { status: 'ok' };
   }
-
 }

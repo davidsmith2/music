@@ -9,5 +9,4 @@ export class ArtistController {
   getArtists() {
     return this.artistService.getArtists();
   }
-
 }

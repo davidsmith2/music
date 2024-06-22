@@ -15,5 +15,4 @@ export class LibraryController {
   getLibrary(@Param('id') id: number) {
     return this.libraryService.getLibrary(id);
   }
-
 }

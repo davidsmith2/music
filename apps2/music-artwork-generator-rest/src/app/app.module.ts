@@ -15,13 +15,8 @@ import { AlbumService } from './album/album.service';
     AppController,
     LibraryController,
     ArtistController,
-    AlbumController
+    AlbumController,
   ],
-  providers: [
-    AppService,
-    LibraryService,
-    ArtistService,
-    AlbumService
-  ],
+  providers: [AppService, LibraryService, ArtistService, AlbumService],
 })
 export class AppModule {}

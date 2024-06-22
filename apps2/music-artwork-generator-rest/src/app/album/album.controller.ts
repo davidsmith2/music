@@ -15,5 +15,4 @@ export class AlbumController {
   saveAlbum(@Body() album: Album) {
     return this.albumService.saveAlbum(album);
   }
-
 }
