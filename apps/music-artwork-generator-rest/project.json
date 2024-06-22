@@ -1,7 +1,7 @@
 {
   "name": "music-artwork-generator-rest",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps2/music-artwork-generator-rest/src",
+  "sourceRoot": "apps/music-artwork-generator-rest/src",
   "projectType": "application",
   "tags": [],
   "targets": {
@@ -9,13 +9,13 @@
       "executor": "@nrwl/webpack:webpack",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/apps2/music-artwork-generator-rest",
-        "main": "apps2/music-artwork-generator-rest/src/main.ts",
-        "tsConfig": "apps2/music-artwork-generator-rest/tsconfig.app.json",
-        "assets": ["apps2/music-artwork-generator-rest/src/assets"],
+        "outputPath": "dist/apps/music-artwork-generator-rest",
+        "main": "apps/music-artwork-generator-rest/src/main.ts",
+        "tsConfig": "apps/music-artwork-generator-rest/tsconfig.app.json",
+        "assets": ["apps/music-artwork-generator-rest/src/assets"],
         "target": "node",
         "compiler": "tsc",
-        "webpackConfig": "apps2/music-artwork-generator-rest/webpack.config.js"
+        "webpackConfig": "apps/music-artwork-generator-rest/webpack.config.js"
       },
       "configurations": {
         "production": {
@@ -24,8 +24,8 @@
           "inspect": false,
           "fileReplacements": [
             {
-              "replace": "apps2/music-artwork-generator-rest/src/environments/environment.ts",
-              "with": "apps2/music-artwork-generator-rest/src/environments/environment.prod.ts"
+              "replace": "apps/music-artwork-generator-rest/src/environments/environment.ts",
+              "with": "apps/music-artwork-generator-rest/src/environments/environment.prod.ts"
             }
           ]
         }
@@ -43,11 +43,9 @@
     },
     "test": {
       "executor": "@nx/jest:jest",
-      "outputs": [
-        "{workspaceRoot}/coverage/apps2/music-artwork-generator-rest"
-      ],
+      "outputs": ["{workspaceRoot}/coverage/apps/music-artwork-generator-rest"],
       "options": {
-        "jestConfig": "apps2/music-artwork-generator-rest/jest.config.ts"
+        "jestConfig": "apps/music-artwork-generator-rest/jest.config.ts"
       }
     }
   }

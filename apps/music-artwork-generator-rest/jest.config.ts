@@ -7,7 +7,7 @@ export default {
     '^.+\\.[tj]s$': ['ts-jest', { tsconfig: '<rootDir>/tsconfig.spec.json' }],
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
-  coverageDirectory: '../../coverage/apps2/music-artwork-generator-rest',
+  coverageDirectory: '../../coverage/apps/music-artwork-generator-rest',
   testEnvironment: 'node',
   preset: '../../jest.preset.js',
 };
