@@ -1,19 +1,31 @@
-import { Observable } from "rxjs";
+import { Observable, catchError, map, of } from "rxjs";
 import { Injectable } from "@angular/core";
 import { Album } from "@davidsmith/api-interfaces";
-import { EntityCollectionServiceBase, EntityCollectionServiceElementsFactory } from "@ngrx/data";
+import { EntityActionOptions, EntityCollectionServiceBase, EntityCollectionServiceElementsFactory } from "@ngrx/data";
+import { HttpClient } from "@angular/common/http";
 
 @Injectable({ providedIn: 'root' })
 export class AlbumService extends EntityCollectionServiceBase<Album> {
-  private readonly storageKey: string = 'artists';
-  private readonly apiRoot: string = '/api';
-
-  constructor(serviceElementsFactory: EntityCollectionServiceElementsFactory) {
+  constructor(
+    serviceElementsFactory: EntityCollectionServiceElementsFactory,
+    private httpClient: HttpClient
+  ) {
     super('Album', serviceElementsFactory);
   }
 
-  getAlbums(): Observable<Array<Album>> {
-    return this.entities$;
+  getAlbums(key: string, options?: EntityActionOptions): Observable<Album[]> {
+    return this.httpClient.get(`/graphql`, {
+      params: options.httpOptions.httpParams as any,
+      headers: options.httpOptions.httpHeaders as any
+    }).pipe(
+      map((res) => {
+        return res['data'][key];
+      }),
+      catchError((err) => {
+        return of(null);
+      })
+    );
+      
   }
 
   /*

@@ -1,28 +1,26 @@
-<ng-container *ngIf="artists$ | async as artists">
+<ng-container *ngIf="artist$ | async as artist">
   <div class="container">
-    <ng-container *ngFor="let artist of artists">
+    <div>
+      <h2>{{artist.name}}</h2>
+    </div>
+    <div *ngFor="let album of artist.albums" class="child-container">
       <div>
-        <h2>{{artist.name}}</h2>
+        <ng-container *ngIf="!album.cover; else albumCoverTemplate">
+          <button (click)="findAlbumCover($event, album)">Find album cover</button>
+        </ng-container>
+        <ng-template #albumCoverTemplate>
+          <img [src]="album.cover" [width]="175" [height]="175" alt="Album artwork">
+          <button (click)="saveAlbumCover($event, album)">Save album cover</button>
+        </ng-template>
       </div>
-      <div *ngFor="let album of artist.albums" class="child-container">
-        <div>
-          <ng-container *ngIf="!album.cover; else albumCoverTemplate">
-            <button (click)="findAlbumCover($event, album)">Find album cover</button>
-          </ng-container>
-          <ng-template #albumCoverTemplate>
-            <img [src]="album.cover" [width]="175" [height]="175" alt="Album artwork">
-            <button (click)="saveAlbumCover($event, album)">Save album cover</button>
-          </ng-template>
-        </div>
-        <div>
-          <h3>{{ album.title }}</h3>
-          <ul>
-            <li *ngFor="let song of album.songs">
-              {{ song.title }}
-            </li>
-          </ul>
-        </div>
+      <div>
+        <h3>{{ album.title }}</h3>
+        <ul>
+          <li *ngFor="let song of album.songs">
+            {{ song.title }}
+          </li>
+        </ul>
       </div>
-    </ng-container>
+    </div>
   </div>
 </ng-container>

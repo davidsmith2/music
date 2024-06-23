@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ArtistMasterComponent } from './artist-master.component';
 import { RouterModule } from '@angular/router';
-import { ArtistsResolverService } from './artists-resolver.service';
 
 @NgModule({
   imports: [
@@ -11,18 +10,10 @@ import { ArtistsResolverService } from './artists-resolver.service';
       {
         path: '',
         component: ArtistMasterComponent,
-        resolve: {
-          artists: ArtistsResolverService
-        },
         runGuardsAndResolvers: 'paramsOrQueryParamsChange',
         children: [
           {
-            path: '',
-            redirectTo: 'All Artists',
-            pathMatch: 'full'
-          },
-          {
-            path: ':name',
+            path: ':id',
             loadChildren: () => import('../artist-detail/artist-detail.module').then(m => m.ArtistDetailModule)
           }
         ]
@@ -31,9 +22,6 @@ import { ArtistsResolverService } from './artists-resolver.service';
   ],
   declarations: [
     ArtistMasterComponent
-  ],
-  providers: [
-    ArtistsResolverService
   ],
   exports: [ArtistMasterComponent]
 })

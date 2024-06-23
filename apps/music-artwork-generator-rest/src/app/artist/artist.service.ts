@@ -14,4 +14,13 @@ export class ArtistService {
     const json = JSON.parse(jsonStr);
     return json.artists;
   }
+
+  getArtist(id: string): Promise<Artist> {
+    const jsonStr = readFileSync(
+      join(__dirname, 'assets', 'Library.json'),
+      'utf8'
+    );
+    const json = JSON.parse(jsonStr);
+    return json.artists.find((artist: Artist) => artist.id === id);
+  }
 }

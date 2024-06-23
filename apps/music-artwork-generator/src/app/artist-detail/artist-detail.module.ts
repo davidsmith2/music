@@ -12,7 +12,7 @@ import { ArtistResolverService } from './artist-resolver.service';
         path: '',
         component: ArtistDetailComponent,
         resolve: {
-          artists: ArtistResolverService
+          artist: ArtistResolverService
         },
         runGuardsAndResolvers: 'paramsOrQueryParamsChange'
       }

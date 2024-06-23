@@ -4,11 +4,15 @@ import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { WINDOW } from './window.constant';
-import { DefaultHttpUrlGenerator, EntityDataModule, HttpUrlGenerator, Pluralizer } from '@ngrx/data';
+import { DefaultDataServiceConfig, DefaultHttpUrlGenerator, EntityDataModule, HttpUrlGenerator, Pluralizer } from '@ngrx/data';
 import { StoreModule } from '@ngrx/store';
 import { entityConfig } from './entity-metadata';
 import { EffectsModule } from '@ngrx/effects';
 import { metaReducers } from './meta-reducers.constant';
+
+const defaultDataServiceConfig: DefaultDataServiceConfig = {
+  root: '/graphql'
+};
 
 @Injectable()
 class CoreHttpUrlGenerator extends DefaultHttpUrlGenerator {
@@ -38,6 +42,10 @@ class CoreHttpUrlGenerator extends DefaultHttpUrlGenerator {
       {
         path: 'albums',
         loadChildren: () => import('./album-master/album-master.module').then(m => m.AlbumMasterModule)
+      },
+      {
+        path: 'songs',
+        loadChildren: () => import('./song-master/song-master.module').then(m => m.SongMasterModule)
       }
     ]),
     StoreModule.forRoot({}, { metaReducers }),
@@ -47,6 +55,7 @@ class CoreHttpUrlGenerator extends DefaultHttpUrlGenerator {
   providers: [
     { provide: WINDOW, useValue: window },
     { provide: HttpUrlGenerator, useClass: CoreHttpUrlGenerator },
+    { provide: DefaultDataServiceConfig, useValue: defaultDataServiceConfig}
   ],
   bootstrap: [AppComponent],
 })

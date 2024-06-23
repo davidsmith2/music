@@ -17,6 +17,24 @@ export class AlbumService {
     }, []);
   }
 
+  getAlbum(id: string) {
+    const jsonStr = readFileSync(
+      join(__dirname, 'assets', 'Library.json'),
+      'utf8'
+    );
+    const json = JSON.parse(jsonStr);
+    let album: Album;
+    for (let i = 0; i < json.artists.length; i++) {
+      const artist = json.artists[i];
+      album = artist.albums.find((album: Album) => album.id === id);
+      if (album) {
+        console.log(album)
+        break;
+      }
+    }
+    return album;
+  }
+
   saveAlbum(album: Album) {
     const jsonStr = readFileSync(
       join(__dirname, 'assets', 'Library.json'),

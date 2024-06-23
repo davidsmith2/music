@@ -1,8 +1,9 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
-import { map } from 'rxjs/operators';
-import { Artist } from '@davidsmith/api-interfaces';
+import { Library } from '@davidsmith/api-interfaces';
+import { LibraryRelationshipService } from '../core/library/library-relationship.service';
+import { Store, select } from '@ngrx/store';
+import { toStaticSelector } from 'ngrx-entity-relationship';
 
 @Component({
   templateUrl: './artist-master.component.html',
@@ -10,10 +11,9 @@ import { Artist } from '@davidsmith/api-interfaces';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ArtistMasterComponent {
-  artists$: Observable<Array<Artist>> = this.activatedRoute.data.pipe(
-    map(data => data.artists)
-  );
+  library$: Observable<Library> = this.store.pipe(select(toStaticSelector(this.libraryRelationshipService.selectLibrary, 1)));
 
+  /*
   completeArtists$ = this.artists$.pipe(
     map(artists => artists.filter(artist => {
       const numAlbums = artist.albums.length;
@@ -29,7 +29,11 @@ export class ArtistMasterComponent {
       return numAlbums !== numCovers;
     }))
   );
+  */
 
-  constructor(private activatedRoute: ActivatedRoute) { }
+  constructor(
+    private store: Store,
+    private libraryRelationshipService: LibraryRelationshipService
+  ) { }
 
 }

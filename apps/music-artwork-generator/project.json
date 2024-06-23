@@ -4,6 +4,7 @@
   "projectType": "application",
   "sourceRoot": "apps/music-artwork-generator/src",
   "prefix": "davidsmith",
+  "tags": [],
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
@@ -90,6 +91,5 @@
         "jestConfig": "apps/music-artwork-generator/jest.config.ts"
       }
     }
-  },
-  "tags": []
+  }
 }

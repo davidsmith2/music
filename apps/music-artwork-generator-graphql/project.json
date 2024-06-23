@@ -1,0 +1,52 @@
+{
+  "name": "music-artwork-generator-graphql",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/music-artwork-generator-graphql/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/music-artwork-generator-graphql",
+        "main": "apps/music-artwork-generator-graphql/src/main.ts",
+        "tsConfig": "apps/music-artwork-generator-graphql/tsconfig.app.json",
+        "assets": ["apps/music-artwork-generator-graphql/src/assets"],
+        "webpackConfig": "apps/music-artwork-generator-graphql/webpack.config.js"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "music-artwork-generator-graphql:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "music-artwork-generator-graphql:build:development"
+        },
+        "production": {
+          "buildTarget": "music-artwork-generator-graphql:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/music-artwork-generator-graphql/jest.config.ts"
+      }
+    }
+  }
+}

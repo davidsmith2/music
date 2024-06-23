@@ -1,14 +1,9 @@
-<ng-container *ngIf="artists$ | async as artists">
+<ng-container *ngIf="library$ | async as library">
   <div class="container">
     <div>
       <ul class="list-reset">
-        <li class="mb-2">
-          <a [routerLink]="['/artists', 'All Artists']">
-            All Artists
-          </a>
-        </li>
-        <li *ngFor="let artist of artists" class="mb-2">
-          <a [routerLink]="['/artists', artist.name]">
+        <li *ngFor="let artist of library.artists" class="mb-2">
+          <a [routerLink]="['/artists', artist.id]">
             {{artist.name}}
           </a>
         </li>
