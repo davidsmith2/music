@@ -35,21 +35,28 @@ export class AlbumService {
     return album;
   }
 
-  saveAlbum(album: Album) {
+  updateAlbum(album: Album) {
     const jsonStr = readFileSync(
       join(__dirname, 'assets', 'Library.json'),
       'utf8'
     );
     const json = JSON.parse(jsonStr);
-    const albumToUpdate = json.artists
-      .find((artist: Artist) => artist.name === album.artist)
-      .albums.find((a: Album) => a.title === album.title);
-    albumToUpdate.cover = album.cover;
+    let albumToUpdate: Album;
+    for (let i = 0; i < json.artists.length; i++) {
+      const artist = json.artists[i];
+      albumToUpdate = artist.albums.find((a: Album) => a.id === album.id);
+      if (albumToUpdate) {
+        albumToUpdate.cover = album.cover;
+        const albumToUpdateIndex = artist.albums.findIndex((a: Album) => a.id === album.id);
+        artist.albums[albumToUpdateIndex] = albumToUpdate;
+        break;
+      }
+    }
     writeFileSync(
       join(__dirname, 'assets', 'Library.json'),
       JSON.stringify(json),
       'utf8'
     );
-    return album;
+    return albumToUpdate;
   }
 }

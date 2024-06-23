@@ -16,7 +16,7 @@ export class ArtistRelationshipService {
         id: '',
         name: '',
         albumIds: '',
-        albums: '{id, title}'
+        albums: '{id, title, artist, cover, songIds, songs}'
       }
     },
     relatedEntity(
@@ -27,6 +27,8 @@ export class ArtistRelationshipService {
         gqlFields: {
           id: '',
           title: '',
+          artist: '',
+          cover: '',
           songIds: '',
           songs: '{id, title}'
         }

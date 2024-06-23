@@ -16,8 +16,11 @@ export class AlbumController {
     return this.albumService.getAlbum(id);
   }
 
-  @Put()
-  saveAlbum(@Body() album: Album) {
-    return this.albumService.saveAlbum(album);
+  @Put(':id')
+  updateAlbum(
+    @Param('id') _id: string,
+    @Body() album: Album
+  ) {
+    return this.albumService.updateAlbum(album);
   }
 }

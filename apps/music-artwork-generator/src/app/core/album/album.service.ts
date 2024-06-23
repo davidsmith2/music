@@ -25,21 +25,19 @@ export class AlbumService extends EntityCollectionServiceBase<Album> {
         return of(null);
       })
     );
-      
   }
 
-  /*
-  saveAlbumCover(album: Album): Observable<Album> {
-    return this.httpClient.put<Album>(`${this.apiRoot}/album`, album);
+  updateAlbum(key: string, data: any, options: EntityActionOptions): Observable<Album> {
+    return this.httpClient.post<Album>(`/graphql`, data, {
+      headers: options.httpOptions.httpHeaders as any
+    }).pipe(
+      map((res) => {
+        return res['data'][key];
+      }),
+      catchError((err) => {
+        return of(null);
+      })
+    );
   }
-
-  updateAlbum(update: Album): void {
-    const artists: Array<Artist> = JSON.parse(this.window.localStorage.getItem(this.storageKey)).slice(0);
-    const artist: Artist = artists.find((artist) => artist.name === update.artist);
-    const albumIndex: number = artist.albums.findIndex(album => album.title === update.title);
-    artist.albums.splice(albumIndex, 1, update);
-    this.window.localStorage.setItem(this.storageKey, JSON.stringify(artists));
-  }
-  */
 
 }

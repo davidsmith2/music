@@ -1,5 +1,5 @@
-import { Args, Int, Query, Resolver } from '@nestjs/graphql';
-import { AlbumType } from './album.types';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { AlbumType, AlbumUpdateType } from './album.types';
 import { AlbumService } from './album.service';
 
 @Resolver(() => AlbumType)
@@ -14,5 +14,10 @@ export class AlbumResolver {
   @Query(() => AlbumType)
   async selectOne_album(@Args('id', { type: () => String }) id: string): Promise<AlbumType> {
     return this.albumService.getByKey(id);
+  }
+
+  @Mutation(() => AlbumType)
+  async updateOne_album(@Args('album', { type: () => AlbumUpdateType }) album: AlbumUpdateType): Promise<AlbumType> {
+    return this.albumService.update(album);
   }
 }

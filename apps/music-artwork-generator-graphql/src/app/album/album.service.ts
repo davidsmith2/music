@@ -15,4 +15,17 @@ export class AlbumService {
     const data = await response.json() as AlbumType;
     return data;
   }
+
+  async update(album: AlbumType): Promise<AlbumType> {
+    const response = await fetch(
+      `http://localhost:3333/api/album/${album.id}`,
+      {
+        method: 'PUT',
+        body: JSON.stringify(album),
+        headers: {'Content-Type': 'application/json'}
+      }
+    );
+    const data = await response.json() as AlbumType;
+    return data;
+  }
 }
