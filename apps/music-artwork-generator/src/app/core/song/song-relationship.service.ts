@@ -12,7 +12,9 @@ export class SongRelationshipService {
     {
       gqlFields: {
         id: '',
-        title: ''
+        title: '',
+        artist: '',
+        album: ''
       }
     }
   );

@@ -1,5 +1,18 @@
 <ng-container *ngIf="songs$ | async as songs">
-    <ul>
-        <li *ngFor="let song of songs">{{song.title}}</li>
-    </ul>
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Artist</th>
+                <th>Album</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let song of songs">
+                <td>{{song.title}}</td>
+                <td>{{song.artist}}</td>
+                <td>{{song.album}}</td>
+            </tr>
+        </tbody>
+    </table>
 </ng-container>
