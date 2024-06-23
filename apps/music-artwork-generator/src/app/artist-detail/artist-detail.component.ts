@@ -67,6 +67,7 @@ export class ArtistDetailComponent implements OnInit, OnDestroy {
     this.albumRelationshipService.updateAlbum({...this.selectedAlbum, cover}).pipe(
       take(1),
       tap(() => {
+        this.selectedAlbum = null;
         this.router.navigate([], {
           relativeTo: this.activatedRoute,
           queryParams: {
