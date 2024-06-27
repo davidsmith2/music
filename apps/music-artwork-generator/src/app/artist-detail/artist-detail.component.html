@@ -1,25 +1,40 @@
 <ng-container *ngIf="artist$ | async as artist">
   <div class="container">
-    <div>
+    <header>
       <h2>{{artist.name}}</h2>
-    </div>
-    <div *ngFor="let album of artist.albums" class="child-container">
-      <div>
-        <ng-container *ngIf="!album.cover; else albumCoverTemplate">
-          <button (click)="findAlbumCover($event, album)">Find album cover</button>
-        </ng-container>
-        <ng-template #albumCoverTemplate>
-          <img [src]="album.cover" [width]="175" [height]="175" alt="Album artwork">
-        </ng-template>
-      </div>
-      <div>
-        <h3>{{ album.title }}</h3>
-        <ul>
-          <li *ngFor="let song of album.songs">
-            {{ song.title }}
-          </li>
-        </ul>
-      </div>
-    </div>
+      <hr>
+      <div>{{getNumberOfArtistAlbums(artist.albums)}} album, {{getNumberOfArtistSongs(artist.albums)}} songs</div>
+    </header>
+    <main style="margin-top: 2em;">
+      <section *ngFor="let album of artist.albums" class="child-container">
+        <div>
+          <ng-container *ngIf="!album.cover; else albumCoverTemplate">
+            <button (click)="findAlbumCover($event, album)">Find album cover</button>
+          </ng-container>
+          <ng-template #albumCoverTemplate>
+            <img [src]="album.cover" [width]="175" [height]="175" alt="Album artwork">
+          </ng-template>
+          <div>{{getNumberOfAlbumSongs(album)}} songs, x minutes</div>
+        </div>
+        <div>
+          <header>
+            <h3 style="margin-top: 0;">{{ album.title }}</h3>
+            <hr>
+            <div>genre, year</div>
+          </header>
+          <main style="margin-top: 2em;">
+            <table width="100%" [cellSpacing]="0" [cellPadding]="16">
+              <tbody>
+                <tr *ngFor="let song of album.songs; let i = index">
+                  <td style="border-top: 1px solid gray">{{ i + 1 }}</td>
+                  <td style="border-top: 1px solid gray">{{ song.title }}</td>
+                  <td style="border-top: 1px solid gray">duration</td>
+                </tr>
+              </tbody>
+            </table>
+            </main>
+        </div>
+      </section>
+    </main>
   </div>
 </ng-container>

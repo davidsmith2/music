@@ -79,4 +79,16 @@ export class ArtistDetailComponent implements OnInit, OnDestroy {
     ).subscribe();
   }
 
+  getNumberOfArtistAlbums(albums: Album[]): number {
+    return albums.length;
+  }
+
+  getNumberOfArtistSongs(albums: Album[]): number {
+    return albums.reduce((total, album) => total + album.songs.length, 0);
+  }
+
+  getNumberOfAlbumSongs(album: Album): number {
+    return album.songs.length;
+  }
+
 }
