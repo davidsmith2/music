@@ -10,6 +10,8 @@ import { ArtistService } from './artist/artist.service';
 import { AlbumService } from './album/album.service';
 import { SongController } from './song/song.controller';
 import { SongService } from './song/song.service';
+import { ImportController } from './import/import.controller';
+import { ImportService } from './import/import.service';
 
 @Module({
   imports: [],
@@ -18,8 +20,16 @@ import { SongService } from './song/song.service';
     LibraryController,
     ArtistController,
     AlbumController,
-    SongController
+    SongController,
+    ImportController
   ],
-  providers: [AppService, LibraryService, ArtistService, AlbumService, SongService],
+  providers: [
+    AppService,
+    LibraryService,
+    ArtistService,
+    AlbumService,
+    SongService,
+    ImportService
+  ],
 })
 export class AppModule {}

@@ -31,7 +31,7 @@ export class LibraryRelationshipService {
     private store: Store
   ) {}
 
-  getLibraryByKey(key: number) {
+  getLibraryByKey(key: string) {
     const graphQLStr = toGraphQL(
       'selectOne_library',
       {id: key},

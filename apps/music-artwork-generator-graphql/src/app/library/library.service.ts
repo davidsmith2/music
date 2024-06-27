@@ -4,7 +4,7 @@ import fetch from 'node-fetch';
 
 @Injectable()
 export class LibraryService {
-  async getByKey(key: number): Promise<LibraryType> {
+  async getByKey(key: string): Promise<LibraryType> {
     const response = await fetch(`http://localhost:3333/api/library/${key}`);
     const data = await response.json() as LibraryType;
     return data;

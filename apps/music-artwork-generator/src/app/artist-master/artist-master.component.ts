@@ -11,7 +11,7 @@ import { toStaticSelector } from 'ngrx-entity-relationship';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ArtistMasterComponent {
-  library$: Observable<Library> = this.store.pipe(select(toStaticSelector(this.libraryRelationshipService.selectLibrary, 1)));
+  library$: Observable<Library> = this.store.pipe(select(toStaticSelector(this.libraryRelationshipService.selectLibrary, '951a9862')));
 
   /*
   completeArtists$ = this.artists$.pipe(

@@ -7,7 +7,7 @@ export class LibraryResolver {
   constructor(private libraryService: LibraryService) {}
 
   @Query(() => LibraryType)
-  async selectOne_library(@Args('id', { type: () => Int }) id: number): Promise<LibraryType> {
+  async selectOne_library(@Args('id', { type: () => String }) id: string): Promise<LibraryType> {
     return this.libraryService.getByKey(id);
   }
 }

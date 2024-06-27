@@ -27,6 +27,20 @@ export class AlbumService extends EntityCollectionServiceBase<Album> {
     );
   }
 
+  getAlbum(key: string, options?: EntityActionOptions): Observable<Album> {
+    return this.httpClient.get(`/graphql`, {
+      params: options.httpOptions.httpParams as any,
+      headers: options.httpOptions.httpHeaders as any
+    }).pipe(
+      map((res) => {
+        return res['data'][key];
+      }),
+      catchError((err) => {
+        return of(null);
+      })
+    );
+  }
+
   updateAlbum(key: string, data: any, options: EntityActionOptions): Observable<Album> {
     return this.httpClient.post<Album>(`/graphql`, data, {
       headers: options.httpOptions.httpHeaders as any

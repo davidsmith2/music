@@ -4,8 +4,6 @@ import { AlbumMasterComponent } from './album-master.component';
 import { RouterModule } from '@angular/router';
 import { AlbumsResolverService } from './albums-resolver.service';
 
-
-
 @NgModule({
   declarations: [
     AlbumMasterComponent
@@ -19,6 +17,10 @@ import { AlbumsResolverService } from './albums-resolver.service';
         resolve: {
           albums: AlbumsResolverService
         }
+      },
+      {
+        path: ':id',
+        loadChildren: () => import('../album-detail/album-detail.module').then(m => m.AlbumDetailModule)
       }
     ])
   ],
