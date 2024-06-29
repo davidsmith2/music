@@ -7,13 +7,14 @@ import {
 import { Song } from '@davidsmith/api-interfaces';
 import { Observable, of } from 'rxjs';
 import { SongRelationshipService } from '../core/song/song-relationship.service';
+import { SongService } from '../core/song/song.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SongsResolver implements Resolve<Array<Song>> {
-  constructor(private songRelationshipService: SongRelationshipService) { }
+  constructor(private songService: SongService) { }
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Array<Song>> {
-    return this.songRelationshipService.getAllSongs();
+    return this.songService.getSongs();
   }
 }

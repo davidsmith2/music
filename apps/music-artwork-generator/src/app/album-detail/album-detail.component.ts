@@ -3,7 +3,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { Album } from '@davidsmith/api-interfaces';
 import { Observable, map } from 'rxjs';
 import { Apollo } from 'apollo-angular';
-import { AlbumService } from '../core/album/album.service';
+import { SELECT_ONE_ALBUM } from '../core/album/album.constants';
 
 @Component({
   selector: 'davidsmith-album-detail',
@@ -14,14 +14,13 @@ import { AlbumService } from '../core/album/album.service';
 export class AlbumDetailComponent {
   album$: Observable<Album> = this.activatedRoute.params.pipe(
     map((params: Params) => {
-      const query = this.apollo.client.readQuery({query: this.albumService.queries.getAlbum, variables: {id: params.id}});
+      const query = this.apollo.client.readQuery({query: SELECT_ONE_ALBUM, variables: {id: params.id}});
       return !!query && query['selectOne_album']
     })
   );
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private albumService: AlbumService,
     private apollo: Apollo
   ) { }
 

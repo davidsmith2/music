@@ -1,17 +1,12 @@
 import { Observable, catchError, map, of } from "rxjs";
 import { Injectable } from "@angular/core";
 import { Album } from "@davidsmith/api-interfaces";
-import { EntityActionOptions, EntityCollectionServiceBase, EntityCollectionServiceElementsFactory } from "@ngrx/data";
-import { Apollo, gql } from "apollo-angular";
+import { EntityCollectionServiceBase, EntityCollectionServiceElementsFactory } from "@ngrx/data";
+import { Apollo } from "apollo-angular";
+import { SELECT_ALL_ALBUMS, SELECT_ONE_ALBUM, UPDATE_ONE_ALBUM } from "./album.constants";
 
 @Injectable({ providedIn: 'root' })
 export class AlbumService extends EntityCollectionServiceBase<Album> {
-  queries = {
-    getAlbums: null,
-    getAlbum: null,
-    updateAlbum: null
-  };
-
   constructor(
     serviceElementsFactory: EntityCollectionServiceElementsFactory,
     private apollo: Apollo
@@ -19,13 +14,12 @@ export class AlbumService extends EntityCollectionServiceBase<Album> {
     super('Album', serviceElementsFactory);
   }
 
-  getAlbums(key: string, options?: EntityActionOptions): Observable<Album[]> {
-    this.queries.getAlbums = gql(options.httpOptions.httpParams['query']);
+  getAlbums(): Observable<Album[]> {
     return this.apollo.query({
-      query: this.queries.getAlbums,
+      query: SELECT_ALL_ALBUMS,
     }).pipe(
       map((res) => {
-        return res['data'][key];
+        return res['data']['selectAll_albums'];
       }),
       catchError((err) => {
         return of(null);
@@ -33,13 +27,12 @@ export class AlbumService extends EntityCollectionServiceBase<Album> {
     );
   }
 
-  getAlbum(key: string, options?: EntityActionOptions): Observable<Album> {
-    this.queries.getAlbum = gql(options.httpOptions.httpParams['query']);
+  getAlbum(): Observable<Album> {
     return this.apollo.query({
-      query: this.queries.getAlbum,
+      query: SELECT_ONE_ALBUM,
     }).pipe(
       map((res) => {
-        return res['data'][key];
+        return res['data']['selectOne_album'];
       }),
       catchError((err) => {
         return of(null);
@@ -47,13 +40,12 @@ export class AlbumService extends EntityCollectionServiceBase<Album> {
     );
   }
 
-  updateAlbum(key: string, data: any, options: EntityActionOptions): Observable<Album> {
-    this.queries.updateAlbum = gql(data.query);
+  updateAlbum(): Observable<Album> {
     return this.apollo.mutate({
-      mutation: this.queries.updateAlbum,
+      mutation: UPDATE_ONE_ALBUM,
     }).pipe(
       map((res) => {
-        return res['data'][key];
+        return res['data']['updateOne_album'];
       }),
       catchError((err) => {
         console.error(err);

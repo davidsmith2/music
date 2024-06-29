@@ -1,20 +1,20 @@
 import { Injectable } from '@angular/core';
 import {
-  Router, Resolve,
+  Resolve,
   RouterStateSnapshot,
   ActivatedRouteSnapshot
 } from '@angular/router';
 import { Album } from '@davidsmith/api-interfaces';
-import { Observable, of } from 'rxjs';
-import { AlbumRelationshipService } from '../core/album/album-relationship.service';
+import { Observable } from 'rxjs';
+import { AlbumService } from '../core/album/album.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AlbumResolver implements Resolve<Album> {
-  constructor(private albumRelationshipService: AlbumRelationshipService) { }
+  constructor(private albumService: AlbumService) { }
 
   resolve(route: ActivatedRouteSnapshot, _state: RouterStateSnapshot): Observable<Album> {
-    return this.albumRelationshipService.getAlbum(route.params.id);
+    return this.albumService.getAlbum();
   }
 }

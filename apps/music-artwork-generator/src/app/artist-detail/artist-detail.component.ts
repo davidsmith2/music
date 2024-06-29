@@ -6,9 +6,10 @@ import { WINDOW } from '../window.constant';
 import { Cover } from '../core/cover/cover.interface';
 import { Album } from '@davidsmith/api-interfaces';
 import { Artist } from '@davidsmith/api-interfaces';
-import { AlbumRelationshipService } from '../core/album/album-relationship.service';
 import { ArtistService } from '../core/artist/artist.service';
 import { Apollo } from 'apollo-angular';
+import { AlbumService } from '../core/album/album.service';
+import { SELECT_ONE_ARTIST } from '../core/artist/artist.constants';
 
 @Component({
   templateUrl: './artist-detail.component.html',
@@ -18,7 +19,7 @@ import { Apollo } from 'apollo-angular';
 export class ArtistDetailComponent implements OnInit, OnDestroy {
   artist$: Observable<Artist> = this.activatedRoute.params.pipe(
     map((_params) => {
-      const query = this.apollo.client.readQuery({ query: this.artistService.queries.getArtist });
+      const query = this.apollo.client.readQuery({ query: SELECT_ONE_ARTIST });
       return !!query && query['selectOne_artist'] || null;
     })
   );
@@ -30,7 +31,7 @@ export class ArtistDetailComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     @Inject(WINDOW) private window: Window,
     private artistService: ArtistService,
-    private albumRelationshipService: AlbumRelationshipService,
+    private albumService: AlbumService,
     private router: Router,
     private apollo: Apollo
   ) {
@@ -63,7 +64,7 @@ export class ArtistDetailComponent implements OnInit, OnDestroy {
   }
 
   updateAlbumCover(cover: string) {
-    this.albumRelationshipService.updateAlbum({...this.selectedAlbum, cover}).pipe(
+    this.albumService.updateAlbum().pipe(
       take(1),
       tap(() => {
         this.selectedAlbum = null;
@@ -83,7 +84,7 @@ export class ArtistDetailComponent implements OnInit, OnDestroy {
   }
 
   getNumberOfArtistSongs(albums: Album[]): number {
-    return albums.reduce((total, album) => total + album.songs.length, 0);
+    return albums.reduce((total, album) => total + album.songs?.length, 0);
   }
 
   getNumberOfAlbumSongs(album: Album): number {

@@ -1,9 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Song } from '@davidsmith/api-interfaces';
-import { Store, select } from '@ngrx/store';
-import { Observable, switchMap } from 'rxjs';
-import { SongRelationshipService } from '../core/song/song-relationship.service';
-import { toFactorySelector, toStaticSelector } from 'ngrx-entity-relationship';
+import { Observable } from 'rxjs';
 import { SongService } from '../core/song/song.service';
 
 @Component({
@@ -12,18 +9,10 @@ import { SongService } from '../core/song/song.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SongMasterComponent {
-  songs$: Observable<Array<Song>> = this.songService.keys$.pipe(
-    switchMap(keys => {
-      const selector = toStaticSelector(this.songRelationshipService.selectSongs, keys);
-      const selection = select(selector);
-      return this.store.pipe(selection);
-    })
-  );
+  songs$: Observable<Array<Song>> = this.songService.getSongs();
 
   constructor(
-    private songService: SongService,
-    private store: Store,
-    private songRelationshipService: SongRelationshipService
+    private songService: SongService
   ) { }
 
 }

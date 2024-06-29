@@ -7,8 +7,8 @@ import { AlbumRelationshipService } from "../core/album/album-relationship.servi
 
 @Injectable()
 export class AlbumsResolverService {
-  constructor(private albumRelationshipService: AlbumRelationshipService) {}
+  constructor(private albumService: AlbumService) {}
   resolve(route: ActivatedRouteSnapshot, _state: RouterStateSnapshot): Observable<Array<Album>> {
-    return this.albumRelationshipService.getAllAlbums();
+    return this.albumService.getAlbums();
   }
 }

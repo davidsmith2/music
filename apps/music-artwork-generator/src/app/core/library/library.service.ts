@@ -3,13 +3,10 @@ import { Library } from "@davidsmith/api-interfaces";
 import { EntityActionOptions, EntityCollectionServiceBase, EntityCollectionServiceElementsFactory } from "@ngrx/data";
 import { Apollo, gql } from "apollo-angular";
 import { Observable, catchError, map, of } from "rxjs";
+import { SELECT_ONE_LIBRARY } from "./library.constants";
 
 @Injectable({ providedIn: 'root' })
 export class LibraryService extends EntityCollectionServiceBase<Library> {
-  queries = {
-    getLibrary: null
-  };
-
   constructor(
     serviceElementsFactory: EntityCollectionServiceElementsFactory,
     private apollo: Apollo
@@ -17,13 +14,12 @@ export class LibraryService extends EntityCollectionServiceBase<Library> {
     super('Library', serviceElementsFactory);
   }
 
-  getLibrary(key: string, options: EntityActionOptions): Observable<Library> {
-    this.queries.getLibrary = gql(options.httpOptions.httpParams['query']);
+  getLibrary(): Observable<Library> {
     return this.apollo.query({
-      query: this.queries.getLibrary,
+      query: SELECT_ONE_LIBRARY,
     }).pipe(
       map(result => {
-        return result.data[key];
+        return result.data['selectOne_library'];
       }),
       catchError((err) => {
         console.error(err);
