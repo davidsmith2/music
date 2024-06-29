@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { reduceGraph, rootEntities, rootEntity } from "ngrx-entity-relationship";
-import { toGraphQL, toQuery } from "ngrx-entity-relationship/graphql";
+import { toGraphQL } from "ngrx-entity-relationship/graphql";
 import { tap } from "rxjs";
 import { Store } from "@ngrx/store";
 import { SongService } from "./song.service";
@@ -31,11 +31,10 @@ export class SongRelationshipService {
       'selectAll_songs',
       this.selectSongs,
     )
-    const queryStr = toQuery(graphQLStr);
     return this.songService.getSongs('selectAll_songs', {
       httpOptions: {
         httpParams: {
-          query: queryStr
+          query: graphQLStr
         } as any,
         httpHeaders: {
           'Content-Type': 'application/json'

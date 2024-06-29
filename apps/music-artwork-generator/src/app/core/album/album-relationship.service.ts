@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { AlbumService } from "../album/album.service";
 import { reduceGraph, relatedEntity, rootEntities, rootEntity } from "ngrx-entity-relationship";
-import { toGraphQL, toMutation, toQuery } from "ngrx-entity-relationship/graphql";
+import { toGraphQL, toMutation } from "ngrx-entity-relationship/graphql";
 import { Store } from "@ngrx/store";
 import { tap } from "rxjs/operators";
 import { Album } from "@davidsmith/api-interfaces";
@@ -60,11 +60,10 @@ export class AlbumRelationshipService {
       'selectAll_albums',
       this.selectAlbumsMaster,
     )
-    const queryStr = toQuery(graphQLStr);
     return this.albumService.getAlbums('selectAll_albums', {
       httpOptions: {
         httpParams: {
-          query: queryStr
+          query: graphQLStr
         } as any,
         httpHeaders: {
           'Content-Type': 'application/json'
@@ -88,11 +87,10 @@ export class AlbumRelationshipService {
       {id: key},
       this.selectAlbumDetail,
     )
-    const queryStr = toQuery(graphQLStr);
     return this.albumService.getAlbum('selectOne_album', {
       httpOptions: {
         httpParams: {
-          query: queryStr
+          query: graphQLStr
         } as any,
         httpHeaders: {
           'Content-Type': 'application/json'

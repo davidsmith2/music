@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { LibraryService } from "./library.service";
 import { ArtistService } from "../artist/artist.service";
 import { reduceGraph, relatedEntity, rootEntity } from "ngrx-entity-relationship";
-import { toGraphQL, toQuery } from "ngrx-entity-relationship/graphql";
+import { toGraphQL } from "ngrx-entity-relationship/graphql";
 import { tap } from "rxjs";
 import { Store } from "@ngrx/store";
 
@@ -37,11 +37,10 @@ export class LibraryRelationshipService {
       {id: key},
       this.selectLibrary,
     )
-    const queryStr = toQuery(graphQLStr);
     return this.libraryService.getLibrary('selectOne_library', {
       httpOptions: {
         httpParams: {
-          query: queryStr
+          query: graphQLStr
         } as any,
         httpHeaders: {
           'Content-Type': 'application/json'

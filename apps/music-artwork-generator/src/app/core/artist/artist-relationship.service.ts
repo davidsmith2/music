@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { ArtistService } from "../artist/artist.service";
 import { AlbumService } from "../album/album.service";
 import { reduceGraph, relatedEntity, rootEntities, rootEntity } from "ngrx-entity-relationship";
-import { toGraphQL, toQuery } from "ngrx-entity-relationship/graphql";
+import { toGraphQL } from "ngrx-entity-relationship/graphql";
 import { Store } from "@ngrx/store";
 import { tap } from "rxjs/operators";
 import { SongService } from "../song/song.service";
@@ -57,11 +57,10 @@ export class ArtistRelationshipService {
       {id: key},
       this.selectArtist,
     )
-    const queryStr = toQuery(graphQLStr);
     return this.artistService.getArtist('selectOne_artist', {
       httpOptions: {
         httpParams: {
-          query: queryStr
+          query: graphQLStr
         } as any,
         httpHeaders: {
           'Content-Type': 'application/json'
