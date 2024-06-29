@@ -22,13 +22,10 @@ export class LibraryService {
           song.id = songId;
           return song;
         });
-        album.songIds = album.songs.map((song) => song.id);
         return album;
       });
-      artist.albumIds = artist.albums.map((album) => album.id);
       return artist;
     });
-    library.artistIds = library.artists.map((artist: Artist) => artist.id);
     writeFileSync(this.filepath, JSON.stringify(library), 'utf8');
     return this.getLibrary(library.id);
   }

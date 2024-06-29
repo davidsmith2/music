@@ -1,9 +1,9 @@
-import { Field, InputType, ObjectType } from "@nestjs/graphql";
+import { Field, ID, InputType, ObjectType } from "@nestjs/graphql";
 import { SongType } from "../song/song.types";
 
 @ObjectType()
 export class AlbumType {
-  @Field(() => String)
+  @Field(() => ID)
   id: string;
   
   @Field({nullable: true})
@@ -14,9 +14,6 @@ export class AlbumType {
 
   @Field({nullable: true})
   cover: string;
-
-  @Field(type => [String], {nullable: true})
-  songIds: Array<string>;
 
   @Field(type => [SongType], {nullable: true})
   songs: Array<SongType>;

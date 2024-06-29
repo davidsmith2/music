@@ -21,7 +21,6 @@ export class ImportService {
     const library: Library = {
       id: libraryId,
       username: null,
-      artistIds: artists.map((artist) => artist.id),
       artists
     };
     return library;
@@ -35,7 +34,6 @@ export class ImportService {
         const artist: Artist = {
           id: artistId,
           name: song.artist,
-          albumIds: albums.map((album) => album.id),
           albums
         };
         acc.push(artist);
@@ -54,7 +52,6 @@ export class ImportService {
           id: albumId,
           title: song.album,
           artist: artistName,
-          songIds: songs.map((song) => song.id),
           songs
         };
         acc.push(album);
