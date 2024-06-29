@@ -3,7 +3,6 @@ import { ActivatedRouteSnapshot, RouterStateSnapshot } from "@angular/router";
 import { Observable } from "rxjs";
 import { Album } from "@davidsmith/api-interfaces";
 import { AlbumService } from "../core/album/album.service";
-import { AlbumRelationshipService } from "../core/album/album-relationship.service";
 
 @Injectable()
 export class AlbumsResolverService {

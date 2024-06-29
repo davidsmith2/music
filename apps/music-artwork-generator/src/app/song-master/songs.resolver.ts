@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 import {
-  Router, Resolve,
+  Resolve,
   RouterStateSnapshot,
   ActivatedRouteSnapshot
 } from '@angular/router';
 import { Song } from '@davidsmith/api-interfaces';
-import { Observable, of } from 'rxjs';
-import { SongRelationshipService } from '../core/song/song-relationship.service';
+import { Observable } from 'rxjs';
 import { SongService } from '../core/song/song.service';
 
 @Injectable({
