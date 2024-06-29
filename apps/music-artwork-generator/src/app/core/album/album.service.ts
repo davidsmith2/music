@@ -15,9 +15,9 @@ export class AlbumService extends EntityCollectionServiceBase<Album> {
   }
 
   getAlbums(): Observable<Album[]> {
-    return this.apollo.query({
+    return this.apollo.watchQuery({
       query: SELECT_ALL_ALBUMS,
-    }).pipe(
+    }).valueChanges.pipe(
       map((res) => {
         return res['data']['selectAll_albums'];
       }),
@@ -28,10 +28,10 @@ export class AlbumService extends EntityCollectionServiceBase<Album> {
   }
 
   getAlbum(id: string): Observable<Album> {
-    return this.apollo.query({
+    return this.apollo.watchQuery({
       query: SELECT_ONE_ALBUM,
       variables: { id }
-    }).pipe(
+    }).valueChanges.pipe(
       map((res) => {
         return res['data']['selectOne_album'];
       }),

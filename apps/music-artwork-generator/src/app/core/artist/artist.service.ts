@@ -15,12 +15,12 @@ export class ArtistService extends EntityCollectionServiceBase<Artist> {
   }
 
   getArtist(id: string): Observable<Artist> {
-    return this.apollo.query({
+    return this.apollo.watchQuery({
       query: SELECT_ONE_ARTIST,
       variables: {
         id
       }
-    }).pipe(
+    }).valueChanges.pipe(
       map(result => {
         return result.data['selectOne_artist'];
       }),

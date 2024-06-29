@@ -14,9 +14,9 @@ export class SongService extends EntityCollectionServiceBase<Song> {
     super('Song', serviceElementsFactory);
   }
   getSongs(): Observable<Array<Song>> {
-    return this.apollo.query({
+    return this.apollo.watchQuery({
       query: SELECT_ALL_SONGS,
-    }).pipe(
+    }).valueChanges.pipe(
       map((res) => {
         return res['data']['selectAll_songs'];
       }),

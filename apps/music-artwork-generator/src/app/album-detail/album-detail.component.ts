@@ -1,9 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Album } from '@davidsmith/api-interfaces';
-import { Observable, map } from 'rxjs';
-import { Apollo } from 'apollo-angular';
-import { SELECT_ONE_ALBUM } from '../core/album/album.constants';
+import { Observable, switchMap } from 'rxjs';
+import { AlbumService } from '../core/album/album.service';
 
 @Component({
   selector: 'davidsmith-album-detail',
@@ -13,15 +12,14 @@ import { SELECT_ONE_ALBUM } from '../core/album/album.constants';
 })
 export class AlbumDetailComponent {
   album$: Observable<Album> = this.activatedRoute.params.pipe(
-    map((params: Params) => {
-      const query = this.apollo.client.readQuery({query: SELECT_ONE_ALBUM, variables: {id: params.id}});
-      return !!query && query['selectOne_album']
+    switchMap((params: Params) => {
+      return this.albumService.getAlbum(params.id);
     })
   );
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private apollo: Apollo
+    private albumService: AlbumService
   ) { }
 
 }

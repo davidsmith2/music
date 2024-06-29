@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, Inject, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map, take, tap } from 'rxjs/operators';
+import { map, switchMap, take, tap } from 'rxjs/operators';
 import { WINDOW } from '../window.constant';
 import { Cover } from '../core/cover/cover.interface';
 import { Album } from '@davidsmith/api-interfaces';
@@ -9,6 +9,7 @@ import { Artist } from '@davidsmith/api-interfaces';
 import { Apollo } from 'apollo-angular';
 import { AlbumService } from '../core/album/album.service';
 import { SELECT_ONE_ARTIST } from '../core/artist/artist.constants';
+import { ArtistService } from '../core/artist/artist.service';
 
 @Component({
   templateUrl: './artist-detail.component.html',
@@ -17,14 +18,8 @@ import { SELECT_ONE_ARTIST } from '../core/artist/artist.constants';
 })
 export class ArtistDetailComponent implements OnInit, OnDestroy {
   artist$: Observable<Artist> = this.activatedRoute.params.pipe(
-    map((params: Params) => {
-      const query = this.apollo.client.readQuery({
-        query: SELECT_ONE_ARTIST,
-        variables: {
-          id: params.id
-        }
-      });
-      return !!query && query['selectOne_artist'] || null;
+    switchMap((params: Params) => {
+      return this.artistService.getArtist(params.id);
     })
   );
 
@@ -34,9 +29,9 @@ export class ArtistDetailComponent implements OnInit, OnDestroy {
   constructor(
     private activatedRoute: ActivatedRoute,
     @Inject(WINDOW) private window: Window,
+    private artistService: ArtistService,
     private albumService: AlbumService,
-    private router: Router,
-    private apollo: Apollo
+    private router: Router
   ) {
     this.window.addEventListener('message', (messageEvent: MessageEvent) => {
       if (messageEvent.origin !== "https://covers.musichoarders.xyz") {

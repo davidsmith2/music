@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AlbumDetailComponent } from './album-detail.component';
 import { RouterModule } from '@angular/router';
-import { AlbumResolver } from './album.resolver';
 
 @NgModule({
   declarations: [
@@ -13,15 +12,9 @@ import { AlbumResolver } from './album.resolver';
     RouterModule.forChild([
       {
         path: '',
-        component: AlbumDetailComponent,
-        resolve: {
-          album: AlbumResolver
-        }
+        component: AlbumDetailComponent
       }
     ])
-  ],
-  providers: [
-    AlbumResolver
   ],
   exports: [
     AlbumDetailComponent

@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Library } from "@davidsmith/api-interfaces";
-import { EntityActionOptions, EntityCollectionServiceBase, EntityCollectionServiceElementsFactory } from "@ngrx/data";
-import { Apollo, gql } from "apollo-angular";
+import { EntityCollectionServiceBase, EntityCollectionServiceElementsFactory } from "@ngrx/data";
+import { Apollo } from "apollo-angular";
 import { Observable, catchError, map, of } from "rxjs";
 import { SELECT_ONE_LIBRARY } from "./library.constants";
 
@@ -15,10 +15,10 @@ export class LibraryService extends EntityCollectionServiceBase<Library> {
   }
 
   getLibrary(id: string): Observable<Library> {
-    return this.apollo.query({
+    return this.apollo.watchQuery({
       query: SELECT_ONE_LIBRARY,
       variables: { id }
-    }).pipe(
+    }).valueChanges.pipe(
       map(result => {
         return result.data['selectOne_library'];
       }),
