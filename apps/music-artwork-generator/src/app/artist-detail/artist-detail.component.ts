@@ -1,14 +1,12 @@
 import { Component, ChangeDetectionStrategy, Inject, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map, switchMap, take, tap } from 'rxjs/operators';
+import { switchMap, take, tap } from 'rxjs/operators';
 import { WINDOW } from '../window.constant';
 import { Cover } from '../core/cover/cover.interface';
 import { Album } from '@davidsmith/api-interfaces';
 import { Artist } from '@davidsmith/api-interfaces';
-import { Apollo } from 'apollo-angular';
 import { AlbumService } from '../core/album/album.service';
-import { SELECT_ONE_ARTIST } from '../core/artist/artist.constants';
 import { ArtistService } from '../core/artist/artist.service';
 
 @Component({
@@ -69,13 +67,6 @@ export class ArtistDetailComponent implements OnInit, OnDestroy {
       take(1),
       tap(() => {
         this.selectedAlbum = null;
-        this.router.navigate([], {
-          relativeTo: this.activatedRoute,
-          queryParams: {
-            refresh: new Date().getTime()
-          },
-          queryParamsHandling: 'merge'
-        });
       })
     ).subscribe();
   }
