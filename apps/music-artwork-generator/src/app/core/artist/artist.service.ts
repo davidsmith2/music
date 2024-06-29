@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Artist } from "@davidsmith/api-interfaces";
-import { EntityActionOptions, EntityCollectionServiceBase, EntityCollectionServiceElementsFactory } from "@ngrx/data";
-import { Apollo, gql } from "apollo-angular";
+import { EntityCollectionServiceBase, EntityCollectionServiceElementsFactory } from "@ngrx/data";
+import { Apollo } from "apollo-angular";
 import { Observable, catchError, map, of } from "rxjs";
 import { SELECT_ONE_ARTIST } from "./artist.constants";
 
@@ -14,9 +14,12 @@ export class ArtistService extends EntityCollectionServiceBase<Artist> {
     super('Artist', serviceElementsFactory);
   }
 
-  getArtist(): Observable<Artist> {
+  getArtist(id: string): Observable<Artist> {
     return this.apollo.query({
       query: SELECT_ONE_ARTIST,
+      variables: {
+        id
+      }
     }).pipe(
       map(result => {
         return result.data['selectOne_artist'];

@@ -8,7 +8,6 @@ import { ArtistService } from "../core/artist/artist.service";
 export class ArtistResolverService {
   constructor(private artistService: ArtistService) {}
   resolve(route: ActivatedRouteSnapshot, _state: RouterStateSnapshot): Observable<Artist> {
-    const id: string = route.paramMap.get('id');
-    return this.artistService.getArtist();
+    return this.artistService.getArtist(route.paramMap.get('id'));
   }
 }

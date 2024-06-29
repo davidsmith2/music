@@ -15,6 +15,6 @@ export class AlbumResolver implements Resolve<Album> {
   constructor(private albumService: AlbumService) { }
 
   resolve(route: ActivatedRouteSnapshot, _state: RouterStateSnapshot): Observable<Album> {
-    return this.albumService.getAlbum();
+    return this.albumService.getAlbum(route.paramMap.get('id'));
   }
 }

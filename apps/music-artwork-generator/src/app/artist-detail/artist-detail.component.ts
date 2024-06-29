@@ -1,12 +1,11 @@
 import { Component, ChangeDetectionStrategy, Inject, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, take, tap } from 'rxjs/operators';
 import { WINDOW } from '../window.constant';
 import { Cover } from '../core/cover/cover.interface';
 import { Album } from '@davidsmith/api-interfaces';
 import { Artist } from '@davidsmith/api-interfaces';
-import { ArtistService } from '../core/artist/artist.service';
 import { Apollo } from 'apollo-angular';
 import { AlbumService } from '../core/album/album.service';
 import { SELECT_ONE_ARTIST } from '../core/artist/artist.constants';
@@ -18,8 +17,13 @@ import { SELECT_ONE_ARTIST } from '../core/artist/artist.constants';
 })
 export class ArtistDetailComponent implements OnInit, OnDestroy {
   artist$: Observable<Artist> = this.activatedRoute.params.pipe(
-    map((_params) => {
-      const query = this.apollo.client.readQuery({ query: SELECT_ONE_ARTIST });
+    map((params: Params) => {
+      const query = this.apollo.client.readQuery({
+        query: SELECT_ONE_ARTIST,
+        variables: {
+          id: params.id
+        }
+      });
       return !!query && query['selectOne_artist'] || null;
     })
   );
@@ -30,7 +34,6 @@ export class ArtistDetailComponent implements OnInit, OnDestroy {
   constructor(
     private activatedRoute: ActivatedRoute,
     @Inject(WINDOW) private window: Window,
-    private artistService: ArtistService,
     private albumService: AlbumService,
     private router: Router,
     private apollo: Apollo
@@ -64,7 +67,10 @@ export class ArtistDetailComponent implements OnInit, OnDestroy {
   }
 
   updateAlbumCover(cover: string) {
-    this.albumService.updateAlbum().pipe(
+    this.albumService.updateAlbum({
+      id: this.selectedAlbum.id,
+      cover
+    }).pipe(
       take(1),
       tap(() => {
         this.selectedAlbum = null;

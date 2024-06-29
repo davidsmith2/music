@@ -1,20 +1,20 @@
 import { gql } from "apollo-angular";
 
 export const SELECT_ONE_ARTIST = gql`
-  query {
-    selectOne_artist(id: "b15ad6e5") {
+  query selectOne_artist($id: String!) {
+    selectOne_artist(id: $id) {
+      id
+      name
+      albums {
         id
-        name
-        albums {
+        title
+        artist
+        cover
+        songs {
           id
           title
-          artist
-          cover
-          songs {
-              id
-              title
-          }
         }
+      }
     }
   }
 `;

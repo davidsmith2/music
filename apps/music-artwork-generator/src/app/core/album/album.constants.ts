@@ -16,8 +16,8 @@ export const SELECT_ALL_ALBUMS = gql`
 `;
 
 export const SELECT_ONE_ALBUM = gql`
-  query {
-    selectOne_album(id: "da11964f") {
+  query selectOne_album($id: String!) {
+    selectOne_album(id: $id) {
       id
       title
       artist
@@ -31,11 +31,8 @@ export const SELECT_ONE_ALBUM = gql`
 `;
 
 export const UPDATE_ONE_ALBUM = gql`
-  mutation {
-    updateOne_album(album: {
-      id: "da11964f",
-      cover: "test"
-    }) {
+  mutation updateOne_album($album: AlbumUpdateType!) {
+    updateOne_album(album: $album) {
       id
       cover
     }

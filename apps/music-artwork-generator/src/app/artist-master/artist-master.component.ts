@@ -17,7 +17,12 @@ export class ArtistMasterComponent implements OnInit {
   ) { }
   
   ngOnInit(): void {
-    this.library$ = of(this.apollo.client.readQuery({ query: SELECT_ONE_LIBRARY })).pipe(
+    this.library$ = of(this.apollo.client.readQuery({
+      query: SELECT_ONE_LIBRARY,
+      variables: {
+        id: '951a9862'
+      }
+    })).pipe(
       map((query) => {
         return !!query && query['selectOne_library'] || null;
       })

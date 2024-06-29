@@ -27,9 +27,10 @@ export class AlbumService extends EntityCollectionServiceBase<Album> {
     );
   }
 
-  getAlbum(): Observable<Album> {
+  getAlbum(id: string): Observable<Album> {
     return this.apollo.query({
       query: SELECT_ONE_ALBUM,
+      variables: { id }
     }).pipe(
       map((res) => {
         return res['data']['selectOne_album'];
@@ -40,9 +41,10 @@ export class AlbumService extends EntityCollectionServiceBase<Album> {
     );
   }
 
-  updateAlbum(): Observable<Album> {
+  updateAlbum(album: Partial<Album>): Observable<Album> {
     return this.apollo.mutate({
       mutation: UPDATE_ONE_ALBUM,
+      variables: { album }
     }).pipe(
       map((res) => {
         return res['data']['updateOne_album'];

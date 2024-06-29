@@ -14,9 +14,10 @@ export class LibraryService extends EntityCollectionServiceBase<Library> {
     super('Library', serviceElementsFactory);
   }
 
-  getLibrary(): Observable<Library> {
+  getLibrary(id: string): Observable<Library> {
     return this.apollo.query({
       query: SELECT_ONE_LIBRARY,
+      variables: { id }
     }).pipe(
       map(result => {
         return result.data['selectOne_library'];
