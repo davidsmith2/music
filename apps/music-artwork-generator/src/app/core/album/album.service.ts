@@ -6,6 +6,12 @@ import { Apollo, gql } from "apollo-angular";
 
 @Injectable({ providedIn: 'root' })
 export class AlbumService extends EntityCollectionServiceBase<Album> {
+  queries = {
+    getAlbums: null,
+    getAlbum: null,
+    updateAlbum: null
+  };
+
   constructor(
     serviceElementsFactory: EntityCollectionServiceElementsFactory,
     private apollo: Apollo
@@ -14,8 +20,9 @@ export class AlbumService extends EntityCollectionServiceBase<Album> {
   }
 
   getAlbums(key: string, options?: EntityActionOptions): Observable<Album[]> {
+    this.queries.getAlbums = gql(options.httpOptions.httpParams['query']);
     return this.apollo.query({
-      query: gql(options.httpOptions.httpParams['query']),
+      query: this.queries.getAlbums,
     }).pipe(
       map((res) => {
         return res['data'][key];
@@ -27,8 +34,9 @@ export class AlbumService extends EntityCollectionServiceBase<Album> {
   }
 
   getAlbum(key: string, options?: EntityActionOptions): Observable<Album> {
+    this.queries.getAlbum = gql(options.httpOptions.httpParams['query']);
     return this.apollo.query({
-      query: gql(options.httpOptions.httpParams['query']),
+      query: this.queries.getAlbum,
     }).pipe(
       map((res) => {
         return res['data'][key];
@@ -40,8 +48,9 @@ export class AlbumService extends EntityCollectionServiceBase<Album> {
   }
 
   updateAlbum(key: string, data: any, options: EntityActionOptions): Observable<Album> {
+    this.queries.updateAlbum = gql(data.query);
     return this.apollo.mutate({
-      mutation: gql(data.query)
+      mutation: this.queries.updateAlbum,
     }).pipe(
       map((res) => {
         return res['data'][key];

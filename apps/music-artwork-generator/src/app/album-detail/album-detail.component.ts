@@ -1,10 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import { Album } from '@davidsmith/api-interfaces';
-import { Store, select } from '@ngrx/store';
-import { toStaticSelector } from 'ngrx-entity-relationship';
-import { Observable, map, switchMap } from 'rxjs';
-import { AlbumRelationshipService } from '../core/album/album-relationship.service';
+import { Observable, map } from 'rxjs';
+import { Apollo } from 'apollo-angular';
+import { AlbumService } from '../core/album/album.service';
 
 @Component({
   selector: 'davidsmith-album-detail',
@@ -14,16 +13,16 @@ import { AlbumRelationshipService } from '../core/album/album-relationship.servi
 })
 export class AlbumDetailComponent {
   album$: Observable<Album> = this.activatedRoute.params.pipe(
-    map((params) => params.id),
-    switchMap((id: string) => this.store.pipe(
-      select(toStaticSelector(this.albumRelationshipService.selectAlbumDetail, id))
-    ))
+    map((params: Params) => {
+      const query = this.apollo.client.readQuery({query: this.albumService.queries.getAlbum, variables: {id: params.id}});
+      return !!query && query['selectOne_album']
+    })
   );
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private store: Store,
-    private albumRelationshipService: AlbumRelationshipService
+    private albumService: AlbumService,
+    private apollo: Apollo
   ) { }
 
 }

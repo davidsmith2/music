@@ -1,8 +1,6 @@
 import { Injectable } from "@angular/core";
-import { reduceGraph, rootEntities, rootEntity } from "ngrx-entity-relationship";
+import { rootEntities, rootEntity } from "ngrx-entity-relationship";
 import { toGraphQL } from "ngrx-entity-relationship/graphql";
-import { tap } from "rxjs";
-import { Store } from "@ngrx/store";
 import { SongService } from "./song.service";
 
 @Injectable({providedIn: 'root'})
@@ -22,8 +20,7 @@ export class SongRelationshipService {
   selectSongs = rootEntities(this.selectSong);
   
   constructor(
-    private songService: SongService,
-    private store: Store
+    private songService: SongService
   ) {}
   
   getAllSongs() {
@@ -40,17 +37,7 @@ export class SongRelationshipService {
           'Content-Type': 'application/json'
         }
       }
-    }).pipe(
-      tap((songs) => {
-        this.store.dispatch(
-          reduceGraph({
-            data: songs,
-            selector: this.selectSongs
-          })
-        );
-        
-      })
-    );
+    });
   }
   
 }

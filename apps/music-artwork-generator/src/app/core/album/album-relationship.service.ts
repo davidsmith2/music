@@ -1,11 +1,8 @@
 import { Injectable } from "@angular/core";
 import { AlbumService } from "../album/album.service";
-import { reduceGraph, relatedEntity, rootEntities, rootEntity } from "ngrx-entity-relationship";
+import { rootEntities, rootEntity } from "ngrx-entity-relationship";
 import { toGraphQL, toMutation } from "ngrx-entity-relationship/graphql";
-import { Store } from "@ngrx/store";
-import { tap } from "rxjs/operators";
 import { Album } from "@davidsmith/api-interfaces";
-import { SongService } from "../song/song.service";
 
 @Injectable({providedIn: 'root'})
 export class AlbumRelationshipService {
@@ -14,13 +11,7 @@ export class AlbumRelationshipService {
     if (songGqlFields) {
       return rootEntity(
         this.albumService,
-        {gqlFields: albumGqlFields},
-        relatedEntity(
-          this.songService,
-          'songIds',
-          'songs',
-          { gqlFields: songGqlFields}
-        )
+        {gqlFields: albumGqlFields}
       );
     } else {
       return rootEntity(
@@ -50,9 +41,7 @@ export class AlbumRelationshipService {
   selectAlbumsDetail = rootEntities(this.selectAlbumDetail);
   
   constructor(
-    private albumService: AlbumService,
-    private songService: SongService,
-    private store: Store
+    private albumService: AlbumService
   ) {}
   
   getAllAlbums() {
@@ -69,16 +58,7 @@ export class AlbumRelationshipService {
           'Content-Type': 'application/json'
         }
       }
-    }).pipe(
-      tap((albums) => {
-        this.store.dispatch(
-          reduceGraph({
-            data: albums,
-            selector: this.selectAlbumsMaster
-          })
-        );
-      })
-    );
+    });
   }
 
   getAlbum(key: string) {
@@ -96,16 +76,7 @@ export class AlbumRelationshipService {
           'Content-Type': 'application/json'
         }
       }
-    }).pipe(
-      tap((album) => {
-        this.store.dispatch(
-          reduceGraph({
-            data: album,
-            selector: this.selectAlbumDetail
-          })
-        );
-      })
-    );
+    });
   }
 
   updateAlbum(album: Album) {
@@ -124,16 +95,7 @@ export class AlbumRelationshipService {
           'Content-Type': 'application/json'
         }
       }
-    }).pipe(
-      tap((albums) => {
-        this.store.dispatch(
-          reduceGraph({
-            data: albums,
-            selector: this.selectAlbumsMaster
-          })
-        );
-      })
-    );
+    });
   }
 
 }

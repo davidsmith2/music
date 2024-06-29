@@ -1,11 +1,9 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Album } from '@davidsmith/api-interfaces';
-import { Store, select } from '@ngrx/store';
-import { toStaticSelector } from 'ngrx-entity-relationship';
 import { Observable } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
-import { AlbumRelationshipService } from '../core/album/album-relationship.service';
+import { map } from 'rxjs/operators';
 import { AlbumService } from '../core/album/album.service';
+import { Apollo } from 'apollo-angular';
 
 @Component({
   selector: 'davidsmith-album-master',
@@ -15,15 +13,15 @@ import { AlbumService } from '../core/album/album.service';
 })
 export class AlbumMasterComponent {
   albums$: Observable<Array<Album>> = this.albumService.keys$.pipe(
-    switchMap((keys: Array<string>) => this.store.pipe(
-      select(toStaticSelector(this.albumRelationshipService.selectAlbumsMaster, keys))
-    ))
+    map((_keys: Array<string>) => {
+      const query = this.apollo.client.readQuery({query: this.albumService.queries.getAlbums});
+      return !!query && query['selectAll_albums']
+    })
   );
 
   constructor(
     private albumService: AlbumService,
-    private store: Store,
-    private albumRelationshipService: AlbumRelationshipService
+    private apollo: Apollo
   ) { }
 
 }

@@ -6,6 +6,10 @@ import { Observable, catchError, map, of } from "rxjs";
 
 @Injectable({ providedIn: 'root' })
 export class ArtistService extends EntityCollectionServiceBase<Artist> {
+  queries = {
+    getArtist: null
+  }
+
   constructor(
     serviceElementsFactory: EntityCollectionServiceElementsFactory,
     private apollo: Apollo
@@ -14,8 +18,9 @@ export class ArtistService extends EntityCollectionServiceBase<Artist> {
   }
 
   getArtist(key: string, options: EntityActionOptions): Observable<Artist> {
+    this.queries.getArtist = gql(options.httpOptions.httpParams['query']);
     return this.apollo.query({
-      query: gql(options.httpOptions.httpParams['query']),
+      query: this.queries.getArtist,
     }).pipe(
       map(result => {
         return result.data[key];

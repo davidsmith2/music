@@ -1,10 +1,7 @@
 import { Injectable } from "@angular/core";
 import { LibraryService } from "./library.service";
-import { ArtistService } from "../artist/artist.service";
-import { reduceGraph, relatedEntity, rootEntity } from "ngrx-entity-relationship";
+import { rootEntity } from "ngrx-entity-relationship";
 import { toGraphQL } from "ngrx-entity-relationship/graphql";
-import { tap } from "rxjs";
-import { Store } from "@ngrx/store";
 
 @Injectable({providedIn: 'root'})
 export class LibraryRelationshipService {
@@ -13,22 +10,13 @@ export class LibraryRelationshipService {
     {
       gqlFields: {
         id: '',
-        artistIds: '',
         artists: '{id, name}'
       }
-    },
-    relatedEntity(
-      this.artistService,
-      'artistIds',
-      'artists',
-      { gqlFields: ['id', 'name']}
-    )
+    }
   );
 
   constructor(
-    private libraryService: LibraryService,
-    private artistService: ArtistService,
-    private store: Store
+    private libraryService: LibraryService
   ) {}
 
   getLibraryByKey(key: string) {
@@ -46,17 +34,7 @@ export class LibraryRelationshipService {
           'Content-Type': 'application/json'
         }
       }
-    }).pipe(
-      tap((library) => {
-        this.store.dispatch(
-          reduceGraph({
-            data: library,
-            selector: this.selectLibrary
-          })
-        );
-
-      })
-    );
+    });
   }
 
 }
