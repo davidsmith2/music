@@ -9,6 +9,7 @@ import { StoreModule } from '@ngrx/store';
 import { entityConfig } from './entity-metadata';
 import { EffectsModule } from '@ngrx/effects';
 import { metaReducers } from './meta-reducers.constant';
+import { GraphQLModule } from './graphql.module';
 
 const defaultDataServiceConfig: DefaultDataServiceConfig = {
   root: '/graphql'
@@ -50,7 +51,8 @@ class CoreHttpUrlGenerator extends DefaultHttpUrlGenerator {
     ]),
     StoreModule.forRoot({}, { metaReducers }),
     EffectsModule.forRoot([]),
-    EntityDataModule.forRoot(entityConfig)
+    EntityDataModule.forRoot(entityConfig),
+    GraphQLModule
   ],
   providers: [
     { provide: WINDOW, useValue: window },
