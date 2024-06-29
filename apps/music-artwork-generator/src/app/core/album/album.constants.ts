@@ -1,7 +1,7 @@
 import { gql } from "apollo-angular";
 
 export const SELECT_ALL_ALBUMS = gql`
-  query {
+  query selectAll_albums {
     selectAll_albums {
       id
       title
