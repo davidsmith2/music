@@ -19,6 +19,7 @@ export class LibraryService {
         album.id = albumId;
         album.songs = album.songs.map((song, songIndex) => {
           const songId: string = this.createId(song.title, Number(`${artist.id}${album.id}${songIndex}`));
+          song.duration = Math.round(song.duration) || 0;
           song.id = songId;
           return song;
         });

@@ -48,6 +48,32 @@ export function createApollo(httpLink: HttpLink): ApolloClientOptions<any> {
                 }
                 return 0;
               }
+            },
+            totalDurationInMinutes: {
+              read(_, { readField }) {
+                const songs = readField<Reference[]>('songs');
+                if (songs) {
+                  const rawDuration: number = songs.reduce((acc, songRef) => {
+                    const duration = readField<number>("duration", songRef);
+                    acc += duration;
+                    return acc;
+                  }, 0);
+                  return Math.floor(rawDuration / 60);
+                }
+                return 0;
+              }
+            }
+          }
+        },
+        SongType: {
+          fields: {
+            durationInMinutes: {
+              read(_, { readField }) {
+                const duration: number = readField<number>('duration');
+                const minutes: number = Math.floor(duration / 60);
+                const seconds: number = duration % 60;
+                return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+              }
             }
           }
         }

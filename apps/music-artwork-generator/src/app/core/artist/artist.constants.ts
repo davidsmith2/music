@@ -13,8 +13,11 @@ export const SELECT_ONE_ARTIST = gql`
         songs {
           id
           title
+          duration
+          durationInMinutes @client
         }
         totalSongs @client
+        totalDurationInMinutes @client
       }
       totalAlbums @client
       totalSongs @client

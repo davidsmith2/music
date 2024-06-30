@@ -70,7 +70,8 @@ export class ImportService {
         id: songId,
         title: song.title,
         artist: song.artist,
-        album: song.album
+        album: song.album,
+        duration: song.duration
       };
       return _song;
     });

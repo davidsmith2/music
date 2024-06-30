@@ -14,7 +14,7 @@
           <ng-template #albumCoverTemplate>
             <img [src]="album.cover" [width]="175" [height]="175" alt="Album artwork">
           </ng-template>
-          <div>{{album.totalSongs}} songs, x minutes</div>
+          <div>{{album.totalSongs}} songs, {{album.totalDurationInMinutes}} minutes</div>
         </div>
         <div>
           <header>
@@ -28,7 +28,7 @@
                 <tr *ngFor="let song of album.songs; let i = index">
                   <td style="border-top: 1px solid gray">{{ i + 1 }}</td>
                   <td style="border-top: 1px solid gray">{{ song.title }}</td>
-                  <td style="border-top: 1px solid gray">duration</td>
+                  <td style="border-top: 1px solid gray">{{ song.durationInMinutes }}</td>
                 </tr>
               </tbody>
             </table>
