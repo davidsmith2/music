@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy, Inject, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import { Observable } from 'rxjs';
 import { switchMap, take, tap } from 'rxjs/operators';
 import { WINDOW } from '../window.constant';
@@ -28,8 +28,7 @@ export class ArtistDetailComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     @Inject(WINDOW) private window: Window,
     private artistService: ArtistService,
-    private albumService: AlbumService,
-    private router: Router
+    private albumService: AlbumService
   ) {
     this.window.addEventListener('message', (messageEvent: MessageEvent) => {
       if (messageEvent.origin !== "https://covers.musichoarders.xyz") {
@@ -69,18 +68,6 @@ export class ArtistDetailComponent implements OnInit, OnDestroy {
         this.selectedAlbum = null;
       })
     ).subscribe();
-  }
-
-  getNumberOfArtistAlbums(albums: Album[]): number {
-    return albums.length;
-  }
-
-  getNumberOfArtistSongs(albums: Album[]): number {
-    return albums.reduce((total, album) => total + album.songs?.length, 0);
-  }
-
-  getNumberOfAlbumSongs(album: Album): number {
-    return album.songs?.length;
   }
 
 }

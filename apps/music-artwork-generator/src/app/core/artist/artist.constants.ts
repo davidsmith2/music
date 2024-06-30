@@ -14,7 +14,10 @@ export const SELECT_ONE_ARTIST = gql`
           id
           title
         }
+        totalSongs @client
       }
+      totalAlbums @client
+      totalSongs @client
     }
   }
 `;

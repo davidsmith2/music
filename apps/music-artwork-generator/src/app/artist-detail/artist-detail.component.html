@@ -3,7 +3,7 @@
     <header>
       <h2>{{artist.name}}</h2>
       <hr>
-      <div>{{getNumberOfArtistAlbums(artist.albums)}} album, {{getNumberOfArtistSongs(artist.albums)}} songs</div>
+      <div>{{artist.totalAlbums}} albums, {{artist.totalSongs}} songs</div>
     </header>
     <main style="margin-top: 2em;">
       <section *ngFor="let album of artist.albums" class="child-container">
@@ -14,7 +14,7 @@
           <ng-template #albumCoverTemplate>
             <img [src]="album.cover" [width]="175" [height]="175" alt="Album artwork">
           </ng-template>
-          <div>{{getNumberOfAlbumSongs(album)}} songs, x minutes</div>
+          <div>{{album.totalSongs}} songs, x minutes</div>
         </div>
         <div>
           <header>
