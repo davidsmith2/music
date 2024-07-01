@@ -4,12 +4,13 @@
 FILE_PATH="$1"
 
 # Extract metadata for title, artist and album using AtomicParsley
-metadata1=$(AtomicParsley "$FILE_PATH" -t 1 | grep -E 'Atom "(©nam|©ART|©alb)" contains: ')
+metadata1=$(AtomicParsley "$FILE_PATH" -t 1 | grep -E 'Atom "(©nam|©ART|©alb|©gen)" contains: ')
 
 # Parse and format the output
 title=$(echo "$metadata1" | grep '©nam' | awk -F": " '{print $2}')
 artist=$(echo "$metadata1" | grep '©ART' | awk -F": " '{print $2}')
 album=$(echo "$metadata1" | grep '©alb' | awk -F": " '{print $2}')
+genre=$(echo "$metadata1" | grep '©gen' | awk -F": " '{print $2}')
 
 # Extract metadata for duration using AtomicParsley
 metadata2=$(AtomicParsley "$FILE_PATH" -T 1)
@@ -18,4 +19,10 @@ metadata2=$(AtomicParsley "$FILE_PATH" -T 1)
 duration=$(echo "$metadata2" | awk '/Movie duration:/ {print $3}')
 
 # Format as JSON
-echo "{\"title\": \"$title\", \"artist\": \"$artist\", \"album\": \"$album\", \"duration\": \"$duration\"}"
+echo -e "{
+    \"title\": \"$title\",
+    \"artist\": \"$artist\",
+    \"album\": \"$album\",
+    \"genre\": \"$genre\",
+    \"duration\": \"$duration\"
+}"

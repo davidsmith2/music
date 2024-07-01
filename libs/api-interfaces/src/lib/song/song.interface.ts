@@ -3,5 +3,6 @@ export interface Song {
   artist: string;
   title: string;
   album: string;
+  genre: string;
   duration: number;
 }

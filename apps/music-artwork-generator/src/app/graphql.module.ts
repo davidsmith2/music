@@ -40,6 +40,17 @@ export function createApollo(httpLink: HttpLink): ApolloClientOptions<any> {
         },
         AlbumType: {
           fields: {
+            genre: {
+              read(_, { readField }) {
+                const songs = readField<Reference[]>('songs');
+                if (songs) {
+                  const genres: string[] = songs.map((songRef) => readField<string>("genre", songRef));
+                  const genre: string = genres[0];
+                  return genre;
+                }
+                return '';
+              }
+            },
             totalSongs: {
               read(_, { readField }) {
                 const songs = readField('songs');
