@@ -51,6 +51,17 @@ export function createApollo(httpLink: HttpLink): ApolloClientOptions<any> {
                 return '';
               }
             },
+            year: {
+              read(_, { readField }) {
+                const songs = readField<Reference[]>('songs');
+                if (songs) {
+                  const years: number[] = songs.map((songRef) => readField<number>("year", songRef));
+                  const year: number = years[0];
+                  return year;
+                }
+                return null;
+              }
+            },
             totalSongs: {
               read(_, { readField }) {
                 const songs = readField('songs');

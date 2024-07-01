@@ -11,10 +11,12 @@ export const SELECT_ONE_ARTIST = gql`
         artist
         cover
         genre @client
+        year @client
         songs {
           id
           title
           genre
+          year
           duration
           durationInMinutes @client
         }

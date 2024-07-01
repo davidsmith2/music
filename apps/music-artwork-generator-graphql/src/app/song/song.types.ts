@@ -18,6 +18,9 @@ export class SongType {
   genre: string;
 
   @Field()
+  year: number;
+
+  @Field()
   duration: number;
 
 }

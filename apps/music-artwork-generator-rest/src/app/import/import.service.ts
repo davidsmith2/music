@@ -72,6 +72,7 @@ export class ImportService {
         artist: song.artist,
         album: song.album,
         genre: song.genre,
+        year: song.year,
         duration: song.duration
       };
       return _song;
