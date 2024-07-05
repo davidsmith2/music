@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { take } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { Library } from '@davidsmith/api-interfaces';
+import { LibraryDto } from '@davidsmith/api-interfaces';
 import { Store } from '@ngrx/store';
 import { MergeQuerySet } from '@ngrx/data';
 import { LibraryService } from './core/library/library.service';
@@ -13,7 +13,7 @@ import { LibraryService } from './core/library/library.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent {
-  library$: Observable<Library>;
+  library$: Observable<LibraryDto>;
 
   constructor(
     private libraryService: LibraryService,

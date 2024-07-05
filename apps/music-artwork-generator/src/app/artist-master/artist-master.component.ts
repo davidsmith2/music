@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { Observable, map, of } from 'rxjs';
-import { Library } from '@davidsmith/api-interfaces';
+import { LibraryDto } from '@davidsmith/api-interfaces';
 import { Apollo } from 'apollo-angular';
 import { SELECT_ONE_LIBRARY } from '../core/library/library.constants';
 
@@ -10,7 +10,7 @@ import { SELECT_ONE_LIBRARY } from '../core/library/library.constants';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ArtistMasterComponent implements OnInit {
-  library$: Observable<Library>;
+  library$: Observable<LibraryDto>;
 
   constructor(
     private apollo: Apollo

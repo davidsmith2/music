@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { Song } from '@davidsmith/api-interfaces';
+import { SongDto } from '@davidsmith/api-interfaces';
 import { Observable } from 'rxjs';
 import { SongService } from '../core/song/song.service';
 
@@ -9,7 +9,7 @@ import { SongService } from '../core/song/song.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SongMasterComponent {
-  songs$: Observable<Array<Song>> = this.songService.getSongs();
+  songs$: Observable<Array<SongDto>> = this.songService.getSongs();
 
   constructor(
     private songService: SongService

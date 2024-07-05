@@ -1,10 +1,7 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { Album } from '@davidsmith/api-interfaces';
+import { AlbumDto } from '@davidsmith/api-interfaces';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { AlbumService } from '../core/album/album.service';
-import { Apollo } from 'apollo-angular';
-import { SELECT_ALL_ALBUMS } from '../core/album/album.constants';
 
 @Component({
   selector: 'davidsmith-album-master',
@@ -13,7 +10,7 @@ import { SELECT_ALL_ALBUMS } from '../core/album/album.constants';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AlbumMasterComponent {
-  albums$: Observable<Array<Album>> = this.albumService.getAlbums();
+  albums$: Observable<Array<AlbumDto>> = this.albumService.getAlbums();
 
   constructor(
     private albumService: AlbumService

@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, Put } from '@nestjs/common';
 import { AlbumService } from './album.service';
-import { Album } from '@davidsmith/api-interfaces';
+import { AlbumDto } from '@davidsmith/api-interfaces';
 
 @Controller('album')
 export class AlbumController {
@@ -19,7 +19,7 @@ export class AlbumController {
   @Put(':id')
   updateAlbum(
     @Param('id') _id: string,
-    @Body() album: Album
+    @Body() album: AlbumDto
   ) {
     return this.albumService.updateAlbum(album);
   }

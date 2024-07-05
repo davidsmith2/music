@@ -4,8 +4,8 @@ import { Observable } from 'rxjs';
 import { switchMap, take, tap } from 'rxjs/operators';
 import { WINDOW } from '../window.constant';
 import { Cover } from '../core/cover/cover.interface';
-import { Album } from '@davidsmith/api-interfaces';
-import { Artist } from '@davidsmith/api-interfaces';
+import { AlbumDto } from '@davidsmith/api-interfaces';
+import { ArtistDto } from '@davidsmith/api-interfaces';
 import { AlbumService } from '../core/album/album.service';
 import { ArtistService } from '../core/artist/artist.service';
 
@@ -15,13 +15,13 @@ import { ArtistService } from '../core/artist/artist.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ArtistDetailComponent implements OnInit, OnDestroy {
-  artist$: Observable<Artist> = this.activatedRoute.params.pipe(
+  artist$: Observable<ArtistDto> = this.activatedRoute.params.pipe(
     switchMap((params: Params) => {
       return this.artistService.getArtist(params.id);
     })
   );
 
-  selectedAlbum: Album;
+  selectedAlbum: AlbumDto;
   popupWindow: Window;
 
   constructor(
@@ -48,7 +48,7 @@ export class ArtistDetailComponent implements OnInit, OnDestroy {
     //
   }
 
-  findAlbumCover(event: Event, album: Album) {
+  findAlbumCover(event: Event, album: AlbumDto) {
     event.preventDefault();
     this.selectedAlbum = album;
     this.popupWindow = this.window.open(

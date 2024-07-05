@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { Album } from '@davidsmith/api-interfaces';
+import { AlbumDto } from '@davidsmith/api-interfaces';
 import { Observable, switchMap } from 'rxjs';
 import { AlbumService } from '../core/album/album.service';
 
@@ -11,7 +11,7 @@ import { AlbumService } from '../core/album/album.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AlbumDetailComponent {
-  album$: Observable<Album> = this.activatedRoute.params.pipe(
+  album$: Observable<AlbumDto> = this.activatedRoute.params.pipe(
     switchMap((params: Params) => {
       return this.albumService.getAlbum(params.id);
     })

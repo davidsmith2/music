@@ -1,17 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { readFileSync, writeFileSync } from 'fs';
 import { join } from 'path';
-import { Artist, Library } from '@davidsmith/api-interfaces';
+import { ArtistDto, LibraryDto } from '@davidsmith/api-interfaces';
 import * as XXH from 'xxhashjs';
 
 @Injectable()
 export class LibraryService {
   private filepath = join(__dirname, 'assets', 'Library.json');
 
-  saveLibrary(library: Library): Library {
+  saveLibrary(library: LibraryDto): LibraryDto {
     const libraryId: string = this.createId(library.username, 0xABCD);
     library.id = libraryId;
-    library.artists = library.artists.map((artist: Artist, artistIndex: number) => {
+    library.artists = library.artists.map((artist: ArtistDto, artistIndex: number) => {
       const artistId: string = this.createId(artist.name, artistIndex);
       artist.id = artistId;
       artist.albums = artist.albums.map((album, albumIndex) => {
@@ -31,8 +31,8 @@ export class LibraryService {
     return this.getLibrary(library.id);
   }
 
-  getLibrary(id: string): Library {
-    const library: Library = JSON.parse(readFileSync(this.filepath, 'utf8'));
+  getLibrary(id: string): LibraryDto {
+    const library: LibraryDto = JSON.parse(readFileSync(this.filepath, 'utf8'));
     return library;
   }
 

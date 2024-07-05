@@ -1,12 +1,12 @@
 import { Injectable } from "@angular/core";
-import { Library } from "@davidsmith/api-interfaces";
+import { LibraryDto } from "@davidsmith/api-interfaces";
 import { EntityCollectionServiceBase, EntityCollectionServiceElementsFactory } from "@ngrx/data";
 import { Apollo } from "apollo-angular";
 import { Observable, catchError, map, of } from "rxjs";
 import { SELECT_ONE_LIBRARY } from "./library.constants";
 
 @Injectable({ providedIn: 'root' })
-export class LibraryService extends EntityCollectionServiceBase<Library> {
+export class LibraryService extends EntityCollectionServiceBase<LibraryDto> {
   constructor(
     serviceElementsFactory: EntityCollectionServiceElementsFactory,
     private apollo: Apollo
@@ -14,7 +14,7 @@ export class LibraryService extends EntityCollectionServiceBase<Library> {
     super('Library', serviceElementsFactory);
   }
 
-  getLibrary(id: string): Observable<Library> {
+  getLibrary(id: string): Observable<LibraryDto> {
     return this.apollo.watchQuery({
       query: SELECT_ONE_LIBRARY,
       variables: { id }
