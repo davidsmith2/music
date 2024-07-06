@@ -31,7 +31,7 @@ export const SELECT_ONE_ALBUM = gql`
 `;
 
 export const UPDATE_ONE_ALBUM = gql`
-  mutation updateOne_album($album: AlbumUpdateType!) {
+  mutation updateOne_album($album: AlbumUpdate!) {
     updateOne_album(album: $album) {
       id
       cover

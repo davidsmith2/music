@@ -1,22 +1,22 @@
+import { AlbumDto } from "@davidsmith/api-interfaces";
 import { Injectable } from "@nestjs/common";
 import fetch from 'node-fetch';
-import { AlbumType } from "./album.types";
 
 @Injectable()
 export class AlbumService {
-  async getAll(): Promise<Array<AlbumType>> {
+  async getAll(): Promise<Array<AlbumDto>> {
     const response = await fetch(`http://localhost:3333/api/album`);
-    const data = await response.json() as Array<AlbumType>;
+    const data = await response.json() as Array<AlbumDto>;
     return data;
   }
 
-  async getByKey(key: string): Promise<AlbumType> {
+  async getByKey(key: string): Promise<AlbumDto> {
     const response = await fetch(`http://localhost:3333/api/album/${key}`);
-    const data = await response.json() as AlbumType;
+    const data = await response.json() as AlbumDto;
     return data;
   }
 
-  async update(album: AlbumType): Promise<AlbumType> {
+  async update(album: AlbumDto): Promise<AlbumDto> {
     const response = await fetch(
       `http://localhost:3333/api/album/${album.id}`,
       {
@@ -25,7 +25,7 @@ export class AlbumService {
         headers: {'Content-Type': 'application/json'}
       }
     );
-    const data = await response.json() as AlbumType;
+    const data = await response.json() as AlbumDto;
     return data;
   }
 }

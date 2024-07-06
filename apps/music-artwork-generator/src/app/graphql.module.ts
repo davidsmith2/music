@@ -10,7 +10,7 @@ export function createApollo(httpLink: HttpLink): ApolloClientOptions<any> {
     link: httpLink.create({ uri }),
     cache: new InMemoryCache({
       typePolicies: {
-        ArtistType: {
+        Artist: {
           fields: {
             totalAlbums: {
               read(_, { readField }) {
@@ -38,7 +38,7 @@ export function createApollo(httpLink: HttpLink): ApolloClientOptions<any> {
             }
           }
         },
-        AlbumType: {
+        Album: {
           fields: {
             genre: {
               read(_, { readField }) {
@@ -87,7 +87,7 @@ export function createApollo(httpLink: HttpLink): ApolloClientOptions<any> {
             }
           }
         },
-        SongType: {
+        Song: {
           fields: {
             durationInMinutes: {
               read(_, { readField }) {

@@ -1,13 +1,13 @@
-import { Args, Int, Query, Resolver } from '@nestjs/graphql';
-import { SongType } from './song.types';
+import { Query, Resolver } from '@nestjs/graphql';
+import { Song } from './song.types';
 import { SongService } from './song.service';
 
-@Resolver(() => SongType)
+@Resolver(() => Song)
 export class SongResolver {
   constructor(private songService: SongService) {}
   
-  @Query(() => [SongType])
-  async selectAll_songs(): Promise<Array<SongType>> {
+  @Query(() => [Song])
+  async selectAll_songs(): Promise<Array<Song>> {
     return this.songService.getAll();
   }
 }

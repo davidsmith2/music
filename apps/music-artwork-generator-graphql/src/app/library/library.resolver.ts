@@ -1,13 +1,14 @@
-import { Args, Int, Query, Resolver } from '@nestjs/graphql';
-import { LibraryType } from './library.types';
+import { Args, Query, Resolver } from '@nestjs/graphql';
+import { Library } from './library.types';
 import { LibraryService } from './library.service';
+import { LibraryDto } from '@davidsmith/api-interfaces';
 
-@Resolver(() => LibraryType)
+@Resolver(() => Library)
 export class LibraryResolver {
   constructor(private libraryService: LibraryService) {}
 
-  @Query(() => LibraryType)
-  async selectOne_library(@Args('id', { type: () => String }) id: string): Promise<LibraryType> {
+  @Query(() => Library)
+  async selectOne_library(@Args('id', { type: () => String }) id: string): Promise<LibraryDto> {
     return this.libraryService.getByKey(id);
   }
 }
