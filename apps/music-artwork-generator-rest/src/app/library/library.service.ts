@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { readFileSync, writeFileSync } from 'fs';
 import { join } from 'path';
-import { ArtistDto, LibraryDto } from '@davidsmith/api-interfaces';
+import { ArtistDto, LibraryDto, SongDto } from '@davidsmith/api-interfaces';
 import * as XXH from 'xxhashjs';
 
 @Injectable()
@@ -17,7 +17,12 @@ export class LibraryService {
       artist.albums = artist.albums.map((album, albumIndex) => {
         const albumId: string = this.createId(album.title, Number(`${artist.id}${albumIndex}`));
         album.id = albumId;
-        album.songs = album.songs.map((song, songIndex) => {
+        album.songs = album.songs.filter((song: SongDto, songIndex: number) => {
+          if (!song) {
+            console.log('Error reading song', album.title, songIndex + 1);
+          }
+          return !!song;
+        }).map((song, songIndex) => {
           const songId: string = this.createId(song.title, Number(`${artist.id}${album.id}${songIndex}`));
           song.duration = Math.round(song.duration) || 0;
           song.id = songId;

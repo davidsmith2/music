@@ -28,7 +28,6 @@ export class AlbumService {
       const artist = json.artists[i];
       album = artist.albums.find((album: AlbumDto) => album.id === id);
       if (album) {
-        console.log(album)
         break;
       }
     }
