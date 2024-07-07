@@ -16,6 +16,7 @@ export const SELECT_ONE_ARTIST = gql`
           id
           title
           genre
+          year
           duration
           durationInMinutes @client
         }

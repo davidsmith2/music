@@ -24,7 +24,6 @@ import { ImportService } from './import/import.service';
     ImportController
   ],
   providers: [
-    AppService,
     LibraryService,
     ArtistService,
     AlbumService,

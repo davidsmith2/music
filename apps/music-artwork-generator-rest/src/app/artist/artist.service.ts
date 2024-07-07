@@ -1,25 +1,14 @@
 import { Injectable } from '@nestjs/common';
-import { readFileSync } from 'fs';
-import { join } from 'path';
 import { ArtistDto } from '@davidsmith/api-interfaces';
+import { AppService } from '../app.service';
 
 @Injectable()
-export class ArtistService {
-  getArtists(): Promise<Array<ArtistDto>> {
-    const jsonStr = readFileSync(
-      join(__dirname, 'assets', 'Library.json'),
-      'utf8'
-    );
-    const json = JSON.parse(jsonStr);
-    return json.artists;
+export class ArtistService extends AppService {
+  getArtists(): Array<ArtistDto> {
+    return this.readLibrary().artists;
   }
 
-  getArtist(id: string): Promise<ArtistDto> {
-    const jsonStr = readFileSync(
-      join(__dirname, 'assets', 'Library.json'),
-      'utf8'
-    );
-    const json = JSON.parse(jsonStr);
-    return json.artists.find((artist: ArtistDto) => artist.id === id);
+  getArtist(id: string): ArtistDto {
+    return this.readLibrary().artists.find((artist: ArtistDto) => artist.id === id);
   }
 }

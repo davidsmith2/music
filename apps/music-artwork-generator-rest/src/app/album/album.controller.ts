@@ -7,12 +7,12 @@ export class AlbumController {
   constructor(private readonly albumService: AlbumService) {}
 
   @Get()
-  getAlbums() {
+  getAlbums(): Array<AlbumDto> {
     return this.albumService.getAlbums();
   }
 
   @Get(':id')
-  getAlbum(@Param('id') id: string) {
+  getAlbum(@Param('id') id: string): AlbumDto {
     return this.albumService.getAlbum(id);
   }
 
@@ -20,7 +20,7 @@ export class AlbumController {
   updateAlbum(
     @Param('id') _id: string,
     @Body() album: AlbumDto
-  ) {
+  ): AlbumDto {
     return this.albumService.updateAlbum(album);
   }
 }

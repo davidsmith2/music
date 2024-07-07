@@ -1,13 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { readFileSync, writeFileSync } from 'fs';
-import { join } from 'path';
 import { ArtistDto, LibraryDto, SongDto } from '@davidsmith/api-interfaces';
 import * as XXH from 'xxhashjs';
+import { AppService } from '../app.service';
 
 @Injectable()
-export class LibraryService {
-  private filepath = join(__dirname, 'assets', 'Library.json');
-
+export class LibraryService extends AppService {
   saveLibrary(library: LibraryDto): LibraryDto {
     const libraryId: string = this.createId(library.username, 0xABCD);
     library.id = libraryId;
@@ -32,16 +29,15 @@ export class LibraryService {
       });
       return artist;
     });
-    writeFileSync(this.filepath, JSON.stringify(library), 'utf8');
-    return this.getLibrary(library.id);
+    this.writeLibrary(library);
+    return this.getLibrary();
   }
 
-  getLibrary(id: string): LibraryDto {
-    const library: LibraryDto = JSON.parse(readFileSync(this.filepath, 'utf8'));
-    return library;
+  getLibrary(): LibraryDto {
+    return this.readLibrary();
   }
 
-  createId(input, seed): string {
+  private createId(input, seed): string {
     const hash = XXH.h32(input, seed.toString().padStart(6, '0')).toString(16);
     return hash;
   }

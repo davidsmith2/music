@@ -12,7 +12,7 @@ export class LibraryController {
   }
 
   @Get(':id')
-  getLibrary(@Param('id') id: string) {
-    return this.libraryService.getLibrary(id);
+  getLibrary(@Param('id') id: string): LibraryDto {
+    return this.libraryService.getLibrary();
   }
 }
