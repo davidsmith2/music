@@ -36,6 +36,7 @@ function getSongs(artist, album) {
     let jsonSong = null;
     let song = null;
     try {
+      console.log('Getting metadata for', songPath);
       jsonSong = execSync(command).toString();
     } catch (e) {
       console.error('Error executing command', e);
