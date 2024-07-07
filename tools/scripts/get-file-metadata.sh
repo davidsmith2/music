@@ -14,7 +14,10 @@ genre=$(echo "$metadata1" | grep '©gen' | awk -F": " '{print $2}')
 year=$(echo "$metadata1" | grep '©day' | awk -F": " '{print $2}')
 
 # Extract metadata for duration using AtomicParsley
-metadata2=$(AtomicParsley "$FILE_PATH" -T 1)
+metadata2=$(AtomicParsley "$FILE_PATH" -T 1) || {
+    echo "Error: Failed to extract metadata using AtomicParsley" >&2
+    exit 1
+}
 
 # Parse and format the output
 duration=$(echo "$metadata2" | awk '/Movie duration:/ {print $3}')
