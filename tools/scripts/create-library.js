@@ -9,7 +9,7 @@ const API_PORT = 3333;
 const API_PATH = '/api/library';
 const API_METHOD = 'POST';
 
-const MUSIC_MEDIA_FOLDER_NAME = 'Music';
+const MUSIC_MEDIA_FOLDER_NAME = 'Test';
 const EXCLUDED_FILES = ['.DS_Store'];
 const GET_FILE_METADATA_SCRIPT = 'get-file-metadata.sh';
 

@@ -11,23 +11,23 @@ import { AlbumService } from './album/album.service';
 import { ImportController } from './import/import.controller';
 import { ImportService } from './import/import.service';
 import { SongModule } from './song/song.module';
+import { AlbumModule } from './album/album.module';
+import { ArtistModule } from './artist/artist.module';
+import { LibraryModule } from './library/library.module';
 
 @Module({
   imports: [
     MongooseModule.forRoot('mongodb://localhost/music'),
+    LibraryModule,
+    ArtistModule,
+    AlbumModule,
     SongModule
   ],
   controllers: [
     AppController,
-    LibraryController,
-    ArtistController,
-    AlbumController,
     ImportController
   ],
   providers: [
-    LibraryService,
-    ArtistService,
-    AlbumService,
     ImportService
   ],
 })
