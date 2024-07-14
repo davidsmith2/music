@@ -10,9 +10,18 @@ import { AppModule } from './app/app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
   const globalPrefix = 'graphql';
   app.setGlobalPrefix(globalPrefix);
+
+  app.enableCors({
+    origin: ['http://localhost:4200'], // Angular's default port
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    credentials: true, // This is important for sessions or basic auth
+  });
+  
   const port = process.env.PORT || 3000;
+
   await app.listen(port);
   Logger.log(
     `🚀 Application is running on: http://localhost:${port}/${globalPrefix}`

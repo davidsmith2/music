@@ -1,13 +1,32 @@
+import { NgModule } from '@angular/core';
+import { ApolloClientOptions, InMemoryCache, Reference, split } from '@apollo/client/core';
+import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
+import { getMainDefinition } from '@apollo/client/utilities';
 import { APOLLO_OPTIONS, ApolloModule } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
-import { NgModule } from '@angular/core';
-import { ApolloClientOptions, InMemoryCache, Reference } from '@apollo/client/core';
-
-const uri = '/graphql';
+import { Kind, OperationTypeNode } from 'graphql';
+import { createClient } from 'graphql-ws';
 
 export function createApollo(httpLink: HttpLink): ApolloClientOptions<any> {
+  const http = httpLink.create({ uri: 'http://localhost:3000/graphql' });
+  const ws = new GraphQLWsLink(
+    createClient({
+      url: 'ws://localhost:3000/graphql'
+    })
+  );
+  const link = split(
+    ({query}) => {
+      const mainDefinition = getMainDefinition(query);
+      return (
+        mainDefinition.kind === Kind.OPERATION_DEFINITION &&
+        mainDefinition.operation === OperationTypeNode.SUBSCRIPTION
+      )
+    },
+    ws,
+    http
+  );
   return {
-    link: httpLink.create({ uri }),
+    link,
     cache: new InMemoryCache({
       typePolicies: {
         Artist: {

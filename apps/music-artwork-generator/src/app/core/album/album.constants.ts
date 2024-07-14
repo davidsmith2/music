@@ -38,3 +38,12 @@ export const UPDATE_ONE_ALBUM = gql`
     }
   }
 `;
+
+export const ALBUM_UPDATED_SUBSCRIPTION = gql`
+  subscription albumUpdated($artistName: String!) {
+    albumUpdated(artistName: $artistName) {
+      id
+      cover
+    }
+  }
+`;

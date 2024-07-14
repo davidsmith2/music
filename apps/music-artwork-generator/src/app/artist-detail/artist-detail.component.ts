@@ -1,13 +1,15 @@
 import { Component, ChangeDetectionStrategy, Inject, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Observable } from 'rxjs';
-import { switchMap, take, tap } from 'rxjs/operators';
+import { filter, switchMap, take, tap } from 'rxjs/operators';
 import { WINDOW } from '../window.constant';
 import { Cover } from '../core/cover/cover.interface';
 import { AlbumDto } from '@davidsmith/api-interfaces';
 import { ArtistDto } from '@davidsmith/api-interfaces';
 import { AlbumService } from '../core/album/album.service';
 import { ArtistService } from '../core/artist/artist.service';
+import { ALBUM_UPDATED_SUBSCRIPTION } from '../core/album/album.constants';
+import { Apollo } from 'apollo-angular';
 
 @Component({
   templateUrl: './artist-detail.component.html',
@@ -24,12 +26,30 @@ export class ArtistDetailComponent implements OnInit, OnDestroy {
   selectedAlbum: AlbumDto;
   popupWindow: Window;
 
+  thing$: Observable<any>;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     @Inject(WINDOW) private window: Window,
     private artistService: ArtistService,
-    private albumService: AlbumService
+    private albumService: AlbumService,
+    private apollo: Apollo
   ) {
+    this.thing$ = this.artist$.pipe(
+      switchMap((artist: ArtistDto) => {
+        return this.apollo.subscribe({
+          query: ALBUM_UPDATED_SUBSCRIPTION,
+          variables: {
+            artistName: artist.name
+          },
+          errorPolicy: 'all'
+        })
+      })
+    );
+    this.thing$.subscribe((a) => {
+      console.log(a);
+    });
+
     this.window.addEventListener('message', (messageEvent: MessageEvent) => {
       if (messageEvent.origin !== "https://covers.musichoarders.xyz") {
         return;
