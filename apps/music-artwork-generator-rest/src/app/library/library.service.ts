@@ -1,10 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { AlbumDto, ArtistDto, CreateLibraryDto, LibraryDto, SongDto } from '@davidsmith/api-interfaces';
+import { CreateLibraryDto, LibraryDto, SongDto } from '@davidsmith/api-interfaces';
 import { InjectModel } from '@nestjs/mongoose';
 import { Library } from './library.schema';
 import { Model } from 'mongoose';
-import { Artist } from '../artist/artist.schema';
-import { Album } from '../album/album.schema';
 import { Song } from '../song/song.schema';
 import { AppService } from '../app.service';
 

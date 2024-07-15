@@ -1,9 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { AlbumDto, SongDto } from '@davidsmith/api-interfaces';
+import { AlbumDto } from '@davidsmith/api-interfaces';
 import { InjectModel } from '@nestjs/mongoose';
-import { Album } from './album.schema';
 import { Model } from 'mongoose';
-import { Song } from '../song/song.schema';
 import { Library } from '../library/library.schema';
 import { AppService } from '../app.service';
 
