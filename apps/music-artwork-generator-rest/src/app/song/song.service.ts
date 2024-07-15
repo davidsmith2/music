@@ -22,7 +22,9 @@ export class SongService {
         title: song.title,
         genre: song.genre,
         year: song.year,
-        duration: song.duration
+        duration: song.duration,
+        artist: song.artist,
+        album: song.album
       } as SongDto;
     });
   }

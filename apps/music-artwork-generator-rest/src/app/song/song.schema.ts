@@ -15,6 +15,12 @@ export class Song extends Document {
   @Prop()
   duration: number;
   
+  @Prop()
+  artist: string;
+  
+  @Prop()
+  album: string;
+  
 }
 
 export const SongSchema = SchemaFactory.createForClass(Song);
