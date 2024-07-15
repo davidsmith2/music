@@ -7,12 +7,12 @@ export class LibraryController {
   constructor(private readonly libraryService: LibraryService) {}
 
   @Post()
-  saveLibrary(@Body() createlibraryDto: CreateLibraryDto) {
-    return this.libraryService.saveLibrary2(createlibraryDto);
+  async saveLibrary(@Body() createlibraryDto: CreateLibraryDto): Promise<LibraryDto> {
+    return await this.libraryService.saveLibrary(createlibraryDto);
   }
 
   @Get(':id')
-  getLibrary(@Param('id') id: string): LibraryDto {
-    return this.libraryService.getLibrary();
+  async getLibrary(@Param('id') id: string): Promise<LibraryDto> {
+    return await this.libraryService.getLibrary();
   }
 }

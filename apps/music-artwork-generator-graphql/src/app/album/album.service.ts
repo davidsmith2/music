@@ -16,7 +16,7 @@ export class AlbumService {
     return data;
   }
 
-  async update(album: AlbumDto): Promise<AlbumDto> {
+  async update(album: AlbumDto): Promise<Partial<AlbumDto>> {
     const response = await fetch(
       `http://localhost:3333/api/album/${album.id}`,
       {
@@ -25,7 +25,7 @@ export class AlbumService {
         headers: {'Content-Type': 'application/json'}
       }
     );
-    const data = await response.json() as AlbumDto;
+    const data = await response.json() as Partial<AlbumDto>;
     return data;
   }
 }

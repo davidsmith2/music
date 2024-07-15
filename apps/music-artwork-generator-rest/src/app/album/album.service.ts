@@ -1,43 +1,66 @@
 import { Injectable } from '@nestjs/common';
-import { AlbumDto, LibraryDto } from '@davidsmith/api-interfaces';
-import { ArtistDto } from '@davidsmith/api-interfaces';
-import { AppService } from '../app.service';
+import { AlbumDto, SongDto } from '@davidsmith/api-interfaces';
+import { InjectModel } from '@nestjs/mongoose';
+import { Album } from './album.schema';
+import { Model } from 'mongoose';
+import { Song } from '../song/song.schema';
 
 @Injectable()
-export class AlbumService extends AppService {
-  getAlbums(): Array<AlbumDto> {
-    return this.readLibrary().artists.reduce((acc: AlbumDto[], artist: ArtistDto) => {
-      return [...acc, ...artist.albums];
-    }, []);
+export class AlbumService {
+  constructor(
+    @InjectModel(Album.name) private albumModel: Model<Album>,
+    @InjectModel(Song.name) private songModel: Model<Song>
+  ) { }
+
+  async getAlbums(): Promise<Array<AlbumDto>> {
+    const albums: Album[] = await this.albumModel.find().populate('songs').exec();
+    const albumDtos: AlbumDto[] = await Promise.all(albums.map(async (album) => {
+      const songs: Song[] = await this.songModel.find({ _id: { $in: album.songs } }).exec();
+      const songDtos: SongDto[] = await Promise.all(songs.map(async (song) => {
+        return {
+          id: song._id as string,
+          title: song.title,
+          genre: song.genre,
+          year: song.year,
+          duration: song.duration,
+          album: album.title
+        } as SongDto;
+      }));
+      return {
+        id: album._id as string,
+        title: album.title,
+        songs: songDtos
+      } as AlbumDto;
+    }));
+    return albumDtos;
   }
 
-  getAlbum(id: string): AlbumDto {
-    const library: LibraryDto = this.readLibrary();
-    let album: AlbumDto;
-    for (let i = 0; i < library.artists.length; i++) {
-      const artist = library.artists[i];
-      album = artist.albums.find((album: AlbumDto) => album.id === id);
-      if (album) {
-        break;
-      }
-    }
-    return album;
+  async getAlbum(id: string): Promise<AlbumDto> {
+    const album: Album = await this.albumModel.findById(id).populate('songs').exec();
+    const songs: Song[] = await this.songModel.find({ _id: { $in: album.songs } }).exec();
+    const songDtos: SongDto[] = await Promise.all(songs.map(async (song) => {
+      return {
+        id: song._id as string,
+        title: song.title,
+        genre: song.genre,
+        year: song.year,
+        duration: song.duration,
+        album: album.title
+      } as SongDto;
+    }));
+    return {
+      id: album._id as string,
+      title: album.title,
+      cover: album.cover,
+      songs: songDtos
+    } as AlbumDto;
   }
 
-  updateAlbum(album: AlbumDto) {
-    const library: LibraryDto = this.readLibrary();
-    let albumToUpdate: AlbumDto;
-    for (let i = 0; i < library.artists.length; i++) {
-      const artist = library.artists[i];
-      albumToUpdate = artist.albums.find((a: AlbumDto) => a.id === album.id);
-      if (albumToUpdate) {
-        albumToUpdate.cover = album.cover;
-        const albumToUpdateIndex = artist.albums.findIndex((a: AlbumDto) => a.id === album.id);
-        artist.albums[albumToUpdateIndex] = albumToUpdate;
-        break;
-      }
-    }
-    this.writeLibrary(library);
-    return albumToUpdate;
+  async updateAlbumCover(albumDto: Partial<AlbumDto>): Promise<Partial<AlbumDto>> {
+    const album: Album = await this.albumModel.findByIdAndUpdate(albumDto.id, { cover: albumDto.cover }, { new: true }).exec();
+    return {
+      id: album._id as string,
+      cover: album.cover
+    };
   }
 }

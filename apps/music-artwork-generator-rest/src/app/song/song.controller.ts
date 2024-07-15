@@ -20,7 +20,7 @@ export class SongController {
   }
   
   @Get()
-  getSongs(): Array<SongDto> {
-    return this.songService.getSongs();
+  async getSongs(): Promise<Array<SongDto>> {
+    return await this.songService.getSongs();
   }
 }

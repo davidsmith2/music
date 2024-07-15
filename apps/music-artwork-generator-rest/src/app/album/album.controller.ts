@@ -7,20 +7,20 @@ export class AlbumController {
   constructor(private readonly albumService: AlbumService) {}
 
   @Get()
-  getAlbums(): Array<AlbumDto> {
+  async getAlbums(): Promise<Array<AlbumDto>> {
     return this.albumService.getAlbums();
   }
 
   @Get(':id')
-  getAlbum(@Param('id') id: string): AlbumDto {
-    return this.albumService.getAlbum(id);
+  async getAlbum(@Param('id') id: string): Promise<AlbumDto> {
+    return await this.albumService.getAlbum(id);
   }
 
   @Put(':id')
-  updateAlbum(
+  async updateAlbumCover(
     @Param('id') _id: string,
-    @Body() album: AlbumDto
-  ): AlbumDto {
-    return this.albumService.updateAlbum(album);
+    @Body() album: Partial<AlbumDto>
+  ): Promise<Partial<AlbumDto>> {
+    return await this.albumService.updateAlbumCover(album);
   }
 }

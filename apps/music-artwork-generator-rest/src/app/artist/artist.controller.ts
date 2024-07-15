@@ -7,13 +7,13 @@ export class ArtistController {
   constructor(private readonly artistService: ArtistService) {}
 
   @Get()
-  getArtists(): Array<ArtistDto> {
-    return this.artistService.getArtists();
+  async getArtists(): Promise<Array<ArtistDto>> {
+    return await this.artistService.getArtists();
   }
 
   @Get(':id')
-  getArtist(@Param('id') id: string): ArtistDto {
-    return this.artistService.getArtist(id);
+  async getArtist(@Param('id') id: string): Promise<ArtistDto> {
+    return await this.artistService.getArtist(id);
   }
 
 }

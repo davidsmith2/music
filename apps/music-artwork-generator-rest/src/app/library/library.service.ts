@@ -1,7 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { AlbumDto, ArtistDto, CreateLibraryDto, LibraryDto, SongDto } from '@davidsmith/api-interfaces';
-import * as XXH from 'xxhashjs';
-import { AppService } from '../app.service';
 import { InjectModel } from '@nestjs/mongoose';
 import { Library } from './library.schema';
 import { Model } from 'mongoose';
@@ -10,46 +8,16 @@ import { Album } from '../album/album.schema';
 import { Song } from '../song/song.schema';
 
 @Injectable()
-export class LibraryService extends AppService {
+export class LibraryService {
   constructor(
     @InjectModel(Library.name) private libraryModel: Model<Library>,
     @InjectModel(Artist.name) private artistModel: Model<Artist>,
     @InjectModel(Album.name) private albumModel: Model<Album>,
     @InjectModel(Song.name) private songModel: Model<Song>
-  ) {
-    super();
-  }
+  ) { }
 
-  saveLibrary(library: LibraryDto): LibraryDto {
-    const libraryId: string = this.createId(library.username, 0xABCD);
-    library.id = libraryId;
-    library.artists = library.artists.map((artist: ArtistDto, artistIndex: number) => {
-      const artistId: string = this.createId(artist.name, artistIndex);
-      artist.id = artistId;
-      artist.albums = artist.albums.map((album, albumIndex) => {
-        const albumId: string = this.createId(album.title, Number(`${artist.id}${albumIndex}`));
-        album.id = albumId;
-        album.songs = album.songs.filter((song: SongDto, songIndex: number) => {
-          if (!song) {
-            console.log('Error reading song', album.title, songIndex + 1);
-          }
-          return !!song;
-        }).map((song, songIndex) => {
-          const songId: string = this.createId(song.title, Number(`${artist.id}${album.id}${songIndex}`));
-          song.duration = Math.round(song.duration) || 0;
-          song.id = songId;
-          return song;
-        });
-        return album;
-      });
-      return artist;
-    });
-    this.writeLibrary(library);
-    return this.getLibrary();
-  }
-
-  async saveLibrary2(createLibraryDto: CreateLibraryDto): Promise<CreateLibraryDto> {
-    // Step 1: Create and save songs
+  async saveLibrary(createLibraryDto: CreateLibraryDto): Promise<LibraryDto> {
+    // Step 1: Save songs
     const songIds = await Promise.all(createLibraryDto.songs.map(async (songDto: SongDto) => {
       const song = new this.songModel({
         title: songDto.title,
@@ -60,7 +28,7 @@ export class LibraryService extends AppService {
       const savedSong = await song.save();
       return savedSong._id; // Collect song ID
     }));
-    // Step 2: Create and save albums
+    // Step 2: Save albums
     const albumTitles = createLibraryDto.songs.map(song => {
       return song.album;
     }).filter((value, index, self) => {
@@ -74,7 +42,7 @@ export class LibraryService extends AppService {
       const savedAlbum = await album.save();
       return savedAlbum._id; // Collect album ID
     }));
-    // Step 3: Create and save artists
+    // Step 3: Save artists
     const artistNames = createLibraryDto.songs.map(song => {
       return song.artist;
     }).filter((value, index, self) => {
@@ -88,23 +56,52 @@ export class LibraryService extends AppService {
       const savedArtist = await artist.save();
       return savedArtist._id; // Collect artist ID
     }));
-    // Step 4: Assuming you have a libraryModel similar to artistModel
+    // Step 4: Save library
     const library = new this.libraryModel({
       username: createLibraryDto.username,
       artists: artistIds, // Use collected artist IDs
     });
-    // Step 5: Save the Library document
-    const savedLibrary = await library.save();
+    await library.save();
     // Step 4: Return the saved Library document (or its DTO)
-    return createLibraryDto; // Adjust according to your needs, e.g., convert to DTO if necessary
+    return this.getLibrary();
   }
 
-  getLibrary(): LibraryDto {
-    return this.readLibrary();
+  async getLibrary(): Promise<LibraryDto> {
+    const library: Library = await this.libraryModel.findOne({username: 'test'}).populate('artists').exec();
+    const artists: Artist[] = await this.artistModel.find({ _id: { $in: library.artists } }).populate('albums').exec();
+    const artistDtos: ArtistDto[] = await Promise.all(artists.map(async (artist) => {
+      const albums: Album[] = await this.albumModel.find({ _id: { $in: artist.albums } }).populate('songs').exec();
+      const albumDtos: AlbumDto[] = await Promise.all(albums.map(async (album) => {
+        const songs: Song[] = await this.songModel.find({ _id: { $in: album.songs } }).exec();
+        const songDtos: SongDto[] = await Promise.all(songs.map(async (song) => {
+          return {
+            id: song._id as string,
+            title: song.title,
+            genre: song.genre,
+            year: song.year,
+            duration: song.duration,
+            album: album.title,
+            artist: artist.name
+          };
+        }));
+        return {
+          id: album._id as string,
+          title: album.title,
+          songs: songDtos,
+          artist: artist.name
+        };
+      }));
+      return {
+        id: artist._id as string,
+        name: artist.name,
+        albums: albumDtos
+      };
+    }));
+    return {
+      id: library._id as string,
+      username: library.username,
+      artists: artistDtos
+    };
   }
 
-  private createId(input, seed): string {
-    const hash = XXH.h32(input, seed.toString().padStart(6, '0')).toString(16);
-    return hash;
-  }
 }

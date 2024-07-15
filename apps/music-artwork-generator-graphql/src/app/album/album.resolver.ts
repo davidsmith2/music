@@ -21,8 +21,8 @@ export class AlbumResolver {
   }
 
   @Mutation(() => Album)
-  async updateOne_album(@Args('album', { type: () => AlbumUpdate }) album: Album): Promise<AlbumDto> {
-    const albumDto: AlbumDto = await this.albumService.update(album);
+  async updateOne_album(@Args('album', { type: () => AlbumUpdate }) album: Album): Promise<Partial<AlbumDto>> {
+    const albumDto: Partial<AlbumDto> = await this.albumService.update(album);
     pubSub.publish('albumUpdated', { albumUpdated: albumDto });
     return albumDto;
   }
@@ -31,7 +31,7 @@ export class AlbumResolver {
     name: 'albumUpdated',
     filter: (payload, variables) => {
       console.log('@Subscription filter', payload, variables);
-      return payload.albumUpdated.artist === variables.artistName;
+      return true;
     }
   })
   albumUpdated(@Args('artistName') artistName: String): AsyncIterator<AlbumDto> {

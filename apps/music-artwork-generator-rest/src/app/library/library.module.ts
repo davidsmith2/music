@@ -17,10 +17,7 @@ import { Song, SongSchema } from '../song/song.schema';
       { name: Artist.name, schema: ArtistSchema },
       { name: Album.name, schema: AlbumSchema },
       { name: Song.name, schema: SongSchema },
-     ]),
-    ArtistModule,
-    AlbumModule,
-    SongModule
+     ])
   ],
   controllers: [LibraryController],
   providers: [LibraryService],

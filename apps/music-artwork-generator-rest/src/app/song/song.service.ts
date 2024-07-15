@@ -1,15 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { SongDto } from '@davidsmith/api-interfaces';
-import { AppService } from '../app.service';
 import { InjectModel } from '@nestjs/mongoose';
 import { Song } from './song.schema';
 import { Model } from 'mongoose';
 
 @Injectable()
-export class SongService extends AppService {
-  constructor(@InjectModel(Song.name) private songModel: Model<Song>) {
-    super();
-  }
+export class SongService {
+  constructor(@InjectModel(Song.name) private songModel: Model<Song>) { }
 
   async createSong(song: SongDto): Promise<SongDto> {
     const createdSong: Song = new this.songModel(song);
@@ -17,14 +14,16 @@ export class SongService extends AppService {
     return song;
   }
 
-  getSongs(): Array<SongDto> {
-    return this.readLibrary().artists.reduce((songs, artist) => {
-      artist.albums.forEach((album) => {
-        album.songs.forEach((song) => {
-          songs.push(song);
-        });
-      });
-      return songs;
-    }, []);
+  async getSongs(): Promise<Array<SongDto>> {
+    const songs: Song[] = await this.songModel.find().exec();
+    return songs.map((song) => {
+      return {
+        id: song._id as string,
+        title: song.title,
+        genre: song.genre,
+        year: song.year,
+        duration: song.duration
+      } as SongDto;
+    });
   }
 }
