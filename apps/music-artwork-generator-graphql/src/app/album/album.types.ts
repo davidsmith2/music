@@ -8,10 +8,10 @@ export class Album {
   id: string;
   
   @Field({nullable: true})
-  artist: string;
+  title: string;
 
   @Field({nullable: true})
-  title: string;
+  artist: string;
 
   @Field({nullable: true})
   cover: string;
@@ -23,8 +23,14 @@ export class Album {
 
 @InputType()
 export class AlbumUpdate {
-  @Field(() => String)
+  @Field(() => ID)
   id: string;
+  
+  @Field()
+  title: string;
+
+  @Field()
+  artist: string;
 
   @Field()
   cover: string;

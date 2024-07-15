@@ -37,7 +37,8 @@ export class AppService {
           id: new Types.ObjectId().toString(),
           title: song.album,
           songs: this.getSongDtos(songs, song.album, artistName),
-          artist: song.artist
+          artist: song.artist,
+          cover: song.artwork
         } as AlbumDto);
       }
       return acc;

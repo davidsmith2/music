@@ -3,7 +3,7 @@
     <div>
       <ul class="list-reset">
         <li *ngFor="let artist of library.artists" class="mb-2">
-          <a [routerLink]="['/artists', artist.id]">
+          <a [routerLink]="['/artists', artist.name]">
             {{artist.name}}
           </a>
         </li>

@@ -2,7 +2,7 @@
     <div class="container">
         <div *ngFor="let album of albums" class="child-container">
             <div>
-                <a routerLink="/albums/{{ album.id }}">
+                <a routerLink="/albums/{{ album.title }}">
                     <img [src]="album.cover" [width]="175" [height]="175" alt="Album artwork"><br>
                     <strong>{{ album.title }}</strong><br>
                     <em>{{ album.artist }}</em>

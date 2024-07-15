@@ -4,11 +4,13 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Library } from '../library/library.schema';
 import { AppService } from '../app.service';
+import { Song } from '../song/song.schema';
 
 @Injectable()
 export class AlbumService {
   constructor(
     @InjectModel(Library.name) private libraryModel: Model<Library>,
+    @InjectModel(Song.name) private songModel: Model<Song>,
     private appService: AppService
   ) { }
 
@@ -25,6 +27,14 @@ export class AlbumService {
   }
 
   async updateAlbumCover(albumDto: Partial<AlbumDto>): Promise<Partial<AlbumDto>> {
-    return null;
+    const songs: Song[] = await this.songModel.find({
+      artist: albumDto.artist,
+      album: albumDto.title
+    }).exec();
+    songs.forEach(song => {
+      song.artwork = albumDto.cover;
+      song.save();
+    });
+    return albumDto;
   }
 }

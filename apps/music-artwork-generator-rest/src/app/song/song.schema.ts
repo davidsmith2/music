@@ -20,6 +20,9 @@ export class Song extends Document {
   
   @Prop()
   album: string;
+
+  @Prop()
+  artwork: string;
   
 }
 

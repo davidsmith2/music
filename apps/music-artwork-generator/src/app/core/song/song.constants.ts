@@ -5,6 +5,8 @@ export const SELECT_ALL_SONGS = gql`
     selectAll_songs {
       id
       title
+      artist
+      album
     }
   }
 `

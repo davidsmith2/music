@@ -33,7 +33,8 @@ export const SELECT_ONE_ALBUM = gql`
 export const UPDATE_ONE_ALBUM = gql`
   mutation updateOne_album($album: AlbumUpdate!) {
     updateOne_album(album: $album) {
-      id
+      title
+      artist
       cover
     }
   }
@@ -42,7 +43,8 @@ export const UPDATE_ONE_ALBUM = gql`
 export const ALBUM_UPDATED_SUBSCRIPTION = gql`
   subscription albumUpdated($artistName: String!) {
     albumUpdated(artistName: $artistName) {
-      id
+      title
+      artist
       cover
     }
   }

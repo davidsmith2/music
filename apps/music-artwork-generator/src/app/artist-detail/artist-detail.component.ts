@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, Inject, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Observable } from 'rxjs';
-import { filter, switchMap, take, tap } from 'rxjs/operators';
+import { switchMap, take, tap } from 'rxjs/operators';
 import { WINDOW } from '../window.constant';
 import { Cover } from '../core/cover/cover.interface';
 import { AlbumDto } from '@davidsmith/api-interfaces';
@@ -80,7 +80,8 @@ export class ArtistDetailComponent implements OnInit, OnDestroy {
 
   updateAlbumCover(cover: string) {
     this.albumService.updateAlbum({
-      id: this.selectedAlbum.id,
+      title: this.selectedAlbum.title,
+      artist: this.selectedAlbum.artist,
       cover
     }).pipe(
       take(1),

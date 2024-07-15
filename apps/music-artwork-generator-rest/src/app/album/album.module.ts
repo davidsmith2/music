@@ -4,11 +4,13 @@ import { AlbumController } from './album.controller';
 import { AlbumService } from './album.service';
 import { Library, LibrarySchema } from '../library/library.schema';
 import { AppService } from '../app.service';
+import { Song, SongSchema } from '../song/song.schema';
 
 @Module({
   imports: [
     MongooseModule.forFeature([
-      { name: Library.name, schema: LibrarySchema }
+      { name: Library.name, schema: LibrarySchema },
+      { name: Song.name, schema: SongSchema }
     ])
   ],
   controllers: [AlbumController],
