@@ -5,7 +5,7 @@ import { AlbumDto } from "@davidsmith/api-interfaces";
 @ObjectType()
 export class Artist {
   @Field(() => ID)
-  id: string;
+  _id: string;
   
   @Field()
   name: string;

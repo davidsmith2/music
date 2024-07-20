@@ -5,7 +5,7 @@ import { SongDto } from "@davidsmith/api-interfaces";
 @ObjectType()
 export class Album {
   @Field(() => ID)
-  id: string;
+  _id: string;
   
   @Field({nullable: true})
   title: string;
@@ -24,7 +24,7 @@ export class Album {
 @InputType()
 export class AlbumUpdate {
   @Field(() => ID)
-  id: string;
+  _id: string;
   
   @Field()
   title: string;

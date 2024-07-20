@@ -80,6 +80,7 @@ export class ArtistDetailComponent implements OnInit, OnDestroy {
 
   updateAlbumCover(cover: string) {
     this.albumService.updateAlbum({
+      _id: this.selectedAlbum._id,
       title: this.selectedAlbum.title,
       artist: this.selectedAlbum.artist,
       cover

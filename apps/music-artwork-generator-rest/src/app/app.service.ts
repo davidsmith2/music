@@ -19,15 +19,16 @@ export class AppService {
     return songs.reduce((acc: ArtistDto[], song: Song) => {
       if (!acc.find(artistDto => artistDto.name === song.artist)) {
         acc.push({
-          id: new Types.ObjectId().toString(),
+          _id: new Types.ObjectId().toString(),
           name: song.artist,
-          albums: this.getAlbumDtos(songs, song.artist)
+          albums: []
         });
       }
       return acc;
     }, []);
   }
 
+  /*
   getAlbumDtos(songs: Song[], artistName?: string): AlbumDto[] {
     return songs.filter((song: Song) => {
       return artistName ? song.artist === artistName : true;
@@ -68,5 +69,6 @@ export class AppService {
       return acc;
     }, []);
   }
+  */
 
 }

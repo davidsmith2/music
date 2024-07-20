@@ -16,12 +16,12 @@ export class AlbumResolver {
   }
 
   @Query(() => Album)
-  async selectOne_album(@Args('id', { type: () => String }) id: string): Promise<AlbumDto> {
-    return this.albumService.getByKey(id);
+  async selectOne_album(@Args('_id', { type: () => String }) _id: string): Promise<AlbumDto> {
+    return this.albumService.getByKey(_id);
   }
 
   @Mutation(() => Album)
-  async updateOne_album(@Args('album', { type: () => AlbumUpdate }) album: Album): Promise<Partial<AlbumDto>> {
+  async updateOne_album(@Args('album', { type: () => AlbumUpdate }) album: AlbumDto): Promise<Partial<AlbumDto>> {
     const albumDto: Partial<AlbumDto> = await this.albumService.update(album);
     pubSub.publish('albumUpdated', { albumUpdated: albumDto });
     return albumDto;

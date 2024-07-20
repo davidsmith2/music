@@ -1,18 +1,18 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { LibraryService } from './library.service';
-import { CreateLibraryDto, LibraryDto } from '@davidsmith/api-interfaces';
+import { LibraryDto, LibrarySummaryDto } from '@davidsmith/api-interfaces';
 
 @Controller('library')
 export class LibraryController {
   constructor(private readonly libraryService: LibraryService) {}
 
   @Post()
-  async saveLibrary(@Body() createlibraryDto: CreateLibraryDto): Promise<LibraryDto> {
-    return await this.libraryService.saveLibrary(createlibraryDto);
+  async saveLibrary(@Body() libraryDto: LibraryDto): Promise<LibraryDto> {
+    return await this.libraryService.saveLibrary(libraryDto);
   }
 
   @Get(':id')
-  async getLibrary(@Param('id') id: string): Promise<LibraryDto> {
-    return await this.libraryService.getLibrary();
+  async getLibrarySummaries(@Param('id') id: string): Promise<LibrarySummaryDto> {
+    return await this.libraryService.getLibrarySummary();
   }
 }

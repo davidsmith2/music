@@ -3,29 +3,27 @@ import { SongDto } from '@davidsmith/api-interfaces';
 import { InjectModel } from '@nestjs/mongoose';
 import { Song } from './song.schema';
 import { Model } from 'mongoose';
+import { Library } from '../library/library.schema';
 
 @Injectable()
 export class SongService {
-  constructor(@InjectModel(Song.name) private songModel: Model<Song>) { }
+  constructor(
+    @InjectModel(Song.name) private songModel: Model<Song>,
+    @InjectModel(Library.name) private libraryModel: Model<Library>
+  ) { }
 
   async createSong(song: SongDto): Promise<SongDto> {
-    const createdSong: Song = new this.songModel(song);
-    createdSong.save();
-    return song;
+    let createdSong: Song = new this.songModel(song);
+    createdSong = await createdSong.save();
+    this.libraryModel.updateOne(
+      { username: 'test' },
+      { $push: { songs: createdSong._id } }
+    ).exec();
+    return createdSong as SongDto;
   }
 
   async getSongs(): Promise<Array<SongDto>> {
     const songs: Song[] = await this.songModel.find().exec();
-    return songs.map((song) => {
-      return {
-        id: song._id as string,
-        title: song.title,
-        genre: song.genre,
-        year: song.year,
-        duration: song.duration,
-        artist: song.artist,
-        album: song.album
-      } as SongDto;
-    });
+    return songs as SongDto[];
   }
 }

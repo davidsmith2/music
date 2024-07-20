@@ -6,6 +6,11 @@ import { ArtistDto } from '@davidsmith/api-interfaces';
 export class ArtistController {
   constructor(private readonly artistService: ArtistService) {}
 
+  @Get()
+  async getArtists(): Promise<ArtistDto[]> {
+    return await this.artistService.getArtists();
+  }
+
   @Get(':id')
   async getArtist(@Param('id') id: string): Promise<ArtistDto> {
     return await this.artistService.getArtist(id);

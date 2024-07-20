@@ -10,6 +10,8 @@ import { entityConfig } from './entity-metadata';
 import { EffectsModule } from '@ngrx/effects';
 import { metaReducers } from './meta-reducers.constant';
 import { GraphQLModule } from './graphql.module';
+import { LibraryComponent } from './library/library.component';
+import { LibraryModule } from './library/library.module';
 
 const defaultDataServiceConfig: DefaultDataServiceConfig = {
   root: '/graphql'
@@ -33,26 +35,33 @@ class CoreHttpUrlGenerator extends DefaultHttpUrlGenerator {
     RouterModule.forRoot([
       {
         path: '',
-        redirectTo: 'artists',
+        redirectTo: 'library',
         pathMatch: 'full',
       },
       {
-        path: 'artists',
-        loadChildren: () => import('./artist-master/artist-master.module').then(m => m.ArtistsMasterModule)
+        path: 'library',
+        component: LibraryComponent,
+        children: [
+          {
+            path: 'artists',
+            loadChildren: () => import('./artist-master/artist-master.module').then(m => m.ArtistsMasterModule)
+          },
+          {
+            path: 'albums',
+            loadChildren: () => import('./album-master/album-master.module').then(m => m.AlbumMasterModule)
+          },
+          {
+            path: 'songs',
+            loadChildren: () => import('./song-master/song-master.module').then(m => m.SongMasterModule)
+          }
+        ]
       },
-      {
-        path: 'albums',
-        loadChildren: () => import('./album-master/album-master.module').then(m => m.AlbumMasterModule)
-      },
-      {
-        path: 'songs',
-        loadChildren: () => import('./song-master/song-master.module').then(m => m.SongMasterModule)
-      }
     ]),
     StoreModule.forRoot({}, { metaReducers }),
     EffectsModule.forRoot([]),
     EntityDataModule.forRoot(entityConfig),
-    GraphQLModule
+    GraphQLModule,
+    LibraryModule
   ],
   providers: [
     { provide: WINDOW, useValue: window },

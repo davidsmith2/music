@@ -1,0 +1,27 @@
+<ng-container *ngIf="librarySummary$ | async as librarySummary">
+    <div class="container">
+        <nav>
+            <h2>Library</h2>
+            <ul class="list-reset">
+                <li class="mb-2">
+                    <a routerLink="/library/artists">Artists</a>
+                    <span>&nbsp;</span>
+                    <span>({{librarySummary.artists}})</span>
+                </li>
+                <li class="mb-2">
+                    <a routerLink="/library/albums">Albums</a>
+                    <span>&nbsp;</span>
+                    <span>({{librarySummary.albums}})</span>
+                </li>
+                <li class="mb-2">
+                    <a routerLink="/library/songs">Songs</a>
+                    <span>&nbsp;</span>
+                    <span>({{librarySummary.songs}})</span>
+                </li>
+            </ul>
+        </nav>
+        <main>
+            <router-outlet></router-outlet>
+        </main>
+    </div>
+</ng-container>

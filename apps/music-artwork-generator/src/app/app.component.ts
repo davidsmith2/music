@@ -1,10 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { take } from 'rxjs/operators';
-import { Observable } from 'rxjs';
-import { LibraryDto } from '@davidsmith/api-interfaces';
 import { Store } from '@ngrx/store';
 import { MergeQuerySet } from '@ngrx/data';
-import { LibraryService } from './core/library/library.service';
 
 @Component({
   selector: 'davidsmith-root',
@@ -13,10 +9,7 @@ import { LibraryService } from './core/library/library.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent {
-  library$: Observable<LibraryDto>;
-
   constructor(
-    private libraryService: LibraryService,
     private store: Store
   ) {
     this.store.dispatch(
@@ -27,7 +20,6 @@ export class AppComponent {
         Song: []
       })
     );
-    this.library$ = this.libraryService.getLibrary('951a9862').pipe(take(1));
   }
 
 }

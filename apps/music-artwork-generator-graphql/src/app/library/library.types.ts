@@ -1,13 +1,17 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
-import { Artist } from '../artist/artist.types';
-import { ArtistDto } from '@davidsmith/api-interfaces';
 
 @ObjectType()
-export class Library {
+export class LibrarySummary {
   @Field(() => ID)
-  id: string;
+  username: string;
 
-  @Field(type => [Artist], {nullable: true})
-  artists: Array<ArtistDto>;
+  @Field()
+  songs: number;
+
+  @Field()
+  albums: number;
+
+  @Field()
+  artists: number;
 
 }

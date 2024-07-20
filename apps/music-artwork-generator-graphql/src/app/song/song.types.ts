@@ -3,16 +3,10 @@ import { Field, ID, ObjectType } from "@nestjs/graphql";
 @ObjectType()
 export class Song {
   @Field(() => ID)
-  id: string;
+  _id: string;
   
   @Field()
-  artist: string;
-
-  @Field()
   title: string;
-
-  @Field()
-  album: string;
 
   @Field()
   genre: string;
@@ -22,5 +16,11 @@ export class Song {
 
   @Field()
   duration: number;
+
+  @Field()
+  artist: string;
+
+  @Field()
+  album: string;
 
 }

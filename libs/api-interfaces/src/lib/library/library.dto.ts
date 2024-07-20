@@ -1,7 +1,6 @@
-import { ArtistDto } from "../artist/artist.dto";
+import { SongDto } from "../song/song.dto";
 
 export interface LibraryDto {
-  id: string;
   username: string;
-  artists: Array<ArtistDto>;
+  songs: Array<SongDto>;
 }

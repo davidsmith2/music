@@ -1,9 +1,10 @@
 export interface SongDto {
-  id: string;
+  _id: string;
   title: string;
-  album: string;
-  artist: string;
   genre: string;
   year: number;
   duration: number;
+  artist: string;
+  album: string;
+  artwork?: string;
 }

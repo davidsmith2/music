@@ -30,7 +30,7 @@ export class AlbumService extends EntityCollectionServiceBase<AlbumDto> {
   getAlbum(id: string): Observable<AlbumDto> {
     return this.apollo.watchQuery({
       query: SELECT_ONE_ALBUM,
-      variables: { id }
+      variables: { _id: id }
     }).valueChanges.pipe(
       map((res) => {
         return res['data']['selectOne_album'];

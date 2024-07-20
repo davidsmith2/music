@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { LibraryDto } from "@davidsmith/api-interfaces";
+import { LibraryDto, LibrarySummaryDto } from "@davidsmith/api-interfaces";
 import { EntityCollectionServiceBase, EntityCollectionServiceElementsFactory } from "@ngrx/data";
 import { Apollo } from "apollo-angular";
 import { Observable, catchError, map, of } from "rxjs";
@@ -14,7 +14,7 @@ export class LibraryService extends EntityCollectionServiceBase<LibraryDto> {
     super('Library', serviceElementsFactory);
   }
 
-  getLibrary(id: string): Observable<LibraryDto> {
+  getLibrary(id: string): Observable<LibrarySummaryDto> {
     return this.apollo.watchQuery({
       query: SELECT_ONE_LIBRARY,
       variables: { id }

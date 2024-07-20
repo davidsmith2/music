@@ -11,6 +11,7 @@ export class AlbumService {
   }
 
   async getByKey(key: string): Promise<AlbumDto> {
+    console.log(key)
     const response = await fetch(`http://localhost:3333/api/album/${key}`);
     const data = await response.json() as AlbumDto;
     return data;
@@ -18,7 +19,7 @@ export class AlbumService {
 
   async update(album: AlbumDto): Promise<Partial<AlbumDto>> {
     const response = await fetch(
-      `http://localhost:3333/api/album/${album.id}`,
+      `http://localhost:3333/api/album/${album._id}`,
       {
         method: 'PUT',
         body: JSON.stringify(album),

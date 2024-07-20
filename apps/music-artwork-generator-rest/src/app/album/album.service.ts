@@ -1,29 +1,26 @@
 import { Injectable } from '@nestjs/common';
 import { AlbumDto } from '@davidsmith/api-interfaces';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
-import { Library } from '../library/library.schema';
-import { AppService } from '../app.service';
+import { InjectConnection, InjectModel } from '@nestjs/mongoose';
+import { Connection, Model, Schema } from 'mongoose';
 import { Song } from '../song/song.schema';
 
 @Injectable()
 export class AlbumService {
   constructor(
-    @InjectModel(Library.name) private libraryModel: Model<Library>,
-    @InjectModel(Song.name) private songModel: Model<Song>,
-    private appService: AppService
+    @InjectConnection() private connection: Connection,
+    @InjectModel(Song.name) private songModel: Model<Song>
   ) { }
 
   async getAlbums(): Promise<Array<AlbumDto>> {
-    const library: Library = await this.libraryModel.findOne({username: 'test'}).populate('songs').exec();
-    const albumDtos: AlbumDto[] = this.appService.getAlbumDtos(library.songs);
-    return albumDtos;
+    const albumsView: Model<any> = this.connection.model('Albums', new Schema({_id: String, title: String}, {strict: false}), 'albumsView');
+    const albums: AlbumDto[] = await albumsView.find().exec().catch(err => console.error(err)) as AlbumDto[];
+    return albums;
   }
 
-  async getAlbum(id: string): Promise<AlbumDto> {
-    const library: Library = await this.libraryModel.findOne({username: 'test'}).populate('songs').exec();
-    const albumDtos: AlbumDto[] = this.appService.getAlbumDtos(library.songs);
-    return albumDtos.find(album => album.title === id);
+  async getAlbum(_id: string): Promise<AlbumDto> {
+    const albumsView: Model<any> = this.connection.model('Albums', new Schema({_id: String, title: String}, {strict: false}), 'albumsView');
+    const album: AlbumDto = await albumsView.findById(_id).exec().catch(err => console.error(err)) as AlbumDto;
+    return album;
   }
 
   async updateAlbumCover(albumDto: Partial<AlbumDto>): Promise<Partial<AlbumDto>> {

@@ -7,6 +7,11 @@ import { ArtistDto } from '@davidsmith/api-interfaces';
 export class ArtistResolver {
   constructor(private artistService: ArtistService) {}
 
+  @Query(() => [Artist])
+  async selectAll_artists(): Promise<ArtistDto[]> {
+    return this.artistService.getAll();
+  }
+
   @Query(() => Artist)
   async selectOne_artist(@Args('id', { type: () => String }) id: string): Promise<ArtistDto> {
     return this.artistService.getByKey(id);
