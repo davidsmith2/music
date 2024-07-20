@@ -1,6 +1,6 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { ArtistService } from './artist.service';
-import { ArtistDto } from '@davidsmith/api-interfaces';
+import { ArtistDto } from '@music/api-interfaces';
 
 @Controller('artist')
 export class ArtistController {

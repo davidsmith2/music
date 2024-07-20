@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, Put } from '@nestjs/common';
 import { AlbumService } from './album.service';
-import { AlbumDto } from '@davidsmith/api-interfaces';
+import { AlbumDto } from '@music/api-interfaces';
 
 @Controller('album')
 export class AlbumController {

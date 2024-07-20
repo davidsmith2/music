@@ -19,7 +19,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@davidsmith/api-interfaces": [
+      "@music/api-interfaces": [
         "libs/api-interfaces/src/index.ts"
       ]
     },

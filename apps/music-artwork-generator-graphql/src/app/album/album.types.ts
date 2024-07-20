@@ -1,6 +1,6 @@
 import { Field, ID, InputType, ObjectType } from "@nestjs/graphql";
 import { Song } from "../song/song.types";
-import { SongDto } from "@davidsmith/api-interfaces";
+import { SongDto } from "@music/api-interfaces";
 
 @ObjectType()
 export class Album {

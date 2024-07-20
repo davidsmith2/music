@@ -1,6 +1,6 @@
 import { Observable, catchError, map, of } from "rxjs";
 import { Injectable } from "@angular/core";
-import { AlbumDto } from "@davidsmith/api-interfaces";
+import { AlbumDto } from "@music/api-interfaces";
 import { EntityCollectionServiceBase, EntityCollectionServiceElementsFactory } from "@ngrx/data";
 import { Apollo } from "apollo-angular";
 import { SELECT_ALL_ALBUMS, SELECT_ONE_ALBUM, UPDATE_ONE_ALBUM } from "./album.constants";

@@ -1,4 +1,4 @@
-import { LibraryDto, LibrarySummaryDto } from "@davidsmith/api-interfaces";
+import { LibraryDto, LibrarySummaryDto } from "@music/api-interfaces";
 import { Injectable } from "@nestjs/common";
 import fetch from 'node-fetch';
 

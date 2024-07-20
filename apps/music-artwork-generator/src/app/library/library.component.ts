@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { LibraryService } from '../core/library/library.service';
-import { LibrarySummaryDto } from '@davidsmith/api-interfaces';
+import { LibrarySummaryDto } from '@music/api-interfaces';
 import { Observable, take } from 'rxjs';
 
 @Component({
-  selector: 'davidsmith-library',
+  selector: 'music-library',
   templateUrl: './library.component.html',
   styleUrl: './library.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

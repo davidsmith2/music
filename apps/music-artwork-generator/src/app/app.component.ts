@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { MergeQuerySet } from '@ngrx/data';
 
 @Component({
-  selector: 'davidsmith-root',
+  selector: 'music-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

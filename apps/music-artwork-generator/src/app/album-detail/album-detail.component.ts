@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { AlbumDto } from '@davidsmith/api-interfaces';
+import { AlbumDto } from '@music/api-interfaces';
 import { Observable, switchMap } from 'rxjs';
 import { AlbumService } from '../core/album/album.service';
 
 @Component({
-  selector: 'davidsmith-album-detail',
+  selector: 'music-album-detail',
   templateUrl: './album-detail.component.html',
   styleUrl: './album-detail.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

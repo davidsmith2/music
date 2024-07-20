@@ -1,7 +1,7 @@
 import { Args, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
 import { Album, AlbumUpdate } from './album.types';
 import { AlbumService } from './album.service';
-import { AlbumDto } from '@davidsmith/api-interfaces';
+import { AlbumDto } from '@music/api-interfaces';
 import { PubSub } from 'graphql-subscriptions';
 
 const pubSub = new PubSub();

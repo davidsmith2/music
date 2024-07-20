@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { SongService } from './song.service';
-import { SongDto } from '@davidsmith/api-interfaces';
+import { SongDto } from '@music/api-interfaces';
 import { ApiBody, ApiOperation, ApiProperty, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { SongDtoClass } from './song-dto-class';
 

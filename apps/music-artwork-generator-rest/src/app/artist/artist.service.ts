@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { ArtistDto } from '@davidsmith/api-interfaces';
+import { ArtistDto } from '@music/api-interfaces';
 import { InjectConnection } from '@nestjs/mongoose';
 import { Connection, Model, Schema } from 'mongoose';
 

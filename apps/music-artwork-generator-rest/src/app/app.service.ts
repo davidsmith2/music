@@ -1,6 +1,6 @@
 import { join } from 'path';
 import { readFileSync, writeFileSync } from 'fs';
-import { AlbumDto, ArtistDto, LibraryDto, SongDto } from '@davidsmith/api-interfaces';
+import { AlbumDto, ArtistDto, LibraryDto, SongDto } from '@music/api-interfaces';
 import { Song } from './song/song.schema';
 import { Types } from 'mongoose';
 

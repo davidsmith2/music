@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { SongDto } from "@davidsmith/api-interfaces";
+import { SongDto } from "@music/api-interfaces";
 import { EntityCollectionServiceBase, EntityCollectionServiceElementsFactory } from "@ngrx/data";
 import { Apollo } from "apollo-angular";
 import { Observable, catchError, map, of } from "rxjs";

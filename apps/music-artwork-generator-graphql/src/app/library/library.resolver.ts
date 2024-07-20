@@ -1,7 +1,7 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
 import { LibrarySummary } from './library.types';
 import { LibraryService } from './library.service';
-import { LibraryDto, LibrarySummaryDto } from '@davidsmith/api-interfaces';
+import { LibraryDto, LibrarySummaryDto } from '@music/api-interfaces';
 
 @Resolver(() => LibrarySummary)
 export class LibraryResolver {

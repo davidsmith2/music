@@ -1,4 +1,4 @@
-import { ArtistDto } from "@davidsmith/api-interfaces";
+import { ArtistDto } from "@music/api-interfaces";
 import { Injectable } from "@nestjs/common";
 import fetch from 'node-fetch';
 

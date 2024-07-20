@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { LibraryService } from './library.service';
-import { LibraryDto, LibrarySummaryDto } from '@davidsmith/api-interfaces';
+import { LibraryDto, LibrarySummaryDto } from '@music/api-interfaces';
 
 @Controller('library')
 export class LibraryController {
