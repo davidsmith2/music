@@ -1,8 +1,7 @@
 import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ArtistDto } from '@music/api-interfaces';
-import { Apollo } from 'apollo-angular';
-import { GET_ARTISTS } from '../core/artist/artist.constants';
+import { ArtistService } from '../core/artist/artist.service';
 
 @Component({
   templateUrl: './artist-master.component.html',
@@ -13,15 +12,11 @@ export class ArtistMasterComponent implements OnInit {
   artists$: Observable<Array<ArtistDto>>;
 
   constructor(
-    private apollo: Apollo
+    private artistService: ArtistService
   ) { }
   
   ngOnInit(): void {
-    this.artists$ = this.apollo.watchQuery({
-      query: GET_ARTISTS
-    }).valueChanges.pipe(
-      map((result) => result.data['getArtists'])
-    )
+    this.artists$ = this.artistService.getArtists();
   }
 
 }
