@@ -19,6 +19,9 @@ export class SongController {
   }
   
   @Get()
+  @ApiOperation({ summary: 'Get songs' })
+  @ApiResponse({ status: 201, description: 'Successful request.', type: [SongDto] })
+  @ApiResponse({ status: 400, description: 'Bad request.' })
   async getSongs(): Promise<Array<SongDto>> {
     return await this.songService.getSongs();
   }
