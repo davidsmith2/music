@@ -4,7 +4,6 @@ import { Library, LibrarySchema } from './library.schema';
 import { LibraryController } from './library.controller';
 import { LibraryService } from './library.service';
 import { Song, SongSchema } from '../song/song.schema';
-import { AppService } from '../app.service';
 
 @Module({
   imports: [
@@ -14,6 +13,6 @@ import { AppService } from '../app.service';
      ])
   ],
   controllers: [LibraryController],
-  providers: [LibraryService, AppService],
+  providers: [LibraryService],
 })
 export class LibraryModule {}

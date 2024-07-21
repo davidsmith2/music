@@ -3,7 +3,6 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ArtistController } from './artist.controller';
 import { ArtistService } from './artist.service';
 import { Library, LibrarySchema } from '../library/library.schema';
-import { AppService } from '../app.service';
 
 @Module({
   imports: [
@@ -12,6 +11,6 @@ import { AppService } from '../app.service';
     ])
   ],
   controllers: [ArtistController],
-  providers: [ArtistService, AppService],
+  providers: [ArtistService],
 })
 export class ArtistModule {}
