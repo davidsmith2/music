@@ -1,8 +1,8 @@
 import { gql } from "apollo-angular";
 
-export const SELECT_ALL_SONGS = gql`
-  query selectAll_songs {
-    selectAll_songs {
+export const GET_SONGS = gql`
+  query songs {
+    getSongs {
       _id
       title
       artist

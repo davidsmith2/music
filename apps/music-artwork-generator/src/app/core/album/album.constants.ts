@@ -1,8 +1,8 @@
 import { gql } from "apollo-angular";
 
-export const SELECT_ALL_ALBUMS = gql`
-  query selectAll_albums {
-    selectAll_albums {
+export const GET_ALBUMS = gql`
+  query albums {
+    getAlbums {
       _id
       title
       artist
@@ -11,9 +11,9 @@ export const SELECT_ALL_ALBUMS = gql`
   }
 `;
 
-export const SELECT_ONE_ALBUM = gql`
-  query selectOne_album($_id: String!) {
-    selectOne_album(_id: $_id) {
+export const GET_ALBUM = gql`
+  query album($_id: ID!) {
+    getAlbum(_id: $_id) {
       _id
       title
       artist
@@ -26,9 +26,9 @@ export const SELECT_ONE_ALBUM = gql`
   }
 `;
 
-export const UPDATE_ONE_ALBUM = gql`
-  mutation updateOne_album($album: AlbumUpdate!) {
-    updateOne_album(album: $album) {
+export const UPDATE_ALBUM = gql`
+  mutation updateAlbum($album: AlbumUpdate!) {
+    updateAlbum(album: $album) {
       _id
       title
       artist

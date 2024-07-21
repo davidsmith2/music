@@ -1,4 +1,4 @@
-import { Args, Query, Resolver } from '@nestjs/graphql';
+import { Args, ID, Query, Resolver } from '@nestjs/graphql';
 import { Artist } from './artist.types';
 import { ArtistService } from './artist.service';
 import { ArtistDto } from '@music/api-interfaces';
@@ -8,12 +8,12 @@ export class ArtistResolver {
   constructor(private artistService: ArtistService) {}
 
   @Query(() => [Artist])
-  async selectAll_artists(): Promise<ArtistDto[]> {
+  async getArtists(): Promise<ArtistDto[]> {
     return this.artistService.getAll();
   }
 
   @Query(() => Artist)
-  async selectOne_artist(@Args('id', { type: () => String }) id: string): Promise<ArtistDto> {
-    return this.artistService.getByKey(id);
+  async getArtist(@Args('_id', { type: () => ID }) _id: string): Promise<ArtistDto> {
+    return this.artistService.getByKey(_id);
   }
 }

@@ -3,7 +3,7 @@ import { SongDto } from "@music/api-interfaces";
 import { EntityCollectionServiceBase, EntityCollectionServiceElementsFactory } from "@ngrx/data";
 import { Apollo } from "apollo-angular";
 import { Observable, catchError, map, of } from "rxjs";
-import { SELECT_ALL_SONGS } from "./song.constants";
+import { GET_SONGS } from "./song.constants";
 
 @Injectable({ providedIn: 'root' })
 export class SongService extends EntityCollectionServiceBase<SongDto> {
@@ -15,10 +15,10 @@ export class SongService extends EntityCollectionServiceBase<SongDto> {
   }
   getSongs(): Observable<Array<SongDto>> {
     return this.apollo.watchQuery({
-      query: SELECT_ALL_SONGS,
+      query: GET_SONGS,
     }).valueChanges.pipe(
       map((res) => {
-        return res['data']['selectAll_songs'];
+        return res['data']['getSongs'];
       }),
       catchError((err) => {
         return of(null);

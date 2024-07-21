@@ -1,17 +1,17 @@
 import { gql } from "apollo-angular";
 
-export const SELECT_ALL_ARTISTS = gql`
-  query {
-    selectAll_artists {
+export const GET_ARTISTS = gql`
+  query artists {
+    getArtists {
       _id
       name
     }
   }
 `;
 
-export const SELECT_ONE_ARTIST = gql`
-  query selectOne_artist($id: String!) {
-    selectOne_artist(id: $id) {
+export const GET_ARTIST = gql`
+  query artist($_id: ID!) {
+    getArtist(_id: $_id) {
       _id
       name
       albums {

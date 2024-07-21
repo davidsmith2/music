@@ -8,7 +8,7 @@ export class SongResolver {
   constructor(private songService: SongService) {}
   
   @Query(() => [Song])
-  async selectAll_songs(): Promise<Array<SongDto>> {
+  async getSongs(): Promise<Array<SongDto>> {
     return this.songService.getAll();
   }
 }
