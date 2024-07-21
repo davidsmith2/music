@@ -9,9 +9,9 @@ export class SongController {
   constructor(private readonly songService: SongService) {}
 
   @Post()
-  @ApiOperation({ summary: 'Create a new song' })
-  @ApiResponse({ status: 201, description: 'The song has been successfully created.', type: SongDto })
-  @ApiResponse({ status: 400, description: 'Bad Request.' })
+  @ApiOperation({ summary: 'Create song' })
+  @ApiResponse({ status: 201, description: 'Successful request.', type: SongDto })
+  @ApiResponse({ status: 400, description: 'Bad request.' })
   @ApiBody({ type: SongDto, description: 'The song to create' })
   createSong(@Body() song: SongDto): Promise<SongDto> {
     console.log('Creating song:', song);
@@ -20,7 +20,7 @@ export class SongController {
   
   @Get()
   @ApiOperation({ summary: 'Get songs' })
-  @ApiResponse({ status: 201, description: 'Successful request.', type: [SongDto] })
+  @ApiResponse({ status: 201, description: 'Successful request.', type: SongDto, isArray: true })
   @ApiResponse({ status: 400, description: 'Bad request.' })
   async getSongs(): Promise<Array<SongDto>> {
     return await this.songService.getSongs();

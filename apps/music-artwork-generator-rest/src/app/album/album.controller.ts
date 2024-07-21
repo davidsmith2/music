@@ -10,7 +10,7 @@ export class AlbumController {
 
   @Get()
   @ApiOperation({ summary: 'Get albums' })
-  @ApiResponse({ status: 201, description: 'Successful request.', type: [AlbumDto] })
+  @ApiResponse({ status: 201, description: 'Successful request.', type: AlbumDto, isArray: true })
   @ApiResponse({ status: 400, description: 'Bad request.' })
   async getAlbums(): Promise<Array<AlbumDto>> {
     return this.albumService.getAlbums();
