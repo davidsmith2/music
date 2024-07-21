@@ -3,7 +3,7 @@ import { LibraryDto, LibrarySummaryDto } from "@music/api-interfaces";
 import { EntityCollectionServiceBase, EntityCollectionServiceElementsFactory } from "@ngrx/data";
 import { Apollo } from "apollo-angular";
 import { Observable, catchError, map, of } from "rxjs";
-import { SELECT_ONE_LIBRARY } from "./library.constants";
+import { SELECT_ONE_LIBRARY_SUMMARY } from "./library.constants";
 
 @Injectable({ providedIn: 'root' })
 export class LibraryService extends EntityCollectionServiceBase<LibraryDto> {
@@ -14,13 +14,13 @@ export class LibraryService extends EntityCollectionServiceBase<LibraryDto> {
     super('Library', serviceElementsFactory);
   }
 
-  getLibrary(id: string): Observable<LibrarySummaryDto> {
+  getLibrary(username: string): Observable<LibrarySummaryDto> {
     return this.apollo.watchQuery({
-      query: SELECT_ONE_LIBRARY,
-      variables: { id }
+      query: SELECT_ONE_LIBRARY_SUMMARY,
+      variables: { username }
     }).valueChanges.pipe(
       map(result => {
-        return result.data['selectOne_library'];
+        return result.data['selectOne_librarySummary'];
       }),
       catchError((err) => {
         console.error(err);

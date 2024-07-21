@@ -14,7 +14,6 @@ export class SongController {
   @ApiResponse({ status: 400, description: 'Bad request.' })
   @ApiBody({ type: SongDto, description: 'The song to create' })
   createSong(@Body() song: SongDto): Promise<SongDto> {
-    console.log('Creating song:', song);
     return this.songService.createSong(song);
   }
   

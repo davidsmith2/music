@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { LibraryResolver } from './library/library.resolver';
-import { LibraryService } from './library/library.service';
+import { LibrarySummaryResolver } from './library-summary/library-summary.resolver';
+import { LibrarySummaryService } from './library-summary/library-summary.service';
 import { ArtistResolver } from './artist/artist.resolver';
 import { ArtistService } from './artist/artist.service';
 import { AlbumResolver } from './album/album.resolver';
@@ -21,8 +21,8 @@ import { SongService } from './song/song.service';
     })
   ],
   providers: [
-    LibraryResolver,
-    LibraryService,
+    LibrarySummaryResolver,
+    LibrarySummaryService,
     ArtistResolver,
     ArtistService,
     AlbumResolver,

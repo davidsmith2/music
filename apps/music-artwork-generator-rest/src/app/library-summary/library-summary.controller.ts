@@ -1,6 +1,6 @@
 import { LibrarySummaryDto } from '@music/api-interfaces';
-import { Controller, Get, Param } from '@nestjs/common';
-import { ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Controller, Get, Param, Query } from '@nestjs/common';
+import { ApiOperation, ApiParam, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { LibrarySummaryService } from './library-summary.service';
 
 @Controller('library-summary')
@@ -9,13 +9,13 @@ export class LibrarySummaryController {
 
   constructor(private readonly librarySummaryService: LibrarySummaryService) {}
 
-  @Get(':id')
+  @Get()
   @ApiOperation({ summary: 'Get library summary' })
-  @ApiParam({ name: 'id', description: 'The ID of the library' })
+  @ApiQuery({ name: 'username', description: 'The username of the library\'s owner' })
   @ApiResponse({ status: 201, description: 'Successful request.', type: LibrarySummaryDto })
   @ApiResponse({ status: 400, description: 'Bad request.' })
-  async getLibrarySummaries(@Param('id') id: string): Promise<LibrarySummaryDto> {
-    return await this.librarySummaryService.getLibrarySummary();
+  async getLibrarySummary(@Query('username') username: string): Promise<LibrarySummaryDto> {
+    return await this.librarySummaryService.getLibrarySummary(username);
   }
 
 }

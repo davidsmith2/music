@@ -1,8 +1,8 @@
 import { gql } from "apollo-angular";
 
-export const SELECT_ONE_LIBRARY = gql`
-  query selectOne_library($id: String!) {
-    selectOne_library(id: $id) {
+export const SELECT_ONE_LIBRARY_SUMMARY = gql`
+  query selectOne_librarySummary($username: String!) {
+    selectOne_librarySummary(username: $username) {
       username
       songs
       albums

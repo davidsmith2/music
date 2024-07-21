@@ -15,7 +15,7 @@ export class LibraryComponent {
   constructor(
     private libraryService: LibraryService,
   ) {
-    this.librarySummary$ = this.libraryService.getLibrary('951a9862').pipe(take(1));
+    this.librarySummary$ = this.libraryService.getLibrary('test').pipe(take(1));
   }
 
 }

@@ -11,7 +11,6 @@ export class AlbumService {
   }
 
   async getByKey(key: string): Promise<AlbumDto> {
-    console.log(key)
     const response = await fetch(`http://localhost:3333/api/album/${key}`);
     const data = await response.json() as AlbumDto;
     return data;

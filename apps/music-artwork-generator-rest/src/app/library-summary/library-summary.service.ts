@@ -7,9 +7,9 @@ import { Connection, Model, Schema } from 'mongoose';
 export class LibrarySummaryService {
   constructor(@InjectConnection() private connection: Connection) {}
 
-  async getLibrarySummary(): Promise<LibrarySummaryDto> {
+  async getLibrarySummary(username: string): Promise<LibrarySummaryDto> {
     const librarySummariesView: Model<any> = this.connection.model('LibrarySummaries', new Schema({}, {strict: false}), 'librarySummariesView');
-    const librarySummaries: LibrarySummaryDto[] = await librarySummariesView.find({}).exec().catch(err => console.error(err)) as LibrarySummaryDto[];
-    return librarySummaries[0];
+    const librarySummary: LibrarySummaryDto = await librarySummariesView.findOne({username}).exec().catch(err => console.error(err)) as LibrarySummaryDto;
+    return librarySummary;
   }
 }
