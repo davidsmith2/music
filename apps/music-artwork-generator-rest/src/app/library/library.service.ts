@@ -1,16 +1,15 @@
 import { Injectable } from '@nestjs/common';
-import { LibraryDto, LibrarySummaryDto, SongDto } from '@music/api-interfaces';
+import { LibraryDto, SongDto } from '@music/api-interfaces';
 import { InjectConnection, InjectModel } from '@nestjs/mongoose';
 import { Library } from './library.schema';
-import { Connection, Model, Schema } from 'mongoose';
+import { Connection, Model } from 'mongoose';
 import { Song } from '../song/song.schema';
 
 @Injectable()
 export class LibraryService {
   constructor(
     @InjectModel(Library.name) private libraryModel: Model<Library>,
-    @InjectModel(Song.name) private songModel: Model<Song>,
-    @InjectConnection() private connection: Connection
+    @InjectModel(Song.name) private songModel: Model<Song>
   ) { }
 
   async saveLibrary(libraryDto: LibraryDto): Promise<LibraryDto> {
@@ -28,12 +27,6 @@ export class LibraryService {
     await library.save();
     // Step 3: Return the saved Library document (or its DTO)
     return libraryDto;
-  }
-
-  async getLibrarySummary(): Promise<LibrarySummaryDto> {
-    const librarySummariesView: Model<any> = this.connection.model('LibrarySummaries', new Schema({}, {strict: false}), 'librarySummariesView');
-    const librarySummaries: LibrarySummaryDto[] = await librarySummariesView.find({}).exec().catch(err => console.error(err)) as LibrarySummaryDto[];
-    return librarySummaries[0];
   }
 
 }

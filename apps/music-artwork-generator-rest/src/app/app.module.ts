@@ -6,6 +6,7 @@ import { SongModule } from './song/song.module';
 import { AlbumModule } from './album/album.module';
 import { ArtistModule } from './artist/artist.module';
 import { LibraryModule } from './library/library.module';
+import { LibrarySummaryModule } from './library-summary/library-summary.module';
 
 @Module({
   imports: [
@@ -13,7 +14,8 @@ import { LibraryModule } from './library/library.module';
     LibraryModule,
     ArtistModule,
     AlbumModule,
-    SongModule
+    SongModule,
+    LibrarySummaryModule
   ],
   controllers: [
     AppController
