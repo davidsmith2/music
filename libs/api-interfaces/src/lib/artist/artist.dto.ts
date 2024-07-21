@@ -1,6 +1,6 @@
 import { AlbumDto } from "../album/album.dto";
 
-export interface ArtistDto {
+export class ArtistDto {
   _id: string;
   name: string;
   albums: Array<AlbumDto>;

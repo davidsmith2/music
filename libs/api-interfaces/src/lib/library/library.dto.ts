@@ -1,6 +1,6 @@
 import { SongDto } from "../song/song.dto";
 
-export interface LibraryDto {
+export class LibraryDto {
   username: string;
   songs: Array<SongDto>;
 }
