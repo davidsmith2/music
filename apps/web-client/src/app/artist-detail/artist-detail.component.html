@@ -1,0 +1,51 @@
+<ng-container *ngIf="artist$ | async as artist">
+  <div class="container">
+    <header>
+      <h2>{{ artist.name }}</h2>
+      <hr />
+      <div>{{ artist.totalAlbums }} albums, {{ artist.totalSongs }} songs</div>
+    </header>
+    <main style="margin-top: 2em">
+      <section *ngFor="let album of artist.albums" class="child-container">
+        <div>
+          <ng-container *ngIf="!album.cover; else albumCoverTemplate">
+            <button (click)="findAlbumCover($event, album)">
+              Find album cover
+            </button>
+          </ng-container>
+          <ng-template #albumCoverTemplate>
+            <img
+              [src]="album.cover"
+              [width]="175"
+              [height]="175"
+              alt="Album artwork"
+            />
+          </ng-template>
+          <div>
+            {{ album.totalSongs }} songs,
+            {{ album.totalDurationInMinutes }} minutes
+          </div>
+        </div>
+        <div>
+          <header>
+            <h3 style="margin-top: 0">{{ album.title }}</h3>
+            <div>{{ album.genre }}, {{ album.year }}</div>
+          </header>
+          <main style="margin-top: 2em">
+            <table width="100%" [cellSpacing]="0" [cellPadding]="16">
+              <tbody>
+                <tr *ngFor="let song of album.songs; let i = index">
+                  <td style="border-top: 1px solid gray">{{ i + 1 }}</td>
+                  <td style="border-top: 1px solid gray">{{ song.title }}</td>
+                  <td style="border-top: 1px solid gray">
+                    {{ song.durationInMinutes }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </main>
+        </div>
+      </section>
+    </main>
+  </div>
+</ng-container>

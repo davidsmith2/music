@@ -3,17 +3,19 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/music-artwork-generator-e2e/src",
   "projectType": "application",
+  "tags": [],
+  "implicitDependencies": ["web-client"],
   "targets": {
     "e2e": {
       "executor": "@nx/cypress:cypress",
       "options": {
         "cypressConfig": "apps/music-artwork-generator-e2e/cypress.json",
         "tsConfig": "apps/music-artwork-generator-e2e/tsconfig.e2e.json",
-        "devServerTarget": "music-artwork-generator:serve"
+        "devServerTarget": "web-client:serve"
       },
       "configurations": {
         "production": {
-          "devServerTarget": "music-artwork-generator:serve:production"
+          "devServerTarget": "web-client:serve:production"
         }
       }
     },
@@ -21,7 +23,5 @@
       "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"]
     }
-  },
-  "tags": [],
-  "implicitDependencies": ["music-artwork-generator"]
+  }
 }

@@ -1,0 +1,10 @@
+.container {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-auto-rows: 275px;
+}
+
+.child-container {
+  display: grid;
+  grid-template-rows: 175px 100px;
+}
