@@ -13,5 +13,4 @@ export class LibrarySummary {
 
   @Field()
   artists: number;
-
 }

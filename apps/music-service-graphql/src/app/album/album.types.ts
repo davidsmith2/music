@@ -1,31 +1,30 @@
-import { Field, ID, InputType, ObjectType } from "@nestjs/graphql";
-import { Song } from "../song/song.types";
-import { SongDto } from "@music/api-interfaces";
+import { Field, ID, InputType, ObjectType } from '@nestjs/graphql';
+import { Song } from '../song/song.types';
+import { SongDto } from '@music/api-interfaces';
 
 @ObjectType()
 export class Album {
   @Field(() => ID)
   _id: string;
-  
-  @Field({nullable: true})
+
+  @Field({ nullable: true })
   title: string;
 
-  @Field({nullable: true})
+  @Field({ nullable: true })
   artist: string;
 
-  @Field({nullable: true})
+  @Field({ nullable: true })
   cover: string;
 
-  @Field(type => [Song], {nullable: true})
+  @Field((type) => [Song], { nullable: true })
   songs: Array<SongDto>;
-
 }
 
 @InputType()
 export class AlbumUpdate {
   @Field(() => ID)
   _id: string;
-  
+
   @Field()
   title: string;
 
@@ -34,5 +33,4 @@ export class AlbumUpdate {
 
   @Field()
   cover: string;
-
 }

@@ -19,7 +19,7 @@ async function bootstrap() {
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true, // This is important for sessions or basic auth
   });
-  
+
   const port = process.env.PORT || 3000;
 
   await app.listen(port);

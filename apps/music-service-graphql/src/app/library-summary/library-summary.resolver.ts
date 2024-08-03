@@ -8,7 +8,9 @@ export class LibrarySummaryResolver {
   constructor(private librarySummaryService: LibrarySummaryService) {}
 
   @Query(() => LibrarySummary)
-  async getLibrarySummary(@Args('username', { type: () => ID }) username: string): Promise<LibrarySummaryDto> {
+  async getLibrarySummary(
+    @Args('username', { type: () => ID }) username: string
+  ): Promise<LibrarySummaryDto> {
     return this.librarySummaryService.getLibrarySummary(username);
   }
 }

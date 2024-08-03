@@ -1,10 +1,10 @@
-import { Field, ID, ObjectType } from "@nestjs/graphql";
+import { Field, ID, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()
 export class Song {
   @Field(() => ID)
   _id: string;
-  
+
   @Field()
   title: string;
 
@@ -22,5 +22,4 @@ export class Song {
 
   @Field()
   album: string;
-
 }

@@ -16,9 +16,9 @@ import { SongService } from './song/song.service';
       driver: ApolloDriver,
       autoSchemaFile: true,
       subscriptions: {
-        'graphql-ws': true
-      }
-    })
+        'graphql-ws': true,
+      },
+    }),
   ],
   providers: [
     LibrarySummaryResolver,
@@ -28,7 +28,7 @@ import { SongService } from './song/song.service';
     AlbumResolver,
     AlbumService,
     SongResolver,
-    SongService
-  ]
+    SongService,
+  ],
 })
 export class AppModule {}

@@ -13,7 +13,9 @@ export class ArtistResolver {
   }
 
   @Query(() => Artist)
-  async getArtist(@Args('_id', { type: () => ID }) _id: string): Promise<ArtistDto> {
+  async getArtist(
+    @Args('_id', { type: () => ID }) _id: string
+  ): Promise<ArtistDto> {
     return this.artistService.getByKey(_id);
   }
 }

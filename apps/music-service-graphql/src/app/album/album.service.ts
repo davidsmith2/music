@@ -1,18 +1,18 @@
-import { AlbumDto } from "@music/api-interfaces";
-import { Injectable } from "@nestjs/common";
+import { AlbumDto } from '@music/api-interfaces';
+import { Injectable } from '@nestjs/common';
 import fetch from 'node-fetch';
 
 @Injectable()
 export class AlbumService {
   async getAll(): Promise<Array<AlbumDto>> {
     const response = await fetch(`http://localhost:3333/api/album`);
-    const data = await response.json() as Array<AlbumDto>;
+    const data = (await response.json()) as Array<AlbumDto>;
     return data;
   }
 
   async getByKey(key: string): Promise<AlbumDto> {
     const response = await fetch(`http://localhost:3333/api/album/${key}`);
-    const data = await response.json() as AlbumDto;
+    const data = (await response.json()) as AlbumDto;
     return data;
   }
 
@@ -22,10 +22,10 @@ export class AlbumService {
       {
         method: 'PUT',
         body: JSON.stringify(album),
-        headers: {'Content-Type': 'application/json'}
+        headers: { 'Content-Type': 'application/json' },
       }
     );
-    const data = await response.json() as Partial<AlbumDto>;
+    const data = (await response.json()) as Partial<AlbumDto>;
     return data;
   }
 }

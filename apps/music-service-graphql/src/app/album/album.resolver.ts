@@ -1,4 +1,11 @@
-import { Args, ID, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
+import {
+  Args,
+  ID,
+  Mutation,
+  Query,
+  Resolver,
+  Subscription,
+} from '@nestjs/graphql';
 import { Album, AlbumUpdate } from './album.types';
 import { AlbumService } from './album.service';
 import { AlbumDto } from '@music/api-interfaces';
@@ -16,12 +23,16 @@ export class AlbumResolver {
   }
 
   @Query(() => Album)
-  async getAlbum(@Args('_id', { type: () => ID }) _id: string): Promise<AlbumDto> {
+  async getAlbum(
+    @Args('_id', { type: () => ID }) _id: string
+  ): Promise<AlbumDto> {
     return this.albumService.getByKey(_id);
   }
 
   @Mutation(() => Album)
-  async updateAlbum(@Args('album', { type: () => AlbumUpdate }) album: AlbumDto): Promise<Partial<AlbumDto>> {
+  async updateAlbum(
+    @Args('album', { type: () => AlbumUpdate }) album: AlbumDto
+  ): Promise<Partial<AlbumDto>> {
     const albumDto: Partial<AlbumDto> = await this.albumService.update(album);
     pubSub.publish('albumUpdated', { albumUpdated: albumDto });
     return albumDto;
@@ -32,11 +43,12 @@ export class AlbumResolver {
     filter: (payload, variables) => {
       console.log('@Subscription filter', payload, variables);
       return true;
-    }
+    },
   })
-  albumUpdated(@Args('artistName') artistName: String): AsyncIterator<AlbumDto> {
-    console.log('@Subscription artistName', artistName)
+  albumUpdated(
+    @Args('artistName') artistName: String
+  ): AsyncIterator<AlbumDto> {
+    console.log('@Subscription artistName', artistName);
     return pubSub.asyncIterator('albumUpdated');
   }
-
 }
