@@ -1,0 +1,52 @@
+{
+  "name": "music-service-rest",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/music-service-rest/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nrwl/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/music-service-rest",
+        "main": "apps/music-service-rest/src/main.ts",
+        "tsConfig": "apps/music-service-rest/tsconfig.app.json",
+        "assets": ["apps/music-service-rest/src/assets"],
+        "target": "node",
+        "compiler": "tsc",
+        "webpackConfig": "apps/music-service-rest/webpack.config.js"
+      },
+      "configurations": {
+        "production": {
+          "optimization": true,
+          "extractLicenses": true,
+          "inspect": false,
+          "fileReplacements": [
+            {
+              "replace": "apps/music-service-rest/src/environments/environment.ts",
+              "with": "apps/music-service-rest/src/environments/environment.prod.ts"
+            }
+          ]
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "options": {
+        "buildTarget": "music-service-rest:build"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/apps/music-service-rest"],
+      "options": {
+        "jestConfig": "apps/music-service-rest/jest.config.ts"
+      }
+    }
+  }
+}
