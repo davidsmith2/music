@@ -13,10 +13,10 @@ import { Kind, OperationTypeNode } from 'graphql';
 import { createClient } from 'graphql-ws';
 
 export function createApollo(httpLink: HttpLink): ApolloClientOptions<any> {
-  const http = httpLink.create({ uri: 'http://localhost:3000/graphql' });
+  const http = httpLink.create({ uri: 'https://local.music.davidsmithweb.com:3000/graphql' });
   const ws = new GraphQLWsLink(
     createClient({
-      url: 'ws://localhost:3000/graphql',
+      url: 'wss://local.music.davidsmithweb.com:3000/graphql',
     })
   );
   const link = split(

@@ -8,9 +8,14 @@ import { AppModule } from './app/app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { Logger } from '@nestjs/common';
 import { json } from 'body-parser';
+import * as fs from 'fs';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const httpsOptions = {
+    key: fs.readFileSync(process.cwd() + '/secrets/private-key.pem'),
+    cert: fs.readFileSync(process.cwd() + '/secrets/certificate.pem'),
+  };
+  const app = await NestFactory.create(AppModule, { httpsOptions });
 
   // Set global prefix
   const globalPrefix = 'api';
@@ -30,7 +35,7 @@ async function bootstrap() {
 
   const port = process.env.PORT || 3333;
   await app.listen(port, () => {
-    Logger.log('Listening at http://localhost:' + port + '/' + globalPrefix);
+    Logger.log('Listening at https://localhost:' + port + '/' + globalPrefix);
   });
 }
 
