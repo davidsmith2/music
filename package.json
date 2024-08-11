@@ -61,13 +61,9 @@
     "ngrx-entity-relationship": "^1.7.1",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.0",
-    "saxon-js": "^2.2.0",
-    "sharp": "^0.23.4",
     "swagger-ui-express": "^5.0.1",
     "tslib": "^2.3.0",
     "uuid": "^9.0.1",
-    "xml2js": "^0.6.2",
-    "xslt3": "^2.2.0",
     "xxhashjs": "^0.2.2",
     "zone.js": "0.14.7"
   },
