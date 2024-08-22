@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { AlbumDto } from '@music/api-interfaces';
 import { Observable, switchMap } from 'rxjs';
-import { AlbumService } from '../core/album/album.service';
+import { AlbumService } from '../../core/album/album.service';
 
 @Component({
   selector: 'music-album-detail',

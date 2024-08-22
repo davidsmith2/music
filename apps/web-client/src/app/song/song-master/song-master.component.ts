@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { SongDto } from '@music/api-interfaces';
 import { Observable } from 'rxjs';
-import { SongService } from '../core/song/song.service';
+import { SongService } from '../../core/song/song.service';
 
 @Component({
   templateUrl: './song-master.component.html',

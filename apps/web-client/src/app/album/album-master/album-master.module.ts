@@ -7,19 +7,7 @@ import { RouterModule } from '@angular/router';
   declarations: [AlbumMasterComponent],
   imports: [
     CommonModule,
-    RouterModule.forChild([
-      {
-        path: '',
-        component: AlbumMasterComponent,
-      },
-      {
-        path: ':id',
-        loadChildren: () =>
-          import('../album-detail/album-detail.module').then(
-            (m) => m.AlbumDetailModule
-          ),
-      },
-    ]),
+    RouterModule
   ],
   exports: [AlbumMasterComponent],
 })

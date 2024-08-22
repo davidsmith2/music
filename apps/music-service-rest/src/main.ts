@@ -21,6 +21,16 @@ async function bootstrap() {
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
 
+  // Enable CORS
+  app.enableCors({
+    origin: [
+      'http://localhost:4200',
+      'https://local.music.davidsmithweb.com:4200',
+    ],
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    credentials: true, // This is important for sessions or basic auth
+  });
+
   // Increase the limit for JSON bodies
   app.use(json({ limit: '50mb' }));
 

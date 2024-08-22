@@ -8,13 +8,13 @@ import {
 import { ActivatedRoute, Params } from '@angular/router';
 import { Observable } from 'rxjs';
 import { switchMap, take, tap } from 'rxjs/operators';
-import { WINDOW } from '../window.constant';
-import { Cover } from '../core/cover/cover.interface';
+import { WINDOW } from '../../window.constant';
+import { Cover } from '../../core/cover/cover.interface';
 import { AlbumDto } from '@music/api-interfaces';
 import { ArtistDto } from '@music/api-interfaces';
-import { AlbumService } from '../core/album/album.service';
-import { ArtistService } from '../core/artist/artist.service';
-import { ALBUM_UPDATED_SUBSCRIPTION } from '../core/album/album.constants';
+import { AlbumService } from '../../core/album/album.service';
+import { ArtistService } from '../../core/artist/artist.service';
+import { ALBUM_UPDATED_SUBSCRIPTION } from '../../core/album/album.constants';
 import { Apollo } from 'apollo-angular';
 
 @Component({

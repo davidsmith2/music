@@ -1,7 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const http = require('http');
-const XXH = require('xxhashjs');
+const https = require('https');
 const { execSync } = require('child_process');
 
 const API_HOST = 'localhost';
@@ -13,89 +12,56 @@ const MUSIC_MEDIA_FOLDER_NAME = 'Test';
 const EXCLUDED_FILES = ['.DS_Store'];
 const GET_FILE_METADATA_SCRIPT = 'get-file-metadata.sh';
 
-function hash(input, _seed) {
-  const seed = _seed.toString().padStart(6, '0');
-  const hash = XXH.h32(input, seed).toString(16);
-  return hash;
-}
-
-function getData(dirs, cb) {
-  return dirs.filter((dir) => {
-    return EXCLUDED_FILES.indexOf(dir) === -1;
-  }).map((dir, idx) => {
-    return cb(dir, idx);
-  })
-}
-
-function getSongs(artist, album) {
-  const dirs = fs.readdirSync(path.join(MUSIC_MEDIA_FOLDER_NAME, artist, album));
-  return getData(dirs, (dir, id) => {
-    const songPath = path.join(__dirname, MUSIC_MEDIA_FOLDER_NAME, artist, album, dir);
-    const scriptPath = path.join(__dirname, GET_FILE_METADATA_SCRIPT);
-    const command = `${scriptPath} "${songPath}"`;
-    let jsonSong = null;
-    let song = null;
-    try {
-      console.log('Getting metadata for', songPath);
-      jsonSong = execSync(command).toString();
-    } catch (e) {
-      console.error('Error executing command', e);
-    }
-    if (jsonSong) {
-      song = {
-        id: null,
-        ...JSON.parse(jsonSong)
-      };
-    }
-    return song;
-  });
-}
-
-function getAlbums(artist) {
-  const dirs = fs.readdirSync(path.join(MUSIC_MEDIA_FOLDER_NAME, artist));
-  return getData(dirs, (dir, id) => {
-    const album = {
-      id: null,
-      artist,
-      title: dir,
-      cover: null
-    };
-    return album;
-  });
-}
-
-function getArtists() {
-  const dirs = fs.readdirSync(path.join(MUSIC_MEDIA_FOLDER_NAME));
-  return getData(dirs, (dir, id) => {
-    const artist = {
-      id: null,
-      name: dir,
-      albums: []
-    };
-    return artist;
-  });
-}
-
 function createLibrary() {
-  const libraryId = null;
-  const username = 'test';
-  const artists = getArtists();
-  artists.forEach((artist) => {
-    const albums = getAlbums(artist.name);
-    artist.albums = albums;
-    albums.forEach((album) => {
-      const songs = getSongs(artist.name, album.title);
-      album.songs = songs;
+  const songs = [];
+  const artistDirs = fs.readdirSync(path.join(MUSIC_MEDIA_FOLDER_NAME));
+  artistDirs.filter((artistDir) => {
+    return !EXCLUDED_FILES.includes(artistDir);
+  }).forEach((artistDir) => {
+    const albumDirs = fs.readdirSync(path.join(MUSIC_MEDIA_FOLDER_NAME, artistDir));
+    albumDirs.filter((albumDir) => {
+      return !EXCLUDED_FILES.includes(albumDir);
+    }).forEach((albumDir) => {
+      const songFiles = fs.readdirSync(path.join(MUSIC_MEDIA_FOLDER_NAME, artistDir, albumDir));
+      songFiles.filter((songFile) => {
+        return !EXCLUDED_FILES.includes(songFile);
+      }).forEach((songFile) => {
+        const songPath = path.join(__dirname, MUSIC_MEDIA_FOLDER_NAME, artistDir, albumDir, songFile);
+        const scriptPath = path.join(__dirname, GET_FILE_METADATA_SCRIPT);
+        const command = `${scriptPath} "${songPath}"`;
+        let jsonSong = null;
+        let song = null;
+        try {
+          console.log('Getting metadata for', songPath);
+          jsonSong = execSync(command).toString();
+        } catch (e) {
+          console.error('Error executing command', e);
+        }
+        if (jsonSong) {
+          song = {
+            id: null,
+            ...JSON.parse(jsonSong)
+          };
+          songs.push(song);
+        }
+      });
     });
   });
   return {
-    id: libraryId,
-    username,
-    artists
+    username: 'davidsmith2@gmail.com',
+    songs
   };
 }
 
 function saveLibrary(library) {
+  // Path to the certificate and key files
+  const certPath = path.join(process.cwd(), '../../secrets/certificate.pem');
+  const keyPath = path.join(process.cwd(), '../../secrets/private-key.pem');
+  const caPath = path.join(process.cwd(), '../../secrets/certificate.pem');
+  // Read the certificate and key files
+  const cert = fs.readFileSync(certPath);
+  const key = fs.readFileSync(keyPath);
+  const ca = fs.readFileSync(caPath);
   const postData = JSON.stringify(library);
   const reqOptions = {
     host: API_HOST,
@@ -105,9 +71,13 @@ function saveLibrary(library) {
     body: postData,
     headers: {
       'Content-Type': 'application/json'
-    }
+    },
+    key,
+    cert,
+    ca,
+    rejectUnauthorized: false
   };
-  const req = http.request(reqOptions, (res) => {
+  const req = https.request(reqOptions, (res) => {
     console.log(`STATUS: ${res.statusCode}`);
     res.setEncoding('utf8');
     res.on('data', (chunk) => {

@@ -8,8 +8,7 @@ import {
   DefaultDataServiceConfig,
   DefaultHttpUrlGenerator,
   EntityDataModule,
-  HttpUrlGenerator,
-  Pluralizer,
+  HttpUrlGenerator
 } from '@ngrx/data';
 import { StoreModule } from '@ngrx/store';
 import { entityConfig } from './entity-metadata';
@@ -18,6 +17,10 @@ import { metaReducers } from './meta-reducers.constant';
 import { GraphQLModule } from './graphql.module';
 import { LibraryComponent } from './library/library.component';
 import { LibraryModule } from './library/library.module';
+import { LoginComponent } from './login/login.component';
+import { LoginModule } from './login/login.module';
+import { AuthGuard } from './auth.guard';
+import { UserResolver } from './user.resolver';
 
 const defaultDataServiceConfig: DefaultDataServiceConfig = {
   root: '/graphql',
@@ -45,28 +48,37 @@ class CoreHttpUrlGenerator extends DefaultHttpUrlGenerator {
         pathMatch: 'full',
       },
       {
+        path: 'login',
+        component: LoginComponent,
+        canActivate: [AuthGuard],
+      },
+      {
         path: 'library',
         component: LibraryComponent,
+        canActivate: [AuthGuard],
+        resolve: {
+          user: UserResolver
+        },
         children: [
           {
             path: 'artists',
             loadChildren: () =>
-              import('./artist-master/artist-master.module').then(
-                (m) => m.ArtistsMasterModule
+              import('./artist/artist.module').then(
+                (m) => m.ArtistModule
               ),
           },
           {
             path: 'albums',
             loadChildren: () =>
-              import('./album-master/album-master.module').then(
-                (m) => m.AlbumMasterModule
+              import('./album/album.module').then(
+                (m) => m.AlbumModule
               ),
           },
           {
             path: 'songs',
             loadChildren: () =>
-              import('./song-master/song-master.module').then(
-                (m) => m.SongMasterModule
+              import('./song/song.module').then(
+                (m) => m.SongModule
               ),
           },
         ],
@@ -77,6 +89,7 @@ class CoreHttpUrlGenerator extends DefaultHttpUrlGenerator {
     EntityDataModule.forRoot(entityConfig),
     GraphQLModule,
     LibraryModule,
+    LoginModule
   ],
   providers: [
     { provide: WINDOW, useValue: window },

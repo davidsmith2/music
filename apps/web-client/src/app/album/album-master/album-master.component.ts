@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { AlbumDto } from '@music/api-interfaces';
 import { Observable } from 'rxjs';
-import { AlbumService } from '../core/album/album.service';
+import { AlbumService } from '../../core/album/album.service';
 
 @Component({
   selector: 'music-album-master',
