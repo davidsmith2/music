@@ -50,7 +50,8 @@
     "serve": {
       "executor": "@angular-devkit/build-angular:dev-server",
       "options": {
-        "port": 4201
+        "port": 4201,
+        "proxyConfig": "apps/desktop-client/proxy.conf.json"
       },
       "configurations": {
         "production": {
