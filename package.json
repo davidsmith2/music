@@ -83,6 +83,7 @@
     "@angular/compiler-cli": "17.3.9",
     "@angular/language-service": "17.3.9",
     "@nestjs/testing": "10.3.9",
+    "@nx/angular": "^18.3.5",
     "@nx/cypress": "18.3.5",
     "@nx/eslint": "18.3.5",
     "@nx/eslint-plugin": "18.3.5",
