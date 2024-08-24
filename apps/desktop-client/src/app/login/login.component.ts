@@ -8,7 +8,6 @@ import { Component } from "@angular/core";
 export class LoginComponent {
   login(event: Event) {
     event.preventDefault();
-    console.log(window.electron);
     window.electron.ipcRenderer.invoke('sign-in-with-apple');
   }
 }
