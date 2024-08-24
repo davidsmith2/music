@@ -5,11 +5,16 @@ import { app, BrowserWindow } from 'electron';
 import App from './app/app';
 
 export default class Main {
+
   static initialize() {
     if (SquirrelEvents.handleEvents()) {
       // squirrel event handled (except first run event) and app will exit in 1000ms, so don't do anything else
       app.quit();
     }
+    app.whenReady().then(() => {
+      // Main.bootstrapApp();
+      Main.bootstrapAppEvents();
+    });
   }
 
   static bootstrapApp() {
@@ -24,6 +29,7 @@ export default class Main {
       // UpdateEvents.initAutoUpdateService();
     }
   }
+
 }
 
 // handle setup events as quickly as possible
@@ -31,4 +37,3 @@ Main.initialize();
 
 // bootstrap app
 Main.bootstrapApp();
-Main.bootstrapAppEvents();

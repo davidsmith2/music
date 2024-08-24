@@ -72,6 +72,7 @@ export default class App {
         contextIsolation: true,
         backgroundThrottling: false,
         preload: join(__dirname, 'main.preload.js'),
+        nodeIntegration: true
       },
     });
     App.mainWindow.setMenu(null);
@@ -100,7 +101,7 @@ export default class App {
   private static loadMainWindow() {
     // load the index.html of the app.
     if (!App.application.isPackaged) {
-      App.mainWindow.loadURL(`http://localhost:${rendererAppPort}`);
+      App.mainWindow.loadURL(`http://localhost:${rendererAppPort}/login`);
     } else {
       App.mainWindow.loadURL(
         format({
@@ -117,6 +118,8 @@ export default class App {
     // Electron.BrowserWindow into this function
     // so this class has no dependencies. This
     // makes the code easier to write tests for
+
+    app.disableHardwareAcceleration();
 
     App.BrowserWindow = browserWindow;
     App.application = app;
