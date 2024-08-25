@@ -3,6 +3,8 @@ import { rendererAppName, rendererAppPort } from './constants';
 import { environment } from '../environments/environment';
 import { join } from 'path';
 import { format } from 'url';
+import * as express from 'express';
+import * as http from 'http';
 
 export default class App {
   // Keep a global reference of the window object, if you don't, the window will
@@ -47,6 +49,7 @@ export default class App {
     if (rendererAppName) {
       App.initMainWindow();
       App.loadMainWindow();
+      App.doThis();
     }
   }
 
@@ -111,6 +114,24 @@ export default class App {
         })
       );
     }
+  }
+
+  private static doThis() {
+    // Set up a local server to handle the callback
+    const expressApp = express();
+    const server = http.createServer(expressApp);
+
+    expressApp.get('/login', (req, res) => {
+      console.log('Received login request', req.query);
+      App.mainWindow.webContents.send('login-callback', req.query);
+      res.send('You can close this window now.');
+    });
+
+    const port = process.env.PORT || 3001;
+
+    server.listen(port, () => {
+      console.log('Server listening on port 3001');
+    });    
   }
 
   static main(app: Electron.App, browserWindow: typeof BrowserWindow) {
