@@ -70,8 +70,9 @@ export class LoginComponent implements OnInit, OnDestroy {
     const responseType = 'code id_token';
     const responseMode = 'form_post';
     const scope = 'name email';
+    const state = 'https://local.music.davidsmithweb.com:4200/login';
     const baseUrl = 'https://appleid.apple.com/auth/authorize';
-    const fullUrl = `${baseUrl}?response_type=code&client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=${responseType}&response_mode=${responseMode}&scope=${scope}`;
+    const fullUrl = `${baseUrl}?response_type=code&client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=${responseType}&response_mode=${responseMode}&scope=${scope}&state=${state}`;
     window.location.href = fullUrl;
   }
 }

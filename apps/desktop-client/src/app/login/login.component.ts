@@ -52,8 +52,9 @@ export class LoginComponent {
     const responseType = 'code id_token';
     const responseMode = 'form_post';
     const scope = 'name email';
+    const state = 'http://localhost:3001/api/login';
     const baseUrl = 'https://appleid.apple.com/auth/authorize';
-    const fullUrl = `${baseUrl}?response_type=code&client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=${responseType}&response_mode=${responseMode}&scope=${scope}`;
+    const fullUrl = `${baseUrl}?response_type=code&client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=${responseType}&response_mode=${responseMode}&scope=${scope}&state=${state}`;
     window.electron.shell.openExternal(fullUrl);
   }
 }

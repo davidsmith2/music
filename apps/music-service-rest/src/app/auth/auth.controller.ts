@@ -1,6 +1,7 @@
 import { Body, Controller, Post, Res } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthResponse, AuthTokens, AuthUser } from './auth.interfaces';
+import { Response } from 'express';
 
 @Controller('auth')
 export class AuthController {
@@ -9,7 +10,7 @@ export class AuthController {
   @Post('redirect')
   async handleRedirect(
     @Body() authResponse: AuthResponse,
-    @Res() res: any
+    @Res() res: Response
   ): Promise<void> {
     console.log('received auth response:', authResponse);
     let isNewUser: boolean;
@@ -38,10 +39,10 @@ export class AuthController {
     urlSearchParams.set('access_token', authTokens.access_token);
     urlSearchParams.set('refresh_token', authTokens.refresh_token);
     urlSearchParams.set('is_new_user', isNewUser.toString());
-    const baseWebClientURL: string = 'http://localhost:3001/login';
-    const fullWebClientURL: string = `${baseWebClientURL}?${urlSearchParams.toString()}`;
-    console.log('redirecting to web client with URL', fullWebClientURL);
-    res.redirect(fullWebClientURL);
+    const returnURL: string = authResponse.state;
+    const redirectURL: string = `${returnURL}?${urlSearchParams.toString()}`;
+    console.log('redirecting to URL', redirectURL);
+    res.redirect(redirectURL);
   }
   
 }

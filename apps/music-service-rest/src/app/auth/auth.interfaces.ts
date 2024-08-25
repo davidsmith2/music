@@ -11,7 +11,7 @@ export interface AuthUser {
 export interface AuthResponse {
   code: string;
   id_token?: string;
-  state?: unknown;
+  state: string;
   user?: string;
 }
 

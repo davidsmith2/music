@@ -47,9 +47,9 @@ export default class App {
     // initialization and is ready to create browser windows.
     // Some APIs can only be used after this event occurs.
     if (rendererAppName) {
+      App.startExpressApp();
       App.initMainWindow();
       App.loadMainWindow();
-      App.doThis();
     }
   }
 
@@ -59,6 +59,31 @@ export default class App {
     if (App.mainWindow === null) {
       App.onReady();
     }
+  }
+
+  private static startExpressApp() {
+    const expressApp = express();
+
+    // Middleware to parse JSON requests
+    expressApp.use(express.json());
+
+    // Serve static files from the 'public' directory
+    const staticPath = join(process.resourcesPath, 'assets');
+    expressApp.use(express.static(staticPath));
+
+    const server = http.createServer(expressApp);
+
+    expressApp.get('/api/login', (req, res) => {
+      console.log('Received login request', req.query);
+      App.mainWindow.webContents.send('login-callback', req.query);
+      res.send('You can close this window now.');
+    });
+
+    const port = process.env.PORT || 3001;
+
+    server.listen(port, () => {
+      console.log('Server listening on port 3001');
+    });    
   }
 
   private static initMainWindow() {
@@ -75,7 +100,8 @@ export default class App {
         contextIsolation: true,
         backgroundThrottling: false,
         preload: join(__dirname, 'main.preload.js'),
-        nodeIntegration: true
+        nodeIntegration: true,
+        webSecurity: false
       },
     });
     App.mainWindow.setMenu(null);
@@ -106,32 +132,8 @@ export default class App {
     if (!App.application.isPackaged) {
       App.mainWindow.loadURL(`http://localhost:${rendererAppPort}/login`);
     } else {
-      App.mainWindow.loadURL(
-        format({
-          pathname: join(__dirname, '..', rendererAppName, 'index.html'),
-          protocol: 'file:',
-          slashes: true,
-        })
-      );
+      App.mainWindow.loadURL(`http://localhost:3001/login`);
     }
-  }
-
-  private static doThis() {
-    // Set up a local server to handle the callback
-    const expressApp = express();
-    const server = http.createServer(expressApp);
-
-    expressApp.get('/login', (req, res) => {
-      console.log('Received login request', req.query);
-      App.mainWindow.webContents.send('login-callback', req.query);
-      res.send('You can close this window now.');
-    });
-
-    const port = process.env.PORT || 3001;
-
-    server.listen(port, () => {
-      console.log('Server listening on port 3001');
-    });    
   }
 
   static main(app: Electron.App, browserWindow: typeof BrowserWindow) {
