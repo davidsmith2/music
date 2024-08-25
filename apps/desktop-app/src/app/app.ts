@@ -1,10 +1,11 @@
-import { BrowserWindow, shell, screen } from 'electron';
+import { BrowserWindow, shell, screen, ipcMain } from 'electron';
 import { rendererAppName, rendererAppPort } from './constants';
 import { environment } from '../environments/environment';
-import { join } from 'path';
+import path, { join } from 'path';
 import { format } from 'url';
 import * as express from 'express';
 import * as http from 'http';
+import { runNodeScript } from './run-node-script';
 
 export default class App {
   // Keep a global reference of the window object, if you don't, the window will
@@ -50,6 +51,7 @@ export default class App {
       App.startExpressApp();
       App.initMainWindow();
       App.loadMainWindow();
+      App.registerIpcHandlers();
     }
   }
 
@@ -134,6 +136,16 @@ export default class App {
     } else {
       App.mainWindow.loadURL(`http://localhost:3001/login`);
     }
+  }
+
+  private static registerIpcHandlers() {
+    ipcMain.handle('import-library', async (event, arg) => {
+      console.log('Received example-invocation with arg:', arg);
+      // Perform some action and return a result
+      const scriptPath = path.join(process.cwd(), 'tools/scripts/create-library.js');
+      const result = await runNodeScript(scriptPath, arg);
+      return result;
+    });    
   }
 
   static main(app: Electron.App, browserWindow: typeof BrowserWindow) {

@@ -14,20 +14,20 @@ const GET_FILE_METADATA_SCRIPT = 'get-file-metadata.sh';
 
 function createLibrary() {
   const songs = [];
-  const artistDirs = fs.readdirSync(path.join(MUSIC_MEDIA_FOLDER_NAME));
+  const artistDirs = fs.readdirSync(path.join(process.cwd(), 'tools/scripts', MUSIC_MEDIA_FOLDER_NAME));
   artistDirs.filter((artistDir) => {
     return !EXCLUDED_FILES.includes(artistDir);
   }).forEach((artistDir) => {
-    const albumDirs = fs.readdirSync(path.join(MUSIC_MEDIA_FOLDER_NAME, artistDir));
+    const albumDirs = fs.readdirSync(path.join(process.cwd(), 'tools/scripts', MUSIC_MEDIA_FOLDER_NAME, artistDir));
     albumDirs.filter((albumDir) => {
       return !EXCLUDED_FILES.includes(albumDir);
     }).forEach((albumDir) => {
-      const songFiles = fs.readdirSync(path.join(MUSIC_MEDIA_FOLDER_NAME, artistDir, albumDir));
+      const songFiles = fs.readdirSync(path.join(process.cwd(), 'tools/scripts', MUSIC_MEDIA_FOLDER_NAME, artistDir, albumDir));
       songFiles.filter((songFile) => {
         return !EXCLUDED_FILES.includes(songFile);
       }).forEach((songFile) => {
-        const songPath = path.join(__dirname, MUSIC_MEDIA_FOLDER_NAME, artistDir, albumDir, songFile);
-        const scriptPath = path.join(__dirname, GET_FILE_METADATA_SCRIPT);
+        const songPath = path.join(process.cwd(), 'tools/scripts', MUSIC_MEDIA_FOLDER_NAME, artistDir, albumDir, songFile);
+        const scriptPath = path.join(process.cwd(), 'tools/scripts', GET_FILE_METADATA_SCRIPT);
         const command = `${scriptPath} "${songPath}"`;
         let jsonSong = null;
         let song = null;
@@ -55,9 +55,9 @@ function createLibrary() {
 
 function saveLibrary(library) {
   // Path to the certificate and key files
-  const certPath = path.join(process.cwd(), '../../secrets/certificate.pem');
-  const keyPath = path.join(process.cwd(), '../../secrets/private-key.pem');
-  const caPath = path.join(process.cwd(), '../../secrets/certificate.pem');
+  const certPath = path.join(process.cwd(), 'secrets/certificate.pem');
+  const keyPath = path.join(process.cwd(), 'secrets/private-key.pem');
+  const caPath = path.join(process.cwd(), 'secrets/certificate.pem');
   // Read the certificate and key files
   const cert = fs.readFileSync(certPath);
   const key = fs.readFileSync(keyPath);
