@@ -1,15 +1,7 @@
 import { Route } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { Component } from '@angular/core';
-
-@Component({
-  template: 'TestComponent'
-})
-export class TestComponent {
-  constructor() {
-    console.log('TestComponent constructor');
-  }
-}
+import { LibraryComponent } from './library/library.component';
 
 export const appRoutes: Route[] = [
   {
@@ -22,7 +14,7 @@ export const appRoutes: Route[] = [
     component: LoginComponent
   },
   {
-    path: 'test',
-    component: TestComponent
+    path: 'library',
+    component: LibraryComponent
   }
 ];

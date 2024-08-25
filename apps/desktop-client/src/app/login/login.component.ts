@@ -33,7 +33,7 @@ export class LoginComponent {
         username: userEmail
       }).pipe(take(1));
       const navigationHandler$: Observable<any> = defer(() => {
-        return from(this.ngZone.run(() => this.router.navigate(['/test'])));
+        return from(this.ngZone.run(() => this.router.navigate(['/library'])));
       });
       return iif(
         () => isNewUser,
