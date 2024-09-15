@@ -2,10 +2,10 @@
   "defaultProject": "web-client",
   "generators": {
     "@nx/angular:application": {
-      "style": "scss",
+      "e2eTestRunner": "cypress",
       "linter": "eslint",
-      "unitTestRunner": "jest",
-      "e2eTestRunner": "cypress"
+      "style": "scss",
+      "unitTestRunner": "jest"
     },
     "@nx/angular:library": {
       "linter": "eslint",
@@ -55,6 +55,11 @@
       "cache": true
     },
     "@nx/webpack:webpack": {
+      "cache": true,
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"]
+    },
+    "@angular-devkit/build-angular:application": {
       "cache": true,
       "dependsOn": ["^build"],
       "inputs": ["production", "^production"]

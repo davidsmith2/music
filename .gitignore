@@ -44,3 +44,4 @@ Thumbs.db
 # Custom
 /uploads
 /secrets
+.angular
