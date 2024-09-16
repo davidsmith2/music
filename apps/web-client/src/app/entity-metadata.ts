@@ -6,6 +6,7 @@ const entityMetadata: EntityMetadataMap = {
   Album: {},
   Song: {},
   Cover: {},
+  User: {}
 };
 
 export const entityConfig = {

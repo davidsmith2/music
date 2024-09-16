@@ -1,19 +1,20 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
-  Router, Resolve,
+  Resolve,
   RouterStateSnapshot,
   ActivatedRouteSnapshot
 } from '@angular/router';
-import { Observable, of } from 'rxjs';
+import { map, Observable } from 'rxjs';
+import { UserService } from './core/user/user.service';
+import { UserDto } from '@music/api-interfaces';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserResolver implements Resolve<boolean> {
-  constructor(private httpClient: HttpClient) {}
-  resolve(_route: ActivatedRouteSnapshot, _state: RouterStateSnapshot): Observable<boolean> {
+export class UserResolver implements Resolve<UserDto> {
+  constructor(private userService: UserService) {}
+  resolve(_route: ActivatedRouteSnapshot, _state: RouterStateSnapshot): Observable<UserDto> {
     const username: string = localStorage.getItem('AUTH_USER_EMAIL');
-    return this.httpClient.get<any>(`https://local.music.davidsmithweb.com:3333/api/user?username=${username}`);
+    return this.userService.getUserByUsername(username);
   }
 }
