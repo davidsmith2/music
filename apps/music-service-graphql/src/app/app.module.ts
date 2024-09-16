@@ -9,6 +9,8 @@ import { AlbumResolver } from './album/album.resolver';
 import { AlbumService } from './album/album.service';
 import { SongResolver } from './song/song.resolver';
 import { SongService } from './song/song.service';
+import { UserResolver } from './user/user.resolver';
+import { UserService } from './user/user.service';
 
 @Module({
   imports: [
@@ -29,6 +31,8 @@ import { SongService } from './song/song.service';
     AlbumService,
     SongResolver,
     SongService,
+    UserResolver,
+    UserService
   ],
 })
 export class AppModule {}
